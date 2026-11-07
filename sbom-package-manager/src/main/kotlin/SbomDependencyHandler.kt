@@ -90,16 +90,17 @@ internal class SbomDependencyHandler(
         }
 
     /**
-     * Return the given project [id], or, if another described component already has this identifier, an identifier
-     * whose name is qualified with the given [ref], as ORT requires projects to have unique identifiers. This happens
-     * for instance for SBOMs that describe the same artifact for different architectures.
+     * Return the given project [id], or, if another project already has this identifier, an identifier whose name is
+     * qualified with the given [ref] or a number, as ORT requires projects to have unique identifiers. This happens for
+     * instance for SBOMs that describe the same artifact for different architectures.
      */
-    private fun uniqueProjectId(id: Identifier, ref: String): Identifier {
+    fun uniqueProjectId(id: Identifier, ref: String? = null): Identifier {
         if (projectIds.add(id)) return id
 
-        val qualified = sanitizedIdentifier(id.type, id.namespace, "${id.name} (${ref.substringAfterLast('#')})", id.version)
-        projectIds += qualified
-        return qualified
+        val qualifiers = sequenceOf(ref?.substringAfterLast('#')) + generateSequence(2) { it + 1 }.map { "#$it" }
+        return qualifiers.filterNotNull().map { qualifier ->
+            sanitizedIdentifier(id.type, id.namespace, "${id.name} ($qualifier)", id.version)
+        }.first { projectIds.add(it) }
     }
 
     override fun dependenciesFor(dependency: SbomNode): List<SbomNode> {

@@ -14,6 +14,7 @@ but usable with any ORT Analyzer.
 | Module                 | Artifact                                             | Content                                                       |
 | ---------------------- | ---------------------------------------------------- | ------------------------------------------------------------- |
 | `sbom-parser`          | `org.eclipse.apoapsis.sbom:sbom-parser`              | Format detection and parsers into a format-independent model |
+| `sbom-sources`         | `org.eclipse.apoapsis.sbom:sbom-sources`             | Source files and retrieval from Dependency-Track, sbomify, URLs |
 | `sbom-package-manager` | `org.eclipse.apoapsis.sbom:sbom-package-manager`     | The `SBOM` package manager plugin for the ORT Analyzer        |
 
 ## Supported formats
@@ -34,7 +35,8 @@ CycloneDX Protocol Buffers are not supported.
 
 The plugin is registered for ORT's `PackageManagerFactory` service with the ID `SBOM`. ORT does not enable it by
 default; add it to `enabledPackageManagers` of the analyzer configuration. It then analyzes all files matching its
-`definitionFilePatterns` (such as `*.cdx.json`, `bom.xml`, `*.spdx.json`) whose content is a supported SBOM.
+`definitionFilePatterns` (such as `*.cdx.json`, `bom.xml`, `*.spdx.json`) whose content is a supported SBOM, and the
+SBOMs listed in source files (see below).
 Do not enable it together with ORT's `SpdxDocumentFile` package manager, as both handle `*.spdx.json` files.
 
 Mapping:
@@ -53,8 +55,45 @@ Options:
 | Option                         | Default    | Description                                                                         |
 | ------------------------------ | ---------- | ----------------------------------------------------------------------------------- |
 | `definitionFilePatterns`       | see code   | File name patterns of SBOMs                                                         |
+| `sourceFilePatterns`           | see code   | File name patterns of SBOM source files; empty to ignore them                       |
 | `attachUnreferencedComponents` | `true`     | Add components not reachable in the dependency graph as direct project dependencies |
 | `concludedLicenseHandling`     | `DECLARED` | Map concluded licenses as `DECLARED`, `CONCLUDED`, or `IGNORE`                      |
+
+## SBOM sources
+
+SBOM source files (`sbom-sources.yml`, `*.sbom-sources.yml`) list SBOMs published elsewhere. At each analysis, the
+package manager retrieves them through the API of their source and analyzes them:
+
+```yaml
+sources:
+  # A Dependency-Track project (URL of its page); "version" selects another version, or "latest".
+  - url: https://sbom.eclipse.org/projects/00000000-0000-0000-0000-000000000000
+    version: latest
+  # A sbomify component or product.
+  - https://app.sbomify.com/public/product/eP_4dk8ixV/
+  # Any SBOM document.
+  - https://example.org/releases/1.0/bom.cdx.json
+```
+
+Credentials come from the default authenticator: in ORT Server, the infrastructure service matching the URL (the
+password is the Dependency-Track API key or the sbomify token); with the ORT CLI, the `.netrc` file. They are never sent
+to another origin on redirects. See the [documentation](https://heurtematte.github.io/ort-sbom-plugin/sources/).
+
+## ORT Server
+
+The plugin can be added to the released images of ORT Server, without changing ORT Server: `ort-server/Dockerfile`
+adds the jars to the core and analyzer worker images and appends them to their classpath. The
+[ORT Server images](.github/workflows/ort-server-images.yml) workflow publishes them as
+`ghcr.io/heurtematte/ort-server-core:0.99.1` and `ghcr.io/heurtematte/ort-server-analyzer-worker:0.99.1`, together
+with copies of the other images of the release, so that the Helm chart of ORT Server uses them all with:
+
+```yaml
+containerRegistry: ghcr.io/heurtematte
+```
+
+To build the images yourself, run `ort-server/build-images.sh 0.99.1`. See
+[Use with ORT Server](https://heurtematte.github.io/ort-sbom-plugin/ort-server/) for Docker Compose and the analysis of
+SBOMs in ORT Server.
 
 ## Building
 
@@ -63,6 +102,7 @@ Requires Java 25, like ORT 98.
 ```shell
 ./gradlew build                 # compile and test
 ./gradlew publishToMavenLocal   # make the artifacts available to local builds, e.g. of ORT Server
+./gradlew ortServerPlugin       # collect the jars to add to ORT Server images in build/ort-server-plugin
 ```
 
 The version of ORT is set by the ORT version catalog in `settings.gradle.kts`.

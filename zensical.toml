@@ -16,6 +16,7 @@ nav = [
   { "Getting started" = "getting-started.md" },
   { "Supported formats" = "formats.md" },
   { "How SBOMs are mapped" = "mapping.md" },
+  { "SBOM sources" = "sources.md" },
   { "Configuration" = "configuration.md" },
   { "Use with ORT Server" = "ort-server.md" },
   { "Development" = "development.md" },

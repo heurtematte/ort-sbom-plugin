@@ -14,9 +14,15 @@
 package org.eclipse.apoapsis.sbom.packagemanager
 
 import java.io.File
+import java.nio.file.FileSystems
+import java.nio.file.PathMatcher
 
 import org.eclipse.apoapsis.sbom.parser.SbomDocument
 import org.eclipse.apoapsis.sbom.parser.SbomParser
+import org.eclipse.apoapsis.sbom.sources.FetchedSbom
+import org.eclipse.apoapsis.sbom.sources.SbomFetcher
+import org.eclipse.apoapsis.sbom.sources.SbomSource
+import org.eclipse.apoapsis.sbom.sources.SbomSourceFile
 
 import org.ossreviewtoolkit.analyzer.PackageManager
 import org.ossreviewtoolkit.analyzer.PackageManagerFactory
@@ -36,6 +42,8 @@ import org.ossreviewtoolkit.model.utils.isScopeIncluded
 import org.ossreviewtoolkit.plugins.api.OrtPlugin
 import org.ossreviewtoolkit.plugins.api.OrtPluginOption
 import org.ossreviewtoolkit.plugins.api.PluginDescriptor
+import org.ossreviewtoolkit.utils.common.collectMessages
+import org.ossreviewtoolkit.utils.ort.createOrtTempDir
 
 import org.slf4j.LoggerFactory
 
@@ -49,6 +57,10 @@ private const val DEFAULT_DEFINITION_FILE_PATTERNS =
     "*.cdx.json,*.cdx.xml,*.cyclonedx.json,*.cyclonedx.xml,*-cyclonedx.json,*-cyclonedx.xml,bom.json,bom.xml," +
         "*.bom.json,*.bom.xml,sbom.json,sbom.xml,*.sbom.json,*.sbom.xml,*.spdx.json,*.spdx.yaml,*.spdx.yml,*.spdx.xml," +
         "*.spdx,*.spdx3.json,*.spdx.jsonld"
+
+/** The default file name patterns of SBOM source files. */
+private const val DEFAULT_SOURCE_FILE_PATTERNS =
+    "sbom-sources.yml,sbom-sources.yaml,*.sbom-sources.yml,*.sbom-sources.yaml"
 
 /** How licenses that an SBOM declares as concluded are mapped to ORT. */
 enum class ConcludedLicenseHandling {
@@ -69,6 +81,14 @@ data class SbomConfig(
      */
     @OrtPluginOption(defaultValue = DEFAULT_DEFINITION_FILE_PATTERNS)
     val definitionFilePatterns: List<String>,
+
+    /**
+     * The file name patterns of SBOM source files. These YAML files list remote sources of SBOMs, such as
+     * Dependency-Track projects, sbomify components or products, or URLs of SBOM documents, which are retrieved and
+     * analyzed.
+     */
+    @OrtPluginOption(defaultValue = DEFAULT_SOURCE_FILE_PATTERNS)
+    val sourceFilePatterns: List<String>,
 
     /**
      * Whether components that are not reachable from the root component in the dependency graph of the SBOM, for
@@ -95,6 +115,10 @@ data class SbomConfig(
  *
  * Packages are identified by their package URL if they have one, so that they get the same identifiers as packages
  * found by the native package managers of ORT; this allows advisors, package curations, and rules to work on them.
+ *
+ * SBOMs can also be retrieved at each analysis from the remote sources listed in SBOM source files (`sbom-sources.yml`):
+ * projects of Dependency-Track, components or products of sbomify, or any URL. The credentials for these sources come
+ * from the default authenticator: in ORT Server, the matching infrastructure service; with the ORT CLI, the `.netrc` file.
  */
 @OrtPlugin(
     id = "SBOM",
@@ -106,16 +130,27 @@ class Sbom(
     override val descriptor: PluginDescriptor = SbomFactory.descriptor,
     private val config: SbomConfig
 ) : PackageManager(SBOM_PROJECT_TYPE) {
+    private val sourceFilePatterns = config.sourceFilePatterns.map(String::trim).filter(String::isNotEmpty)
+
     override val globsForDefinitionFiles =
-        listOf(config.definitionFilePatterns.map(String::trim).filter(String::isNotEmpty).joinToString(",", "{", "}"))
+        listOf(
+            (config.definitionFilePatterns.map(String::trim).filter(String::isNotEmpty) + sourceFilePatterns)
+                .joinToString(",", "{", "}")
+        )
+
+    private val sourceFileMatcher: PathMatcher? = sourceFilePatterns.takeIf { it.isNotEmpty() }?.let { patterns ->
+        FileSystems.getDefault().getPathMatcher(patterns.joinToString(",", "glob:{", "}"))
+    }
+
+    private val fetcher by lazy { SbomFetcher() }
 
     private val dependencyHandler = SbomDependencyHandler(config.concludedLicenseHandling)
 
     private val graphBuilder = DependencyGraphBuilder(dependencyHandler)
 
     /**
-     * Keep only the [definitionFiles] whose content is a supported SBOM, as the file name patterns may also match
-     * other files.
+     * Keep only the [definitionFiles] that are SBOM source files or whose content is a supported SBOM, as the file name
+     * patterns may also match other files.
      */
     override fun mapDefinitionFiles(
         analysisRoot: File,
@@ -123,10 +158,12 @@ class Sbom(
         analyzerConfig: AnalyzerConfiguration
     ): List<File> =
         definitionFiles.filter { file ->
-            (SbomParser.detectFormat(file.readHead()) != null).also { isSbom ->
+            (file.isSourceFile() || SbomParser.detectFormat(file.readHead()) != null).also { isSbom ->
                 if (!isSbom) logger.info("Ignoring '{}' as it is not a supported SBOM.", file.relativeTo(analysisRoot))
             }
         }
+
+    private fun File.isSourceFile(): Boolean = sourceFileMatcher?.matches(toPath().fileName) == true
 
     override fun resolveDependencies(
         analysisRoot: File,
@@ -136,9 +173,13 @@ class Sbom(
         analyzerConfig: AnalyzerConfiguration,
         labels: Map<String, String>
     ): List<ProjectAnalyzerResult> {
-        val document = SbomParser.parse(definitionFile)
-        val documentIndex = dependencyHandler.register(document)
+        val definitionFilePath = VersionControlSystem.getPathInfo(definitionFile).path
+            .ifEmpty { definitionFile.relativeTo(analysisRoot).invariantSeparatorsPath }
+        val projectDir = definitionFile.parentFile
 
+        if (definitionFile.isSourceFile()) return resolveSources(definitionFile, definitionFilePath, excludes, includes)
+
+        val document = SbomParser.parse(definitionFile)
         logger.info(
             "Parsed {} {} document '{}' with {} components.",
             document.format.displayName,
@@ -147,12 +188,95 @@ class Sbom(
             document.components.size
         )
 
+        return analyzeDocument(document, definitionFilePath, projectDir, definitionFile.name, excludes, includes)
+    }
+
+    /**
+     * Retrieve the SBOMs of the sources listed in the given [sourceFile] and analyze them. A source that cannot be
+     * retrieved results in a project with an error, so that the other sources are still analyzed.
+     */
+    private fun resolveSources(
+        sourceFile: File,
+        definitionFilePath: String,
+        excludes: Excludes,
+        includes: Includes
+    ): List<ProjectAnalyzerResult> {
+        val sources = SbomSourceFile.parse(sourceFile)
+        require(sources.isNotEmpty()) { "The SBOM source file '${sourceFile.name}' does not list any sources." }
+
+        val projectDir = sourceFile.parentFile
+        val downloadDir = createOrtTempDir("sbom-sources")
+
+        return try {
+            sources.flatMap { source ->
+                val fetched = runCatching { fetcher.fetch(source, downloadDir) }.getOrElse { e ->
+                    logger.error("Could not retrieve the SBOM of {}: {}", source.description, e.collectMessages())
+                    return@flatMap listOf(failedSourceResult(source, definitionFilePath, projectDir, e))
+                }
+
+                val document = runCatching { SbomParser.parse(fetched.file) }.getOrElse { e ->
+                    return@flatMap listOf(failedSourceResult(source, definitionFilePath, projectDir, e))
+                }
+
+                logger.info(
+                    "Parsed {} {} document of {} with {} components.",
+                    document.format.displayName,
+                    document.specVersion,
+                    source.description,
+                    document.components.size
+                )
+
+                analyzeDocument(document, definitionFilePath, projectDir, fetched.fallbackName(), excludes, includes)
+            }
+        } finally {
+            downloadDir.deleteRecursively()
+        }
+    }
+
+    /** Create the result for a [source] whose SBOM could not be retrieved or parsed because of [error]. */
+    private fun failedSourceResult(
+        source: SbomSource,
+        definitionFilePath: String,
+        projectDir: File,
+        error: Throwable
+    ): ProjectAnalyzerResult {
+        val project = Project(
+            id = dependencyHandler.uniqueProjectId(sanitizedIdentifier(SBOM_PROJECT_TYPE, "", source.url, "")),
+            definitionFilePath = definitionFilePath,
+            declaredLicenses = emptySet(),
+            vcs = VcsInfo.EMPTY,
+            vcsProcessed = processProjectVcs(projectDir),
+            homepageUrl = source.url,
+            scopeNames = emptySet()
+        )
+
+        val issue = Issue(
+            source = descriptor.id,
+            message = "Could not retrieve the SBOM of ${source.description}: ${error.collectMessages()}",
+            severity = Severity.ERROR
+        )
+
+        return ProjectAnalyzerResult(project, emptySet(), listOf(issue))
+    }
+
+    /**
+     * Convert the given [document] into projects. Use the given [definitionFilePath] and [projectDir] for the projects,
+     * and the given [fallbackName] for the project if the document describes no component and has no name.
+     */
+    @Suppress("LongParameterList")
+    private fun analyzeDocument(
+        document: SbomDocument,
+        definitionFilePath: String,
+        projectDir: File,
+        fallbackName: String,
+        excludes: Excludes,
+        includes: Includes
+    ): List<ProjectAnalyzerResult> {
+        val documentIndex = dependencyHandler.register(document)
+
         val issues = document.warnings.mapTo(mutableListOf()) { warning ->
             Issue(source = descriptor.id, message = warning, severity = Severity.HINT)
         }
-
-        val definitionFilePath = VersionControlSystem.getPathInfo(definitionFile).path
-            .ifEmpty { definitionFile.relativeTo(analysisRoot).invariantSeparatorsPath }
 
         val roots = document.roots.ifEmpty { listOf(SYNTHETIC_ROOT_REF) }
         val directDependencies = roots.associateWith { root -> document.directDependenciesOf(root) }.toMutableMap()
@@ -187,9 +311,9 @@ class Sbom(
 
         return roots.map { root ->
             val project = if (root == SYNTHETIC_ROOT_REF) {
-                syntheticProject(document, definitionFile, definitionFilePath)
+                syntheticProject(document, fallbackName, definitionFilePath, projectDir)
             } else {
-                dependencyHandler.createProject(documentIndex, root, definitionFilePath, definitionFile.parentFile)
+                dependencyHandler.createProject(documentIndex, root, definitionFilePath, projectDir)
             }
 
             directDependencies.getValue(root)
@@ -215,18 +339,27 @@ class Sbom(
     override fun createPackageManagerResult(projectResults: Map<File, List<ProjectAnalyzerResult>>) =
         PackageManagerResult(projectResults, graphBuilder.build(), graphBuilder.packages())
 
-    private fun syntheticProject(document: SbomDocument, definitionFile: File, definitionFilePath: String): Project {
-        val name = document.name?.takeUnless { it.isBlank() } ?: definitionFile.name
+    private fun syntheticProject(
+        document: SbomDocument,
+        fallbackName: String,
+        definitionFilePath: String,
+        projectDir: File
+    ): Project {
+        val name = document.name?.takeUnless { it.isBlank() } ?: fallbackName
         return Project(
-            id = sanitizedIdentifier(SBOM_PROJECT_TYPE, "", name, ""),
+            id = dependencyHandler.uniqueProjectId(sanitizedIdentifier(SBOM_PROJECT_TYPE, "", name, "")),
             definitionFilePath = definitionFilePath,
             declaredLicenses = emptySet(),
             vcs = VcsInfo.EMPTY,
-            vcsProcessed = processProjectVcs(definitionFile.parentFile),
+            vcsProcessed = processProjectVcs(projectDir),
             homepageUrl = ""
         )
     }
 }
+
+/** The name of the project created for a fetched SBOM that describes no component and has no name. */
+private fun FetchedSbom.fallbackName(): String =
+    listOfNotNull(name, version).joinToString(" ").ifEmpty { source.url }
 
 /** The ref of the artificial root used for SBOMs that do not describe a component. */
 internal const val SYNTHETIC_ROOT_REF = "\u0000root"

@@ -1,0 +1,24 @@
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Eclipse Public License 2.0 which is available at
+# https://www.eclipse.org/legal/epl-2.0
+#
+# SPDX-License-Identifier: EPL-2.0
+
+# Values for the Helm chart of ORT Server (https://github.com/eclipse-apoapsis/helm-charts) to use the images with the
+# ORT SBOM plugin. The chart pulls all images from this registry, tagged with its appVersion (0.99.1 for chart 0.26.2);
+# the "ORT Server images" workflow publishes the images with the plugin and copies the other images of that release.
+#
+#   helm upgrade --install ort-server <chart> -f values.yaml -f ort-server/helm-values.yaml
+
+containerRegistry: ghcr.io/heurtematte
+
+# Only needed if the packages are private: the name of a secret of type kubernetes.io/dockerconfigjson that grants read
+# access to ghcr.io, for instance created with:
+#   kubectl create secret docker-registry ghcr-pull-secret --docker-server=ghcr.io \
+#     --docker-username=<user> --docker-password=<token with read:packages>
+# imagePullSecret: ghcr-pull-secret

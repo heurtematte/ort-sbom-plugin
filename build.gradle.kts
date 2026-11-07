@@ -79,3 +79,23 @@ subprojects {
         }
     }
 }
+
+/** The modules whose jars are added to ORT Server; their other dependencies are already part of ORT Server. */
+val ortServerPluginModules = listOf(":sbom-parser", ":sbom-sources", ":sbom-package-manager")
+
+val ortServerPluginDir = layout.buildDirectory.dir("ort-server-plugin")
+
+val ortServerPluginJars by tasks.registering(Sync::class) {
+    group = "distribution"
+    description = "Collects the jars of the plugin to add to the ORT Server images."
+
+    from(ortServerPluginModules.map { project(it).tasks.named("jar") })
+    into(ortServerPluginDir.map { it.dir("plugins") })
+}
+
+val ortServerPlugin by tasks.registering {
+    group = "distribution"
+    description = "Prepares the context to build ORT Server images with the plugin, see 'ort-server/Dockerfile'."
+
+    dependsOn(ortServerPluginJars, ":sbom-package-manager:ortServerLibraries")
+}

@@ -14,6 +14,7 @@
 rootProject.name = "ort-sbom-plugin"
 
 include(":sbom-parser")
+include(":sbom-sources")
 include(":sbom-package-manager")
 
 dependencyResolutionManagement {

@@ -1,0 +1,108 @@
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Eclipse Public License 2.0 which is available at
+# https://www.eclipse.org/legal/epl-2.0
+#
+# SPDX-License-Identifier: EPL-2.0
+
+# Build the images of ORT Server core and analyzer worker with the plugin (see ort-server/Dockerfile), and copy the
+# other images of the same ORT Server release, so that the Helm chart of ORT Server can use them all with
+# "containerRegistry: ghcr.io/<owner>".
+name: ORT Server images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sbom-*/src/main/**"
+      - "sbom-*/build.gradle.kts"
+      - "*.gradle.kts"
+      - "gradle.properties"
+      - "gradle/**"
+      - "ort-server/**"
+      - ".github/workflows/ort-server-images.yml"
+  pull_request:
+    paths:
+      - "ort-server/**"
+      - ".github/workflows/ort-server-images.yml"
+  workflow_dispatch:
+    inputs:
+      ort-server-version:
+        description: The release of ORT Server to add the plugin to; it must use the ORT version of the plugin.
+        required: true
+        default: "0.99.1"
+
+env:
+  # The release of ORT Server whose images get the plugin, by default.
+  ORT_SERVER_VERSION: ${{ inputs.ort-server-version || '0.99.1' }}
+  SOURCE_PREFIX: ghcr.io/eclipse-apoapsis
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  images:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
+
+      - name: Collect the jars of the plugin
+        run: ./gradlew --console=plain ortServerPlugin
+
+      - name: Set the target prefix
+        run: echo "TARGET_PREFIX=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
+
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - if: github.event_name != 'pull_request'
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build the core image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: build/ort-server-plugin
+          file: ort-server/Dockerfile
+          build-args: BASE_IMAGE=${{ env.SOURCE_PREFIX }}/ort-server-core:${{ env.ORT_SERVER_VERSION }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.TARGET_PREFIX }}/ort-server-core:${{ env.ORT_SERVER_VERSION }}
+
+      - name: Build the analyzer worker image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: build/ort-server-plugin
+          file: ort-server/Dockerfile
+          build-args: BASE_IMAGE=${{ env.SOURCE_PREFIX }}/ort-server-analyzer-worker:${{ env.ORT_SERVER_VERSION }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.TARGET_PREFIX }}/ort-server-analyzer-worker:${{ env.ORT_SERVER_VERSION }}
+
+      - name: Copy the other images
+        if: github.event_name != 'pull_request'
+        run: |
+          for component in advisor-worker config-worker evaluator-worker maintenance-tasks orchestrator \
+              reporter-worker scanner-worker ui; do
+            docker buildx imagetools create \
+              -t "$TARGET_PREFIX/ort-server-$component:$ORT_SERVER_VERSION" \
+              "$SOURCE_PREFIX/ort-server-$component:$ORT_SERVER_VERSION"
+          done

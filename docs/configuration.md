@@ -5,6 +5,7 @@ The `SBOM` package manager has the following options:
 | Option                         | Type        | Default    | Description                                                                                       |
 | ------------------------------ | ----------- | ---------- | ------------------------------------------------------------------------------------------------- |
 | `definitionFilePatterns`       | String list | see below  | File name patterns of the SBOMs to analyze. Matching files are analyzed if their content is a supported SBOM. |
+| `sourceFilePatterns`           | String list | see below  | File name patterns of [SBOM source files](sources.md), which list SBOMs to retrieve from Dependency-Track, sbomify, or URLs. Empty to disable them. |
 | `attachUnreferencedComponents` | Boolean     | `true`     | Add components that are not reachable from a described component as direct dependencies of the project. If disabled, they are dropped with a warning. |
 | `concludedLicenseHandling`     | Enum        | `DECLARED` | How licenses an SBOM marks as concluded are mapped, see below.                                     |
 
@@ -20,6 +21,17 @@ bom.json, bom.xml, *.bom.json, *.bom.xml, sbom.json, sbom.xml, *.sbom.json, *.sb
 
 Files matching a pattern whose content is not a supported SBOM, such as a `bom.json` used for something else, are
 ignored. ORT's usual path excludes and the directories it always ignores (such as `node_modules`) apply.
+
+## Source file patterns
+
+By default, [SBOM source files](sources.md) are recognized by these names:
+
+```text
+sbom-sources.yml, sbom-sources.yaml, *.sbom-sources.yml, *.sbom-sources.yaml
+```
+
+Set the option to an empty string to ignore source files, for instance to make sure that an analysis does not access
+the network.
 
 ## Concluded licenses
 

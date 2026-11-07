@@ -19,9 +19,14 @@ sbom-parser/
   src/main/kotlin/           format detection, parsers, format-independent model
   src/testFixtures/          SBOM fixtures, published as test fixtures of the artifact
   src/test/kotlin/           parser tests and the corpus test
+sbom-sources/
+  src/main/kotlin/           SBOM source files and the retrieval from Dependency-Track, sbomify, and URLs
+  src/testFixtures/          a local HTTP server simulating these sources, for tests
+  src/test/kotlin/           tests of the source files and the retrieval
 sbom-package-manager/
   src/main/kotlin/           the SBOM package manager and the mapping to the ORT model
   src/test/kotlin/           tests with the ORT Analyzer and the corpus analysis test
+ort-server/                  images of ORT Server with the plugin (Dockerfile, build script, Compose file)
 docs/                        this documentation (Zensical)
 ```
 

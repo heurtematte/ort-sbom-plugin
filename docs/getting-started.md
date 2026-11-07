@@ -17,8 +17,8 @@ The plugin is built against ORT 98, which requires **Java 25**.
 
 ## Adding the plugin to an ORT-based application
 
-Add the package manager to the runtime classpath of the application that runs the ORT Analyzer, such as ORT Server or a
-custom ORT distribution:
+Add the package manager to the runtime classpath of the application that runs the ORT Analyzer, such as a custom ORT
+distribution (for ORT Server, see [Use with ORT Server](ort-server.md)):
 
 === "Gradle (Kotlin DSL)"
 
@@ -71,7 +71,8 @@ ORT does not enable the plugin by default. Add `SBOM` to the enabled package man
 
 The analyzer then processes all files in the analyzed directory whose names match the
 [definition file patterns](configuration.md), such as `bom.json`, `*.cdx.json`, or `*.spdx.json`, and whose content is
-a supported SBOM. Other files matching the patterns are ignored.
+a supported SBOM. Other files matching the patterns are ignored. It also retrieves and analyzes the SBOMs listed in
+[SBOM source files](sources.md) (`sbom-sources.yml`), for instance from Dependency-Track or sbomify.
 
 !!! warning "SpdxDocumentFile"
 

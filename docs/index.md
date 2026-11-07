@@ -29,6 +29,23 @@ source code is not available, such as container images, runtimes, or third-party
 
     [:octicons-arrow-right-24: How SBOMs are mapped](mapping.md)
 
+-   :material-cloud-download: **SBOMs from Dependency-Track and sbomify**
+
+    ---
+
+    Source files list SBOMs published in Dependency-Track, sbomify, or at any URL; they are retrieved through the APIs
+    at each analysis, with the credentials of ORT Server's infrastructure services.
+
+    [:octicons-arrow-right-24: SBOM sources](sources.md)
+
+-   :material-server: **Ready for ORT Server**
+
+    ---
+
+    Images of ORT Server with the plugin, for Helm and Docker Compose, without changing ORT Server.
+
+    [:octicons-arrow-right-24: Use with ORT Server](ort-server.md)
+
 -   :material-puzzle: **A standard ORT plugin**
 
     ---
@@ -52,6 +69,8 @@ source code is not available, such as container images, runtimes, or third-party
 
 ```mermaid
 flowchart LR
+    sources[sbom-sources.yml] --> fetch[sbom-sources<br/>Dependency-Track, sbomify, URLs]
+    fetch --> detect
     sbom[SBOM file<br/>CycloneDX / SPDX] --> detect[Format detection]
     detect --> parser[sbom-parser<br/>format-independent model]
     parser --> pm[sbom-package-manager<br/>SBOM plugin]
@@ -59,11 +78,12 @@ flowchart LR
     analyzer --> later[Advisor, evaluator,<br/>reporters]
 ```
 
-The project consists of two libraries:
+The project consists of three libraries:
 
 | Module                 | Artifact                                         | Content                                                        |
 | ---------------------- | ------------------------------------------------ | -------------------------------------------------------------- |
 | `sbom-parser`          | `org.eclipse.apoapsis.sbom:sbom-parser`          | Format detection and parsers into a format-independent model  |
+| `sbom-sources`         | `org.eclipse.apoapsis.sbom:sbom-sources`         | Source files and retrieval from Dependency-Track, sbomify, URLs |
 | `sbom-package-manager` | `org.eclipse.apoapsis.sbom:sbom-package-manager` | The `SBOM` package manager plugin for the ORT Analyzer         |
 
 ## License

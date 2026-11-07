@@ -1,0 +1,24 @@
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Eclipse Public License 2.0 which is available at
+# https://www.eclipse.org/legal/epl-2.0
+#
+# SPDX-License-Identifier: EPL-2.0
+
+# Use the images with the ORT SBOM plugin in the Docker Compose setup of ORT Server. In a checkout of ORT Server:
+#
+#   ORT_SERVER_IMAGE_TAG=0.99.1 docker compose -f docker-compose.yml -f <ort-sbom-plugin>/ort-server/compose.yml up
+#
+# ORT_SERVER_IMAGE_TAG must be a release of ORT Server for which images with the plugin exist.
+# ORT_SERVER_SBOM_IMAGE_PREFIX selects images built with build-images.sh, such as "ort-server-sbom/".
+
+services:
+  core:
+    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/}ort-server-core:${ORT_SERVER_IMAGE_TAG:?set ORT_SERVER_IMAGE_TAG to a release of ORT Server}
+
+  analyzer-worker:
+    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/}ort-server-analyzer-worker:${ORT_SERVER_IMAGE_TAG:?set ORT_SERVER_IMAGE_TAG to a release of ORT Server}
