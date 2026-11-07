@@ -15,7 +15,7 @@
 #
 #   helm upgrade --install ort-server <chart> -f values.yaml -f ort-server/helm-values.yaml
 
-containerRegistry: ghcr.io/heurtematte
+containerRegistry: ghcr.io/heurtematte/ort-sbom-plugin
 
 # Only needed if the packages are private: the name of a secret of type kubernetes.io/dockerconfigjson that grants read
 # access to ghcr.io, for instance created with:

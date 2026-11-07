@@ -173,7 +173,7 @@ C4Deployment
 
     Deployment_Node(github, "GitHub", "heurtematte/ort-sbom-plugin") {
         Container(workflow, "ORT Server images workflow", "GitHub Actions, Docker", "Base image + plugin jars, ORT version check")
-        ContainerDb(registry, "ghcr.io/heurtematte", "Container registry", "ort-server-core, ort-server-analyzer-worker, copies of the other images")
+        ContainerDb(registry, "ghcr.io/heurtematte/ort-sbom-plugin", "Container registry", "ort-server-core, ort-server-analyzer-worker, copies of the other images")
     }
 
     Deployment_Node(k8s, "Kubernetes cluster", "Helm chart of ORT Server") {

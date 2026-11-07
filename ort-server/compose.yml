@@ -18,7 +18,7 @@
 
 services:
   core:
-    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/}ort-server-core:${ORT_SERVER_IMAGE_TAG:?set ORT_SERVER_IMAGE_TAG to a release of ORT Server}
+    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-core:${ORT_SERVER_IMAGE_TAG:?set ORT_SERVER_IMAGE_TAG to a release of ORT Server}
 
   analyzer-worker:
-    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/}ort-server-analyzer-worker:${ORT_SERVER_IMAGE_TAG:?set ORT_SERVER_IMAGE_TAG to a release of ORT Server}
+    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-analyzer-worker:${ORT_SERVER_IMAGE_TAG:?set ORT_SERVER_IMAGE_TAG to a release of ORT Server}

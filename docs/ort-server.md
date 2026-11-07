@@ -33,9 +33,13 @@ are already part of the images.
 The [ORT Server images workflow](https://github.com/heurtematte/ort-sbom-plugin/actions/workflows/ort-server-images.yml)
 publishes, for a release of ORT Server:
 
-- `ghcr.io/heurtematte/ort-server-core:<version>` and `ghcr.io/heurtematte/ort-server-analyzer-worker:<version>`,
-  with the plugin;
-- copies of all other images of that release under the same names, such as `ghcr.io/heurtematte/ort-server-ui`.
+- `ghcr.io/heurtematte/ort-sbom-plugin/ort-server-core:<version>` and
+  `ghcr.io/heurtematte/ort-sbom-plugin/ort-server-analyzer-worker:<version>`, with the plugin;
+- copies of all other images of that release under the same names, such as
+  `ghcr.io/heurtematte/ort-sbom-plugin/ort-server-ui`.
+
+The images are published under the name of the repository, so that they do not collide with other images of ORT
+Server of the same owner, such as those built by a fork of ORT Server.
 
 By default, it uses ORT Server 0.99.1; run it manually to build the images for another release.
 
@@ -45,7 +49,7 @@ The [Helm chart of ORT Server](https://github.com/eclipse-apoapsis/helm-charts) 
 registry, with the `appVersion` of the chart as tag (0.99.1 for chart 0.26.2). Point it to the published images:
 
 ```yaml
-containerRegistry: ghcr.io/heurtematte
+containerRegistry: ghcr.io/heurtematte/ort-sbom-plugin
 
 # Only if the packages are private: a secret of type kubernetes.io/dockerconfigjson with access to ghcr.io.
 imagePullSecret: ghcr-pull-secret
