@@ -1,0 +1,187 @@
+SPDXVersion: SPDX-2.3
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: com.github.eclipse-cbi/p2repo-sbom
+DocumentNamespace: https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13
+Creator: Tool: protobom-v0.0.0-20261106155048-7c0962b61355+dirty
+Creator: Tool: GitHub.com-Dependency-Graph
+Created: 2026-11-07T11:36:14Z
+DocumentComment: Exact versions could not be resolved for some packages. For more information: https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-the-dependency-graph#dependencies-included.
+
+PackageName: org.eclipse.tycho:target-platform-configuration
+SPDXID: SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-13bfd5
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/target-platform-configuration
+
+PackageName: org.eclipse.tycho:tycho-p2-director-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-88b080
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-p2-director-plugin
+
+PackageName: org.eclipse.tycho:tycho-p2-repository-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-35c22c
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-p2-repository-plugin
+
+PackageName: org.eclipse.tycho:tycho-p2-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-7034ec
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-p2-plugin
+
+PackageName: org.eclipse.tycho.extras:tycho-sourceref-jgit
+SPDXID: SPDXRef-maven-org.eclipse.tycho.extras-tycho-sourceref-jgit-5.0.4-b412fc
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho.extras/tycho-sourceref-jgit@5.0.4
+
+PackageName: org.eclipse.tycho:tycho-p2-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-5.0.4-3e27c8
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-p2-plugin@5.0.4
+
+PackageName: org.eclipse.tycho:tycho-p2-publisher-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-p2-publisher-plugin-5.0.4-97f70f
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-p2-publisher-plugin@5.0.4
+
+PackageName: org.eclipse.tycho:tycho-source-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-7eff11
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-source-plugin
+
+PackageName: org.eclipse.cbi.maven.plugins:eclipse-jarsigner-plugin
+SPDXID: SPDXRef-maven-org.eclipse.cbi.maven.plugins-eclipse-jarsigner-plugin-1.5.7-f88ef7
+PackageVersion: 1.5.7
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.cbi.maven.plugins/eclipse-jarsigner-plugin@1.5.7
+
+PackageName: org.eclipse.tycho:tycho-packaging-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-packaging-plugin-5.0.4-ac735c
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-packaging-plugin@5.0.4
+
+PackageName: org.eclipse.tycho:tycho-maven-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-maven-plugin-5.0.4-564a65
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-maven-plugin@5.0.4
+
+PackageName: org.eclipse.tycho:target-platform-configuration
+SPDXID: SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-5.0.4-c38a04
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/target-platform-configuration@5.0.4
+
+PackageName: org.eclipse.tycho:tycho-p2-director-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-5.0.4-c006d7
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-p2-director-plugin@5.0.4
+
+PackageName: org.apache.maven.plugins:maven-resources-plugin
+SPDXID: SPDXRef-maven-org.apache.maven.plugins-maven-resources-plugin-2.7-0d7226
+PackageVersion: 2.7
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: Apache-2.0
+PackageCopyrightText: <text>Copyright 2001-2023 The Apache Software Foundation</text>
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.apache.maven.plugins/maven-resources-plugin@2.7
+
+PackageName: org.eclipse.tycho:tycho-buildtimestamp-jgit
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-buildtimestamp-jgit-5.0.4-a7acce
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-buildtimestamp-jgit@5.0.4
+
+PackageName: org.eclipse.tycho:tycho-p2-repository-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-5.0.4-1352e9
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-p2-repository-plugin@5.0.4
+
+PackageName: org.eclipse.tycho:tycho-compiler-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-compiler-plugin-5.0.4-966121
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-compiler-plugin@5.0.4
+
+PackageName: org.eclipse.tycho:target-platform-configuration
+SPDXID: SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-0.1.0-SNAPSHOT-192e64
+PackageVersion: 0.1.0-SNAPSHOT
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-1.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/target-platform-configuration@0.1.0-SNAPSHOT
+
+PackageName: org.eclipse.tycho:tycho-source-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-5.0.4-f2ab4c
+PackageVersion: 5.0.4
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-source-plugin@5.0.4
+
+PackageName: org.eclipse.tycho:tycho-eclipse-plugin
+SPDXID: SPDXRef-maven-org.eclipse.tycho-tycho-eclipse-plugin-d2eeb7
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+ExternalRef: PACKAGE-MANAGER purl pkg:maven/org.eclipse.tycho/tycho-eclipse-plugin
+
+PackageName: com.github.eclipse-cbi/p2repo-sbom
+SPDXID: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54
+PackageVersion: main
+PackageDownloadLocation: git+https://github.com/eclipse-cbi/p2repo-sbom
+FilesAnalyzed: false
+PackageLicenseDeclared: EPL-2.0
+ExternalRef: PACKAGE-MANAGER purl pkg:github/eclipse-cbi/p2repo-sbom@main
+
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-35c22c
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho.extras-tycho-sourceref-jgit-5.0.4-b412fc
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-5.0.4-c38a04
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.apache.maven.plugins-maven-resources-plugin-2.7-0d7226
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-5.0.4-1352e9
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-eclipse-plugin-d2eeb7
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-5.0.4-3e27c8
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-packaging-plugin-5.0.4-ac735c
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-88b080
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-7eff11
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-maven-plugin-5.0.4-564a65
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-buildtimestamp-jgit-5.0.4-a7acce
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-0.1.0-SNAPSHOT-192e64
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-13bfd5
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-7034ec
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-p2-publisher-plugin-5.0.4-97f70f
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.cbi.maven.plugins-eclipse-jarsigner-plugin-1.5.7-f88ef7
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-5.0.4-c006d7
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-compiler-plugin-5.0.4-966121
+Relationship: SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54 DEPENDS_ON SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-5.0.4-f2ab4c
+Relationship: SPDXRef-DOCUMENT DESCRIBES SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54

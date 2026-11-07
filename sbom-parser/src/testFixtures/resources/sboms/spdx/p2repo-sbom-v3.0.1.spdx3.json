@@ -1,0 +1,831 @@
+{
+  "@context": "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+  "@graph": [
+    {
+      "type": "CreationInfo",
+      "@id": "_:creationinfo",
+      "specVersion": "3.0.1",
+      "created": "2026-11-07T11:36:14Z",
+      "createdBy": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Creator"
+      ]
+    },
+    {
+      "type": "Tool",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Creator",
+      "creationInfo": "_:creationinfo",
+      "name": "Tool: protobom-v0.0.0-20261106155048-7c0962b61355+dirty, Tool: GitHub.com-Dependency-Graph"
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-13bfd5",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:target-platform-configuration",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/target-platform-configuration",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/target-platform-configuration"
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-88b080",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-p2-director-plugin",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-p2-director-plugin",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-p2-director-plugin"
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-35c22c",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-p2-repository-plugin",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-p2-repository-plugin",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-p2-repository-plugin"
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-7034ec",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-p2-plugin",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-p2-plugin",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-p2-plugin"
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho.extras-tycho-sourceref-jgit-5.0.4-b412fc",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho.extras:tycho-sourceref-jgit",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho.extras/tycho-sourceref-jgit@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho.extras/tycho-sourceref-jgit@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "simplelicensing_LicenseExpression",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0",
+      "creationInfo": "_:creationinfo",
+      "simplelicensing_licenseExpression": "EPL-2.0"
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-1",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho.extras-tycho-sourceref-jgit-5.0.4-b412fc",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-5.0.4-3e27c8",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-p2-plugin",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-p2-plugin@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-p2-plugin@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-2",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-5.0.4-3e27c8",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-publisher-plugin-5.0.4-97f70f",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-p2-publisher-plugin",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-p2-publisher-plugin@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-p2-publisher-plugin@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-3",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-publisher-plugin-5.0.4-97f70f",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-7eff11",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-source-plugin",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-source-plugin",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-source-plugin"
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.cbi.maven.plugins-eclipse-jarsigner-plugin-1.5.7-f88ef7",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.cbi.maven.plugins:eclipse-jarsigner-plugin",
+      "software_packageVersion": "1.5.7",
+      "software_packageUrl": "pkg:maven/org.eclipse.cbi.maven.plugins/eclipse-jarsigner-plugin@1.5.7",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.cbi.maven.plugins/eclipse-jarsigner-plugin@1.5.7"
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-packaging-plugin-5.0.4-ac735c",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-packaging-plugin",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-packaging-plugin@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-packaging-plugin@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-4",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-packaging-plugin-5.0.4-ac735c",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-maven-plugin-5.0.4-564a65",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-maven-plugin",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-maven-plugin@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-maven-plugin@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-5",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-maven-plugin-5.0.4-564a65",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-5.0.4-c38a04",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:target-platform-configuration",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/target-platform-configuration@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/target-platform-configuration@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-6",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-5.0.4-c38a04",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-5.0.4-c006d7",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-p2-director-plugin",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-p2-director-plugin@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-p2-director-plugin@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-7",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-5.0.4-c006d7",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.apache.maven.plugins-maven-resources-plugin-2.7-0d7226",
+      "creationInfo": "_:creationinfo",
+      "name": "org.apache.maven.plugins:maven-resources-plugin",
+      "software_packageVersion": "2.7",
+      "software_copyrightText": "Copyright 2001-2023 The Apache Software Foundation",
+      "software_packageUrl": "pkg:maven/org.apache.maven.plugins/maven-resources-plugin@2.7",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.apache.maven.plugins/maven-resources-plugin@2.7"
+        }
+      ]
+    },
+    {
+      "type": "simplelicensing_LicenseExpression",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-1",
+      "creationInfo": "_:creationinfo",
+      "simplelicensing_licenseExpression": "Apache-2.0"
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-8",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.apache.maven.plugins-maven-resources-plugin-2.7-0d7226",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-1"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-buildtimestamp-jgit-5.0.4-a7acce",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-buildtimestamp-jgit",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-buildtimestamp-jgit@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-buildtimestamp-jgit@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-9",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-buildtimestamp-jgit-5.0.4-a7acce",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-5.0.4-1352e9",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-p2-repository-plugin",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-p2-repository-plugin@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-p2-repository-plugin@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-10",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-5.0.4-1352e9",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-compiler-plugin-5.0.4-966121",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-compiler-plugin",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-compiler-plugin@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-compiler-plugin@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-11",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-compiler-plugin-5.0.4-966121",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-0.1.0-SNAPSHOT-192e64",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:target-platform-configuration",
+      "software_packageVersion": "0.1.0-SNAPSHOT",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/target-platform-configuration@0.1.0-SNAPSHOT",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/target-platform-configuration@0.1.0-SNAPSHOT"
+        }
+      ]
+    },
+    {
+      "type": "simplelicensing_LicenseExpression",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-2",
+      "creationInfo": "_:creationinfo",
+      "simplelicensing_licenseExpression": "EPL-1.0"
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-12",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-0.1.0-SNAPSHOT-192e64",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-2"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-5.0.4-f2ab4c",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-source-plugin",
+      "software_packageVersion": "5.0.4",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-source-plugin@5.0.4",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-source-plugin@5.0.4"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-13",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-5.0.4-f2ab4c",
+      "relationshipType": "hasConcludedLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-eclipse-plugin-d2eeb7",
+      "creationInfo": "_:creationinfo",
+      "name": "org.eclipse.tycho:tycho-eclipse-plugin",
+      "software_packageUrl": "pkg:maven/org.eclipse.tycho/tycho-eclipse-plugin",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:maven/org.eclipse.tycho/tycho-eclipse-plugin"
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "creationInfo": "_:creationinfo",
+      "name": "com.github.eclipse-cbi/p2repo-sbom",
+      "software_packageVersion": "main",
+      "software_downloadLocation": "git+https://github.com/eclipse-cbi/p2repo-sbom",
+      "software_packageUrl": "pkg:github/eclipse-cbi/p2repo-sbom@main",
+      "externalIdentifier": [
+        {
+          "type": "ExternalIdentifier",
+          "externalIdentifierType": "packageUrl",
+          "identifier": "pkg:github/eclipse-cbi/p2repo-sbom@main"
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-14",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "hasDeclaredLicense",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-0"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-15",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-35c22c"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-16",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho.extras-tycho-sourceref-jgit-5.0.4-b412fc"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-17",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-5.0.4-c38a04"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-18",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.apache.maven.plugins-maven-resources-plugin-2.7-0d7226"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-19",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-5.0.4-1352e9"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-20",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-eclipse-plugin-d2eeb7"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-21",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-5.0.4-3e27c8"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-22",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-packaging-plugin-5.0.4-ac735c"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-23",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-88b080"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-24",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-7eff11"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-25",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-maven-plugin-5.0.4-564a65"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-26",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-buildtimestamp-jgit-5.0.4-a7acce"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-27",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-0.1.0-SNAPSHOT-192e64"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-28",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-13bfd5"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-29",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-7034ec"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-30",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-publisher-plugin-5.0.4-97f70f"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-31",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.cbi.maven.plugins-eclipse-jarsigner-plugin-1.5.7-f88ef7"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-32",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-5.0.4-c006d7"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-33",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-compiler-plugin-5.0.4-966121"
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-34",
+      "creationInfo": "_:creationinfo",
+      "from": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+      "relationshipType": "dependsOn",
+      "to": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-5.0.4-f2ab4c"
+      ]
+    },
+    {
+      "type": "software_Sbom",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Sbom",
+      "creationInfo": "_:creationinfo",
+      "software_sbomType": [
+        "build"
+      ],
+      "rootElement": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54"
+      ],
+      "element": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-13bfd5",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-88b080",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-35c22c",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-7034ec",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho.extras-tycho-sourceref-jgit-5.0.4-b412fc",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-1",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-5.0.4-3e27c8",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-2",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-publisher-plugin-5.0.4-97f70f",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-3",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-7eff11",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.cbi.maven.plugins-eclipse-jarsigner-plugin-1.5.7-f88ef7",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-packaging-plugin-5.0.4-ac735c",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-4",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-maven-plugin-5.0.4-564a65",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-5",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-5.0.4-c38a04",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-6",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-5.0.4-c006d7",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-7",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.apache.maven.plugins-maven-resources-plugin-2.7-0d7226",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-8",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-buildtimestamp-jgit-5.0.4-a7acce",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-9",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-5.0.4-1352e9",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-10",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-compiler-plugin-5.0.4-966121",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-11",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-0.1.0-SNAPSHOT-192e64",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-12",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-5.0.4-f2ab4c",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-13",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-eclipse-plugin-d2eeb7",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-14",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-15",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-16",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-17",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-18",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-19",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-20",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-21",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-22",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-23",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-24",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-25",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-26",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-27",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-28",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-29",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-30",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-31",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-32",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-33",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-34"
+      ]
+    },
+    {
+      "type": "simplelicensing_LicenseExpression",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-3",
+      "creationInfo": "_:creationinfo",
+      "simplelicensing_licenseExpression": "CC0-1.0"
+    },
+    {
+      "type": "SpdxDocument",
+      "spdxId": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-DOCUMENT",
+      "creationInfo": "_:creationinfo",
+      "name": "com.github.eclipse-cbi/p2repo-sbom",
+      "dataLicense": "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-License-3",
+      "rootElement": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Sbom"
+      ],
+      "element": [
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Sbom",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-13bfd5",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-88b080",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-35c22c",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-7034ec",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho.extras-tycho-sourceref-jgit-5.0.4-b412fc",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-1",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-plugin-5.0.4-3e27c8",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-2",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-publisher-plugin-5.0.4-97f70f",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-3",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-7eff11",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.cbi.maven.plugins-eclipse-jarsigner-plugin-1.5.7-f88ef7",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-packaging-plugin-5.0.4-ac735c",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-4",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-maven-plugin-5.0.4-564a65",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-5",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-5.0.4-c38a04",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-6",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-director-plugin-5.0.4-c006d7",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-7",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.apache.maven.plugins-maven-resources-plugin-2.7-0d7226",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-8",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-buildtimestamp-jgit-5.0.4-a7acce",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-9",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-p2-repository-plugin-5.0.4-1352e9",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-10",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-compiler-plugin-5.0.4-966121",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-11",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-target-platform-configuration-0.1.0-SNAPSHOT-192e64",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-12",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-source-plugin-5.0.4-f2ab4c",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-13",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-maven-org.eclipse.tycho-tycho-eclipse-plugin-d2eeb7",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-github-eclipse-cbi-p2repo-sbom-main-ee4f54",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-14",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-15",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-16",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-17",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-18",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-19",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-20",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-21",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-22",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-23",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-24",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-25",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-26",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-27",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-28",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-29",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-30",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-31",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-32",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-33",
+        "https://spdx.org/spdxdocs/protobom/43d1e919-b8be-4de2-aab5-e3e7e8b07c13#SPDXRef-Relationship-34"
+      ]
+    }
+  ]
+}

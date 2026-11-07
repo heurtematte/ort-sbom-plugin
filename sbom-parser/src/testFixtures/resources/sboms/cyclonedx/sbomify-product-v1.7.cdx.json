@@ -1,0 +1,157 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:7e0a9d73-3f3f-4bb5-84d5-437543a880b6",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-07T14:20:22.672347Z",
+    "tools": [
+      {
+        "vendor": "sbomify, ltd",
+        "name": "sbomify",
+        "version": "26.11.0",
+        "externalReferences": [
+          {
+            "url": "https://sbomify.com",
+            "type": "website"
+          },
+          {
+            "url": "https://github.com/sbomify/sbomify",
+            "type": "vcs"
+          }
+        ]
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "sbomify - latest",
+      "scope": "required",
+      "externalReferences": [
+        {
+          "url": "https://github.com/sbomify/sbomify/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/sbomify/sbomify",
+          "type": "vcs"
+        },
+        {
+          "url": "https://www.linkedin.com/company/sbomify",
+          "type": "social"
+        },
+        {
+          "url": "https://sbomify.com",
+          "type": "website"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "application",
+      "name": "Python Stack",
+      "version": "v26.11.0",
+      "scope": "required",
+      "externalReferences": [
+        {
+          "url": "https://app.sbomify.com/api/v1/sboms/17b5582a-22f6-4c8b-9600-156101329414/download",
+          "type": "other",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "0e97c14d2f56e4c67ca314d8faee865057c9bd603ee2f69ecd42b16e862d2690"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "container",
+      "name": "Container",
+      "version": "v26.11.0",
+      "scope": "required",
+      "externalReferences": [
+        {
+          "url": "https://app.sbomify.com/api/v1/sboms/94e67fe9-c327-46aa-8642-ce597c40341c/download",
+          "type": "other",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "1b16e130e77599b05ae44dfb22b116dc89eda97a23efc6dd737284cca9e61971"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "name": "Frontend Stack",
+      "version": "v26.11.0",
+      "scope": "required",
+      "externalReferences": [
+        {
+          "url": "https://app.sbomify.com/api/v1/sboms/0e2b9c06-8ec6-4ad2-afe1-2b9d3bbfff05/download",
+          "type": "other",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "943e0a938cea6a88af6b6d7ddbd3265cf60a3555e39d5d1558e092741859abf8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "sbomify - Container",
+      "scope": "required",
+      "externalReferences": [
+        {
+          "url": "https://app.sbomify.com/api/v1/sboms/5a0d06ed-fa82-4632-ba2b-b90eb18579a8/download",
+          "type": "other",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "753ba31e708f6ea63f0569fbb765a3888bbc4c47137deb8a51b98eab33d783a6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "sbomify - Python Stack",
+      "scope": "required",
+      "externalReferences": [
+        {
+          "url": "https://app.sbomify.com/api/v1/sboms/91f1366a-01e0-46f5-a1b8-f193df705898/download",
+          "type": "other",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "10f7c3e341ef725123173bbd839e1b08f305fd1d1295f822457ad319134070c3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "sbomify - Frontend Stack",
+      "scope": "required",
+      "externalReferences": [
+        {
+          "url": "https://app.sbomify.com/api/v1/sboms/08d1e3cc-0e16-43d1-a15d-972a5afac51a/download",
+          "type": "other",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "1466c6edc0240765c5fc364e60ae2348ebec487d53b0e750af5f7e022f0e5f3e"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

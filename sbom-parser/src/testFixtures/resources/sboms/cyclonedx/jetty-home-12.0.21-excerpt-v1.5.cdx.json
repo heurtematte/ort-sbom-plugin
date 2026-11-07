@@ -1,0 +1,2109 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:05a8d878-0c9b-3a91-abc1-14049e65ea79",
+  "version": 1,
+  "metadata": {
+    "lifecycles": [
+      {
+        "phase": "build"
+      }
+    ],
+    "tools": [
+      {
+        "vendor": "OWASP Foundation",
+        "name": "CycloneDX Maven plugin",
+        "version": "2.8.0",
+        "hashes": [
+          {
+            "alg": "MD5",
+            "content": "76ffec6a7ddd46b2b24517411874eb99"
+          },
+          {
+            "alg": "SHA-1",
+            "content": "5b0d5b41975b53be4799b9621b4af0cfc41d44b6"
+          },
+          {
+            "alg": "SHA-256",
+            "content": "6852aa0f4e42a2db745bab80e384951a6a65b9215d041081d675780999027e81"
+          },
+          {
+            "alg": "SHA-512",
+            "content": "417de20fcdcb11c9713bacbd57290d8e68037fdb4553fd31b8cb08bd760ad52dc65ea88ad4be15844ad3fd5a4d3e440d2f70326f2fe1e63ec78e059c9a883f8d"
+          },
+          {
+            "alg": "SHA-384",
+            "content": "5eb755c6492e7a7385fa9a1e1f4517875bcb834b2df437808a37a2d6f5285df428741762305980315a63fcef1406597d"
+          },
+          {
+            "alg": "SHA3-384",
+            "content": "0fe16a47cf7aab0b22251dafcc39939b68e8f1778093309d8d2060b51a08df445a8b8ed5a9561669faf2e55f907c76d8"
+          },
+          {
+            "alg": "SHA3-256",
+            "content": "3e5a1eb5ab7d0797498862794709ff8eaaa071fe4cc9ec77f52db7e2f97ef487"
+          },
+          {
+            "alg": "SHA3-512",
+            "content": "59281a3e29e76270d7f44b40b5b9f05e55f1ae3ec716d80add806f360940809e3813998ac7c5758043b8e248aed73b86e37dc506cdb4cde03c16bb617d8e5a3a"
+          }
+        ]
+      }
+    ],
+    "component": {
+      "publisher": "Webtide",
+      "group": "org.eclipse.jetty",
+      "name": "jetty-home",
+      "version": "12.0.21",
+      "description": "The Eclipse Jetty Project",
+      "licenses": [
+        {
+          "license": {
+            "id": "EPL-2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.eclipse.jetty/jetty-home@12.0.21?type=pom",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://jetty.org/jetty-home"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://github.com/jetty/jetty.project/issues"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://www.eclipse.org/lists/jetty-dev/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jetty/jetty.project/jetty-home"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.eclipse.jetty/jetty-home@12.0.21?type=pom"
+    },
+    "properties": [
+      {
+        "name": "maven.goal",
+        "value": "makeBom"
+      },
+      {
+        "name": "maven.scopes",
+        "value": "compile,provided,runtime,system"
+      },
+      {
+        "name": "cdx:reproducible",
+        "value": "enabled"
+      }
+    ]
+  },
+  "components": [
+    {
+      "group": "org.hibernate.search",
+      "name": "hibernate-search-util-common",
+      "version": "7.1.2.Final",
+      "description": "Hibernate Search common utilities",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "2228b21e4ec33d604213009a9dfc8765"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "d53389e1cc847c2e5aae3117978dd18b6f8bf84a"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c954cd419d82c8c44e9f556f0241400e15994ca0c3d1eba5468619097e25a26e"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "a1c5b647ffb46fbcae94867575eded5e6461026027bf9da72c212110989865ce41939293b74331f8eeef5a5b712e2b74ffcf8fb009d190ae7f57e4b56c5c4465"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "66643e43b854c1cd6990bf3534750b694bbe5ae32b939a73f06d4dd25adac94b638338cedff700db9c985606cb29db29"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "74a724e986f66a9bd003484ffdfe0d81d2e98bd9ef1df7229f097e8a4c80ccb2005959da6153bee61ebfc8b978b8b2bd"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "30c2e7f87a5d079e7208fbbb59a8f035d88437a8db3b6abc72a5912751f8267c"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "9f3a1d7d1a9dabb72ce9b4624d15a9a85437e0b3b23135c675aeec0cfd1c7b8239b557fcb105c9d9c28eebcd0e32e0bcbbf6c71dc64bc9cab45563193b98d625"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1+",
+            "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.hibernate.search/hibernate-search-util-common@7.1.2.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://hibernate.org/search/"
+        },
+        {
+          "type": "vcs",
+          "url": "http://github.com/hibernate/hibernate-search"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.hibernate.search/hibernate-search-util-common@7.1.2.Final?type=jar"
+    },
+    {
+      "group": "io.smallrye",
+      "name": "jandex",
+      "version": "3.1.2",
+      "description": "SmallRye Build Parent POM",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "757ae579a3a52c03c3c60fbe393c086f"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "a6c1c89925c7df06242b03dddb353116ceb9584c"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "dee12fa1787d5523ed1a02d6c63b19e7aef6ac560f7c6d70595db01aa37e041e"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "fa47891bf01ea727007f29f0265d28b536957171ea1e9af9a28b3715bbf9bf938562c3ea038c761d4ba0fd652db5772dd7c6cefd05299e25bf412a32e816d4f6"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "11c526d42649c4ad06bdc237751d76ff2be43a47cc0e0a9b837e44ec18472e466b8197397049f935bac459b75a76389e"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "78f99a6edbe9555f49bac3eaa90f60b77c44acc57c9781da3f9e2e8877caf8d4d2e00d4644fcbb1d4130ff5ac436af4c"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "2b185d30b0878dfc1ce0a7b554f733f46da961292ccdf046979ce959fb8cf9dc"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "a251f9fc5ace3ddfe1bdea89c1ae824270774ddab7b64689ea64072942794ef4e0944b98ff4263a516562f8304ea3b2bc3c2f493bc798808a413277c0448775a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/io.smallrye/jandex@3.1.2?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://smallrye.io"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://github.com/smallrye/jandex/issues"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/smallrye/jandex/jandex/"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/io.smallrye/jandex@3.1.2?type=jar"
+    },
+    {
+      "publisher": "Hibernate.org",
+      "group": "org.hibernate.common",
+      "name": "hibernate-commons-annotations",
+      "version": "6.0.6.Final",
+      "description": "Common reflection code used in support of annotation processing",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "c155df7d9f04d15f3f6bbe79f4907074"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "77a5f94b56d49508e0ee334751db5b78e5ccd50c"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "cd974e0a8481fafdbaf9b4a0f08bb5a6c969b0365482763eedf77e6fd7f493b7"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "f670bfed87c66897660da90a3d94e4d21de8fb726757858d18d331999c3d223badc24af6437046f01e8c90f2b2427001500b9679f29c3465c402ae082a97712c"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "0f8a875b2d1b632f3b5764be0ca9da4bc37757697984fa80ac74a31a7650f0923364f79f1f32a86da95023a58cf2915f"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "0b3a7da556b2b86cf986b2064c4cf137af69814c5fd541ae380cc794e93178d751998ed63a6f551fc549306863ed1000"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "aeb443cebd0d1cd733dfb67328675e9b872edbbb1383341af4e549494b171ddb"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "af9f75b63fb0a8e964c2a95c4ca9371b308a3ac49e4d891b4e0ad0af4fec862a3aa715180f57de04e56b1886d3088725cf259644e1e07a468912a8a1a7c92456"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-only",
+            "url": "https://opensource.org/licenses/LGPL-2.1"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.hibernate.common/hibernate-commons-annotations@6.0.6.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://hibernate.org"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://hibernate.atlassian.net/browse/HCANN"
+        },
+        {
+          "type": "vcs",
+          "url": "http://github.com/hibernate/hibernate-commons-annotations"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.hibernate.common/hibernate-commons-annotations@6.0.6.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan",
+      "name": "infinispan-core",
+      "version": "15.0.11.Final",
+      "description": "Infinispan core module",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "56ed8a18433064a7e951b4b1ed16703b"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "5991dc48957b1f5a877cfe6c8270cafca0465a34"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ffac7bf6ea06c859f865cd1965f9ef528b416d40b4ae2f28776a70c9fdb00f85"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "77545a8c1b1748762e44f237b4b2280df865f44876f870b0d829e4ff8c6d80b6477fdd3ea913aaf51ac2d0bfa9a3dbb81da1ca34944e155745419ee0077ecbf7"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "88fb67303b617bf0de90f0b2d02050d5ade9f838668f4bd1160f7e618578c28f4d5fa5eb230f6867439b7a2d0b05b564"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "6e9ea7339c433cac60e192291888dafb650576c3c333d4b95616f972b489cae448587746333193eb2f3a3b314968de80"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "dbd50fd568243ff27370086fc9fe271e7f17d7d86956a94eb303830850fccc63"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "71ffe5c9a42487ba8f62967feb529e20ccc57bc9c104f664a617e49f6723f81be4b2463a60167228f697435db44ab2816b1303ffecc0cdeb3223304609a24a65"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan/infinispan-core@15.0.11.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://www.infinispan.org"
+        },
+        {
+          "type": "build-system",
+          "url": "https://ci.infinispan.org"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.jboss.org/browse/ISPN"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/infinispan"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan/infinispan-core@15.0.11.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan",
+      "name": "infinispan-commons",
+      "version": "15.0.11.Final",
+      "description": "Infinispan Commons",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "8486fe28581e655a41af5a87a64f048d"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "65259dce23bf0f8e26be34d18f5e530e1f6b057d"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "e09765eeab63f5d85117d4d0e3f4d7f3c7f6db2083346a4076131306b3aeda5c"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "f7af47cc8d0193dde243bea3327df82468cb76317f12571c50a3d6c968ddcc4f14b2bf112abcdb858bd9ff9e2a55cbe6497bce36647d74e237e117404a89db8d"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "2e258ab470fb092912970c6e4b677dcc80a9cce199d961bb9d42ceee33be5ceab4a84c6b37247b64ea83c46655ec6140"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "d60f709e057fad7db13334a017ede44df8541b47e4c18d7b932ab1de2b05e5ee51e8183b5eb2e7e451c7a3ffcb07632c"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "f2c8d4c03e3e8e02ce1a4eff62eafa1b09477fa03c187a6aa810df93e10be87d"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "6cadafc7f59da32067e426a98f285d35755080699bd84f5499c74605662d8137b7d048196294c87fe56d47253fb837dd9bde7c6e333c5e3405a171597504393a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan/infinispan-commons@15.0.11.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://www.infinispan.org"
+        },
+        {
+          "type": "build-system",
+          "url": "https://ci.infinispan.org"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.jboss.org/browse/ISPN"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/infinispan"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan/infinispan-commons@15.0.11.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan.protostream",
+      "name": "protostream",
+      "version": "5.0.12.Final",
+      "description": "ProtoStream is a serialization library based on Protocol buffers format for serializing structured data.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "8c143a54ea62648113cbcb465dd0e851"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "10d52d7fa81643476ed61caa8a5cefc5fa6991d2"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "31afdae612bfcc55e5cb31e1322e4bfa91b748bc9e99a3ee6ba8089206969e58"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "3fb122dca49b9ccabd54194c0d1b86946068852d4766a97d1f81c2a126412f10bef61b2101baded9f5b2b791cd96e85946a3dc747cd1496c1a3cf8d092e9ffcf"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "e8c59cd37ec1f04d9c2ac807d1a0f9d8e82c614b997c97d6713de1f5dee136c87c22238cb3bbe7895a24ad3f61ac8644"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "a62c0374e751601dc6d4dadcb0bd2d2f2b120c04752d393675d29f63bd42d05861fe3a20d10fccc6ac43950eda83d263"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "c65ecd45c127172b49aff8b63bbfcf511ba2ee63f6274ad404aa23741a7918db"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "e90090e1b17c6b65e3649254070d12facd6ba6e33eb127bbef198f230816afcc47e5da3621c04699aad453470047eaf5a8fe75f7213d5214e46bb394cc7a4261"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan.protostream/protostream@5.0.12.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/infinispan/protostream"
+        },
+        {
+          "type": "build-system",
+          "url": "https://travis-ci.org/github/infinispan/protostream"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.redhat.com/projects/IPROTO/issues/"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/protostream"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan.protostream/protostream@5.0.12.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan.protostream",
+      "name": "protostream-types",
+      "version": "5.0.10.Final",
+      "description": "Builtin protobuf types and default marshalling for some common Java types.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "ae68c2678a920bec9f125f7edef448d3"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "62e100ea0eae9fa834b8b9a37f04205d1cd45184"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ccba62d18eddf45dca4d224fa63f7dcee6361b12baef634fc59ddb3a6f0bdda2"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "0a6b99f9367704b39d03a83398109e73797fbd4d57b38ba55e8f8e4894063f9b62a8593a3f47d7082f757e9b6275b02414314ad0600d176e6e577c4327f2c18a"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "e3f3cbe79efe16f7cf138f2bf2694753e997ae4f39c37e343b768dfd5f5f38b4edeb295ad5dc8e582250086cf6548a24"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "1c9ea27c3a0aff2c5b9275d7f359c2a8ff9f551a6f74ebd8cc5cd1529f661df5bb0651e51a19a5dcb69cee5becb9bf99"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "f609f1e8299cd9c00293faaf990a13c49c78163c0ad8a4deb4a84be3843055fc"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "fc2174356ac24f9707e9cad52ce78434fa7ed363e3a40d021cef576f776e42e9b8e2b3e33a6534abf795bec7a82df182599fbe0781ad972b2835852a665b348c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan.protostream/protostream-types@5.0.10.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://infinispan.org"
+        },
+        {
+          "type": "build-system",
+          "url": "https://travis-ci.org/github/infinispan/protostream"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.redhat.com/projects/IPROTO/issues/"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/protostream"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan.protostream/protostream-types@5.0.10.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan.protostream",
+      "name": "protostream-processor",
+      "version": "5.0.12.Final",
+      "description": "Annotation processor for ProtoStream annotations. Generates your message and enum marshallers so you don't have to!",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "6077e06da2381f6982bd59b0cfede074"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "003d3ef4ff0c2a915fc16da5df139442231c792e"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "3f81882270a0d430040a908a321fd0c9c08aff7106c4b409c9417a50f8377261"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "fbca9d8b787f91ee2edb01573a5b021430e83d8d47126e8b89c70a7357448e99560dbb40bce273055afb25ab1d11c379accaf7e19f065bf059d9eb02c3aca3d9"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "62e3641663777238562ee1ede7f7f3a25f40f68e234fd6730519502f8d9a41a857ac9aaf0fbb0c134ab13a2ceb7bcbe7"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "da69347744dfc64bd7e24d015207f42a0c75dc0b0cca0621d4cac21c25373a04a1c5d595bec8ddbc5479e92968f82c25"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "97ebea76ce09e5500aa3a7af918a65caaf22b1778992522dcc354074a648a4ce"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "22c08966468dbebb592f08d17c027a83cd5712b70f54b81fb825ddb650c26e4169116abf3c55ede061055ee1e70be34b608154a603a73ae060b37d32deba0185"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan.protostream/protostream-processor@5.0.12.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/infinispan/protostream"
+        },
+        {
+          "type": "build-system",
+          "url": "https://travis-ci.org/github/infinispan/protostream"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.redhat.com/projects/IPROTO/issues/"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/protostream"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan.protostream/protostream-processor@5.0.12.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.jgroups",
+      "name": "jgroups",
+      "version": "5.3.10.Final",
+      "description": "Reliable cluster communication toolkit",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "44474e960db4bb93d6705a5ad71ae0e3"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "80ea94ab9ffa73f091b10705965a1e894c556f97"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "1793a1ee89acfda85927633572c8a9935638b2404c2e44832ed6287fdb61e58f"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "c7467cc374e2050bb9c9b0b2214cff02a10d21bc93e067338bf74f28dcd315d07732ea7e2a3ea93d8f51643723f39766f9e29cdeba22442f1673d5853dd3325c"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "5bb77d17ed48f10b495c6c1bf6fe2bf75615d3e32e1f4ee3d246d0c062ccc96c7c5b9bac5cf891b7be24ff6481c8e0d7"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "1185b3ec58e8ee11ca71561f2ec0adaa1bc7721f729915f04335b506135f96575659418ec44183501142ff4f22cdc873"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "6b8bda06879080e8271cef547ef9bd58a87e1ee713ea647498067e02f6ca8c5c"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "961d19edfbc1a0c34a83d21dd8274b09a3dba67f2e832f19d2f5a40a0d188996c46ffc34ac01d73aa3701eaa070e508ab6741587bfae416fe241f7f6cc28f73f"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jgroups/jgroups@5.3.10.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://www.jgroups.org"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://repository.jboss.org/nexus"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.redhat.com/browse/JGRP"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/belaban/JGroups"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.jgroups/jgroups@5.3.10.Final?type=jar"
+    },
+    {
+      "group": "com.github.ben-manes.caffeine",
+      "name": "caffeine",
+      "version": "3.1.8",
+      "description": "A high performance caching library",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "b19301179903e8781776397d9923f7c8"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "24795585df8afaf70a2cd534786904ea5889c047"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "7dd15f9df1be238ffaa367ce6f556737a88031de4294dad18eef57c474ddf1d3"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "66195ac8ec62e5425344a51ab671a136618b8658a1e91bb1d1cd1aea5a51fdc12eb7fe5131a00e18ee330d6b0cad14f6743937c23baa50fb21e40eb76d82a777"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "bb1447801069938c709220002e2489c589f3a12e411a902983d1120785265b5b2716614b0612b6ab732978fdfe492399"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "e0455cea493f7d299cc9cb4dafa42b184ddc35927985537ad8119057621f988c3165f1bec62715054bd9de802d91e1eb"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "a197fd5b92f9d15ee3a9efac322eb201b47bd8dc20304a0c6d85986199ec03ca"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "4fb700794e520bb3bc81ef156bedf696894ebf2d2bf0f25efdfd56dde4cd89b76c45b4a80d7eacb2ed0a6220718f1f9552547fecfb7d3fd319fa5145b4f20cab"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.1.8?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/ben-manes/caffeine"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/ben-manes/caffeine"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.1.8?type=jar"
+    },
+    {
+      "publisher": "EE4J Community",
+      "group": "jakarta.transaction",
+      "name": "jakarta.transaction-api",
+      "version": "2.0.1",
+      "description": "Jakarta Transactions",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "5315974a3935e342b40849478e1c9966"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "51a520e3fae406abb84e2e1148e6746ce3f80a1a"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "50c0a7c760c13ae6c042acf182b28f0047413db95b4636fb8879bcffab5ba875"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "13c1a21af3c8030794155a62b4cdc70ba1d951fbfc0aead9e89f3f529e7bb4473a070bd4a6c593ce1c0cfb781332bd62d21cf0b34e3751f99b0de463f566ec61"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "9484a0adc05a5ea5377f6037ac2d1efa1d59d172ac03b683580f7d3e542d6e26779128dd1a7fab41f7061156f66c3b44"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "064434509905dcaaeebd4e1eaeb26446cb911ff74f30d49e1b0c7f29a0e62fd9f5b84114129ec845eb99cc37cc4b5048"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "7d865d16dc3e2a2b7e097a305a33f7fd419ec4dcea2df1e278b66a74e59325bd"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "efe99bb4d2397b5d004b7aac679ec2ea0c13ce6c06fdcaec56b12f07d5938ac5f07df2937478b551955382612e2544819ea7f5827e0f6ea2726bbc1643dfdab3"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "EPL-2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-2.0-with-classpath-exception"
+          }
+        }
+      ],
+      "purl": "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://projects.eclipse.org/projects/ee4j.jta"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://jakarta.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://github.com/eclipse-ee4j/jta-api/issues"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://dev.eclipse.org/mhonarc/lists/jta-dev/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/eclipse-ee4j/jta-api"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar"
+    },
+    {
+      "publisher": "JBoss by Red Hat",
+      "group": "org.jboss.threads",
+      "name": "jboss-threads",
+      "version": "3.6.1.Final",
+      "description": "Provides, via submodules, a base configuration for JBoss project builds, as well as a derived configuration supporting multi-release JARs",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "39d8df6ff3546c93ceead139e3cec9c1"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "0077135b4d356519ef6622a81c63d85276479b61"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "a0432e46d8781ee4f9e431fd05be3b58abf668b7e3c524ebf276c0621dc81827"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "c3891ad36887d41199251b9c120fa789da2b0731f78096d386d35d8fa89dbe2dd546e6a9bad67ba8f9c3194de79e4b27073640aa186b31b4c66d6b1cdeee525b"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "ff27fe79eb158a88ed9f08703071b937a079dd853cdf26ea48dffc996150708761f6b3762bb56c55539b872058bdd452"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "85812b298f79b2a472f7075e197e00e57f5d0091471ef4304741224b339281038a262bed953c1db9bd1d2d82adbc56d4"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "bb7cf57cdaa05efdc90897031fec29bbfbf9372c20d2169580c8abef44b9e154"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "406b20318d9bfba40093faf5328f71ce8b61e09dc57d6fd89f08b625cb42bb9a919a9bc1d0aaef04591fe4203a89a18abed6344cd40be3e1a94638f05d989a41"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jboss.threads/jboss-threads@3.6.1.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://www.jboss.org"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.jboss.org/browse/JBTHR"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/jboss-user/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jbossas/jboss-threads"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.jboss.threads/jboss-threads@3.6.1.Final?type=jar"
+    },
+    {
+      "publisher": "Webtide",
+      "group": "org.eclipse.jetty",
+      "name": "jetty-infinispan-embedded-query",
+      "version": "12.0.21",
+      "description": "The Eclipse Jetty Project",
+      "scope": "optional",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "ed246d3a89be5127f1838b8573f54d6f"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "a48cf7405be441036294b12ae2299253656a28d8"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "6c4334a0bc714633863c8bd85a2e2c767096d1936e9c92247d9a9708f7758205"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "8bc3473fb5401d443d6566d596da9b6fa87c85a2af2c182b1b8e121c19dc7def314ace5b5b89be08735933ef5cc8a80c34eaa54f516a5eec8c1fbc4ed60e4b90"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "3d4bb72761e759d7570dda7f9cecda233503ad8c6c137c8b19a812032262f76457915450452f96d5ff2eeaff21235953"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "851b430f961efe0591f6e8cebb44016b8f966bc9eaabf3b18c7c9d06f28d8e36d15658f6306f2fc5bb5f1319dbb03f7e"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "92442896a29d90fa59af1ebe0def0305650aa5ca192e7f0f40ce8a29dc26d503"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "9fc2235b5c010b098001ca0c4f2e72eea0f651d8af4353426ad78879a1063a0d211e47bf0765086d4d50d5c100c906cc72895743ce24884b4485c10740b3d299"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "EPL-2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.eclipse.jetty/jetty-infinispan-embedded-query@12.0.21?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://jetty.org/jetty-integrations/jetty-infinispan/jetty-infinispan-embedded-query"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://github.com/jetty/jetty.project/issues"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://www.eclipse.org/lists/jetty-dev/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jetty/jetty.project/jetty-integrations/jetty-infinispan/jetty-infinispan-embedded-query"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.eclipse.jetty/jetty-infinispan-embedded-query@12.0.21?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan",
+      "name": "infinispan-query",
+      "version": "15.0.11.Final",
+      "description": "Infinispan Query module",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "5135eba1599da01f3c57986c2c82185c"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "9a3ad2d55803d5f4675221131c44c9d67efb0349"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "49e3f4a9d3a5ada55be1a2e9c9660bda13c9d9727b19290233e4726d670848ec"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "e0c6a9b9794aaeb01fe9bb10fab3bc02462c2a0c8795c49a300e1c5fc9e6ce9a1a63b113143b60029f124657404682119303423f3a281c7109177b35de0a6069"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "4d6451f5f1f47cbf01e7ebc7d95e3c12e1093a34b9500fbf342b221d6edff0393649b0528ffd1c5725c8800efadfe20a"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "4cf45589175120c8ee2764085a4d3c1c0674ec435394830837de0fa4dfe62037d9248a84e54eb99e0c5469ac3bde4f0b"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "e10e540c31eb9f91d971353dc835f03d5e866301627c2e39a003cb9ff0a6e1e0"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "10b9457671197a003eafc716ac38c57a280f11ba303098c28906dfd3183c6cafb56ca0326822cf359a590f5206c10ded212d09a63b06490cabedb711e565de22"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan/infinispan-query@15.0.11.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://www.infinispan.org"
+        },
+        {
+          "type": "build-system",
+          "url": "https://ci.infinispan.org"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.jboss.org/browse/ISPN"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/infinispan"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan/infinispan-query@15.0.11.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan",
+      "name": "infinispan-query-dsl",
+      "version": "15.0.11.Final",
+      "description": "Infinispan Query DSL API module",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "04d3ab43df6e22405b616e563c876a5e"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "eef9674a9a97e994236b2d93fa39de7df617ca75"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "2b611d384cc67c7c82fd6086e63de10d73892935fed958b4dae1bd32b163b43c"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "90318af6bd865e6df02e7906be9f45ff63fd9e148f657661d480769495e691ade7da35e5e8030a572530d72db3661e719b06c75a4664a44288ead532de3f071c"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "b6bc55f0797a789278b9833929232560e7e012cf1d2095a003753ac7e44c65295393147898dfaf35741ca5899921d80b"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "24e3c78858e259fbe0316b00df0a14e7fcffd151c9041bd26a47789bca3322eeb507ec0bcf81c5907b39c3a56b77b532"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "dc7342f792792c6b7a04cfccd1a74dcb9e1dca01d487254178503012d9447cdf"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "d822f62c7d25fef9a4ca97133a5147dee5a918b4b3ccbed06b114b689bbc839d04e0fa728cfac14f03d21bdfa158e80eac709a3c3c54ae3660fa723e046da050"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan/infinispan-query-dsl@15.0.11.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://www.infinispan.org"
+        },
+        {
+          "type": "build-system",
+          "url": "https://ci.infinispan.org"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.jboss.org/browse/ISPN"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/infinispan"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan/infinispan-query-dsl@15.0.11.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan",
+      "name": "infinispan-query-core",
+      "version": "15.0.11.Final",
+      "description": "Zero calories query for Infinispan caches (no indexing)",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "d062b8c2a8f248e434998567eb8bcb6d"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "21c649922ca7b914b23adef1a10891fab59c4b9c"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "561650d344d892e189aeaa92377b1ba35d1f9b46227773d55a276e251b7c0b48"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "97337d1be39743261b265b70f3ca10700576ef48bc73fffb0bcb3cfa60dcc6f1cd055cf1f0390d62d91b2db30ac799f11540c250963b25e524d8d595bcfbfba2"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "f40a3bc2d99b904b8a7ced6d9fee26f2e632d3af126a629e4a90c5b521832ee445ffdcd152a9b409c930edecd917af19"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "99f1a065918aed4312305ee6783b6905a3adadd54ae942fd5f155d0a5a3e12e4edac38ead9ed4bd55a6092c774fc0d49"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "940da7f67225aa6752d9ee50610f8077c4a76228b8ced2b7406594339390b238"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "07d2e4f3b5f7ccf009817fb05d466736c166135174e45a1118888ef34564efb24275d7fb25496114d97d70635181c01caa27ab51e1ec881c4f43d95cc65715d6"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan/infinispan-query-core@15.0.11.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://www.infinispan.org"
+        },
+        {
+          "type": "build-system",
+          "url": "https://ci.infinispan.org"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.jboss.org/browse/ISPN"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/infinispan"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan/infinispan-query-core@15.0.11.Final?type=jar"
+    },
+    {
+      "publisher": "JBoss, a division of Red Hat",
+      "group": "org.infinispan",
+      "name": "infinispan-objectfilter",
+      "version": "15.0.11.Final",
+      "description": "Infinispan Object Querying and Filtering based on Ickle, a JP-QL subset",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "1ae6951875c134baac100784440573ea"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "d4ef2ffa5b1bdf13c75a9f7719e4fb6bf23005df"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "fcd7334023537121b75e7c0af5d0c7d2016785cce65de7111aa6379c2a810949"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "f007193a1a7fb0c620d7a7901a3da98935ebb10c3b2e2f6176e0d20b6e521f5b687027ac2e36f8166cedb9016c252a3a702e715476da92719b74768503e871aa"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "ecb0293eb452e2535d5656b9e5a745899887a00016c63110369148aca4596900d6e640db06066c8af600a99bf41842f0"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "1e9e56de927d85442c7ed5d90c726fbc893ed57841ac8138862f4ee8653a3c902204a0f02e24cd438e9d5a82622a7b44"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "2014ff63e2513a3c5429f2f9014cf941331faaebc2008c55a399263c0b941be3"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "f7b7dd452b0c5d833b844f24995512bb5888f800712f125b2f6b87b38550cdda218c4de14ffe0b01ea60c96ba165ce6cd5dff62cdce9eb9881375f63a46715bb"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.infinispan/infinispan-objectfilter@15.0.11.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://www.infinispan.org"
+        },
+        {
+          "type": "build-system",
+          "url": "https://ci.infinispan.org"
+        },
+        {
+          "type": "distribution-intake",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.jboss.org/browse/ISPN"
+        },
+        {
+          "type": "mailing-list",
+          "url": "http://lists.jboss.org/pipermail/infinispan-issues/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/infinispan/infinispan"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.infinispan/infinispan-objectfilter@15.0.11.Final?type=jar"
+    },
+    {
+      "group": "org.hibernate.search",
+      "name": "hibernate-search-v5migrationhelper-engine",
+      "version": "7.1.2.Final",
+      "description": "Helper to migrate from Hibernate Search 5 to 6, providing partial support for Hibernate Search 5 Engine APIs on top of Hibernate Search 6",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "2612c1c7a26fbd05cdd10f2f13ba88b2"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "9fbb4352e96f38f8d9ede3711dbbab03a67256c8"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "15e5c5b83ca7d172f6762467f6a5b1a176bb15a7c2f584950b9669c69bff5a5e"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "4b6d6b826d3de98246c1ac2ce6daafeeece1c06ccbd775b22a16fa13ceef54ade8b1e6e65a657ac2c4a9c9e4456fcc1cb6cc805074039aec125480f313e3ea04"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "4fe9f183d1cb319d5d69305196433792422c3414445d79a3c2239afaf8f0e70c59cef994ca88debae299af31c71b5428"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "5a85fcaea4000e4a0d08a2597d4bddcc2fd25965cb84a4ad97351c9926cae74e8945fcc69a1b89a83b99482c11b02c49"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "770eabca3561eb411851bb03a337a8dc8d1ed11b15534a8f773b3a52a5fffdbe"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "a1c26540895834060b255f611dc9c3eb41deba9d996d8d95e823187845744d946c59a7151d0c5216483aafd22250278b2478b010f53a84d73eaab54a58aed960"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1+",
+            "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.hibernate.search/hibernate-search-v5migrationhelper-engine@7.1.2.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://hibernate.org/search/"
+        },
+        {
+          "type": "vcs",
+          "url": "http://github.com/hibernate/hibernate-search"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.hibernate.search/hibernate-search-v5migrationhelper-engine@7.1.2.Final?type=jar"
+    },
+    {
+      "group": "org.hibernate.search",
+      "name": "hibernate-search-backend-lucene",
+      "version": "7.1.2.Final",
+      "description": "Hibernate Search Backend relying on embedded instances of Lucene",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "c0bba696614bd05727e5c08d52182d43"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "c6c6923a40045f7ca981dccf22597d5ea7e74b0a"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c0cb6d2c2ac01a88d148a57c38953c08cc170574c721a3f1c48efaa105415d00"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "c728152428cbab230da400f5f8b86b6b086b9b59424fbe2261681ceb2d9717f71291104313712b70dc2329520ed94cfd1028d25b65622cd2f9e2c2e6ea8821e7"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "87a3ee4d43121b20debd6fbbaa6fc8632a83d89c9aaea0477e77555f0da4edf68a6f5c019a53c11e6d8dec47f3c2ab6c"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "0103eb679fd66a499893ba9f26011f305f3d633ed40177452d1df5ea67cdd5e959e35f72aee98bd1c6c7d097688e0cb7"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "7cd8db175936d8faa2f6b36f50d7cac62f0fd5eb1cd0cc345bb8d72046ed1ce4"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "c6a9861f5e26282fa5d2d6671fed369b829b3d55e1864302ba75aabea3765d1a2aa2d14a24a94ec5d0f2d703b44ff4dcc0d5468685da0d62926e0310daa9214d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1+",
+            "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.hibernate.search/hibernate-search-backend-lucene@7.1.2.Final?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://hibernate.org/search/"
+        },
+        {
+          "type": "vcs",
+          "url": "http://github.com/hibernate/hibernate-search"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.hibernate.search/hibernate-search-backend-lucene@7.1.2.Final?type=jar"
+    },
+    {
+      "group": "org.apache.lucene",
+      "name": "lucene-core",
+      "version": "9.9.2",
+      "description": "Apache Lucene (module: core)",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "83b9de12671650561f4ad6716d0d860a"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7699f80220fc80b08413902560904623b88beb9f"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ee9edc77fd8089210b8da2f244028ee1cf815077e2eab084f0a625fe9f9cdbbe"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "4cca65101f8bfcbb11c0ad8853da032c5239d275c4f45d4b83aadbd3d98d71a9dc5fcb8c71aa2b0415c7af2b377a287c20d4069fcade606f4e92d5ec580a2f52"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "0f6714725f4f9a3cd56d3d42f415fab478bea9ae8c3a1f68f8cf14de05b4e6a104d106288854e9fdb048f18f4807ff23"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "35421a1a617d58a4e9f028f4fa8d6b0a568c14f5bf2ce216463647c675b750a54d6526ae2212abe0869bf3d7243e5c30"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "fc3614734c14ed29803111296250060d82203056cc51063a37714aaf7430de2b"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "107b38b6b6955b6e466e673582cbcda74ba505bc186ba2d506f2733dcf6fe55e8dc519b6423ad96e875b0f9c4893a66c938d6b0996618b349561235e973dc04d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://lucene.apache.org/"
+        },
+        {
+          "type": "build-system",
+          "url": "https://builds.apache.org/job/Lucene/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.apache.org/jira/browse/LUCENE"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://mail-archives.apache.org/mod_mbox/lucene-java-user/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://gitbox.apache.org/repos/asf?p=lucene.git"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar"
+    },
+    {
+      "group": "org.apache.lucene",
+      "name": "lucene-analysis-common",
+      "version": "9.9.2",
+      "description": "Apache Lucene (module: common)",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "c12c144eb694e2f73f759a87200d5570"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "2a4712ee9d87e0f9942a81195dbd5223dbeaa541"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "0083066fd7c0df1d6ce41906edb52314c4d0cbd18c45387cb3cac3d75a043f57"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "b208584a321d83bd13bc820043c818b56f184515e20e44f06b8518bb9d6f8835d89d1e3d58289a621298bce1cb58dfa4f34fd0372c25d3aa99b3cc2ccac8b894"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "0511788d8bcf1e21dd61066df770056f7f69d42a2c694e46e27a68159fa72959855856c508c28020de6ef4914e79f942"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "aa4ea120c8d0ee176dc0acb1638604eb550c3392752e6e780081b691964bc3604ed0fab03bf24dfd76616d09eeb08426"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "de4cbed85db9d4b9905a2716bde1b4232c51bd049e81fd433a0cc9f797de6b08"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "b8c6c2ada610e8bed656d2991be3bf55a0f11a77da111049d9314dd0060c46319961ff5580e2e0d42411e1b9d67b5ab46c3105088d514c63a4be4776824b5d8d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.lucene/lucene-analysis-common@9.9.2?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://lucene.apache.org/"
+        },
+        {
+          "type": "build-system",
+          "url": "https://builds.apache.org/job/Lucene/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.apache.org/jira/browse/LUCENE"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://mail-archives.apache.org/mod_mbox/lucene-java-user/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://gitbox.apache.org/repos/asf?p=lucene.git"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.lucene/lucene-analysis-common@9.9.2?type=jar"
+    },
+    {
+      "group": "org.apache.lucene",
+      "name": "lucene-queryparser",
+      "version": "9.9.2",
+      "description": "Apache Lucene (module: queryparser)",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "44373f14ce9aa84fc1b29b8a5fcd7ded"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7cf8dea63ab511ea9a322916198c3abd0402c8b2"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ddb0a0ca074caeafc2bff4a21cf402faf7fbef11b5e1419e52e83566878141cb"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "f89df5c662a9052c5967430798a3f0485aab92805fbdb9b124b9e93e674db84269dd8fc0de802873890a31d6a1b0f777cd468651fbc8160a5ff34fddbc5a13d6"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "d6a4c8f25ce013b2866e39e849eeb22863d123658356b9f623000121b247cfe89fefe8efb47207355998bf297be31a6c"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "5fca42b26e8acfa944a5bd852ee15c254764b9e06bd1f4cb5b57fd0d4248ce2b7bce81e380aea3d8a0e7fe5d8f5c471e"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "be0d6894b29e801b64376e4b766727e31b1cabca4db126bb0520fdc1dcd35594"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "580f435290b634bffa81e35d7261102e974261570f3a226e2e8b8b04542a2cead5893e4bd2332d4fbeb13be4cbc56314072699acbfc609fd9592c8494dbde953"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.lucene/lucene-queryparser@9.9.2?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://lucene.apache.org/"
+        },
+        {
+          "type": "build-system",
+          "url": "https://builds.apache.org/job/Lucene/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.apache.org/jira/browse/LUCENE"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://mail-archives.apache.org/mod_mbox/lucene-java-user/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://gitbox.apache.org/repos/asf?p=lucene.git"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.lucene/lucene-queryparser@9.9.2?type=jar"
+    },
+    {
+      "group": "org.apache.lucene",
+      "name": "lucene-queries",
+      "version": "9.9.2",
+      "description": "Apache Lucene (module: queries)",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "9eb7d409bf0389a53b832c4bccafeef2"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "671252594e15280818f56d4b369bc48c0ab00dac"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "e97d34018d179741f715895d30c75e5d8555b631150d7cf95d5b3e9a3902b75a"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "483e67f8f92815a11c1f6551c385063206b300f66c3b6bc0522e85e0ce7ed182d46ddc57f42f7817800d597a602f548fb7309442d516a8bb559ddf8c52fa9693"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "921b278c62b6a342e47fd4e84e86191a8b5d42fd2ebe97a3a7d484dac1a994067cf63f258ed1daf8ff5a3a4c3555313f"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "04057129ce663b621db04d1ff680b44f9c0ad0ea6d49e3224cd8ecb0060f02f62e3b2f27b860ada9182a83ed28fde48b"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "caa508ac1d9d2d88a99bf73859020311a874cfb9096e4f366d87281c451de6d7"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "1e7e8d4b42cae57f3675b3da3ee263cb7df9ebae1e9f16cfa315cf1c4708f9f3f45d7a3cceee1c548fbec00dbdce3793b286195901248b48e8e59105561c4fb5"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.lucene/lucene-queries@9.9.2?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://lucene.apache.org/"
+        },
+        {
+          "type": "build-system",
+          "url": "https://builds.apache.org/job/Lucene/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.apache.org/jira/browse/LUCENE"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://mail-archives.apache.org/mod_mbox/lucene-java-user/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://gitbox.apache.org/repos/asf?p=lucene.git"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.lucene/lucene-queries@9.9.2?type=jar"
+    },
+    {
+      "group": "org.apache.lucene",
+      "name": "lucene-join",
+      "version": "9.9.2",
+      "description": "Apache Lucene (module: join)",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "72f2c44043698a82e13893855fefec92"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "902e4b65686e29c1489a7cdf43ed2ce3b7fe8ace"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "93651d612ae34f9fb13b391f56861d36b42cbf374983590bce7caa48645e065d"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "dbf2ab13c2529d30afe66175f4e1acb8c6f79d82c3fcaaacbc31f997bd93015a41a92f4ce75284c52997a0350043b228f12317e20875798a52b2e1e10e970806"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "1c0e7aecddad30f76a478cbb66421fa3cc915bc6dae5bbcf617834b220e1f1adc5703f89b2b6441cfdf256b2ed58f5a5"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "ea7e000a063152b5d312365a13ea7eee95d0dee5efe4e1f53a3b8c41a421ad6bf3c0da8cdb99042d1a179f43bacf4d77"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "80aeacf09d2f8897c788d20e53d9ac5d180ae99e4d5c69778beb4c25109bbb63"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "b6ba006896cb57f3c38dbccff99996a03a7600df24f82ea1de68235923756f4016eaa2d2f85dfbf6a0474586a9206409954da1cce6dcd72ce28240356e4f80cd"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.lucene/lucene-join@9.9.2?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://lucene.apache.org/"
+        },
+        {
+          "type": "build-system",
+          "url": "https://builds.apache.org/job/Lucene/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.apache.org/jira/browse/LUCENE"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://mail-archives.apache.org/mod_mbox/lucene-java-user/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://gitbox.apache.org/repos/asf?p=lucene.git"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.lucene/lucene-join@9.9.2?type=jar"
+    },
+    {
+      "group": "org.apache.lucene",
+      "name": "lucene-facet",
+      "version": "9.9.2",
+      "description": "Apache Lucene (module: facet)",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "96a475140252ea17e32d6fabbf77df40"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "c74ce90b19bfd1be77055f4e0b2473df1ebdc171"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "a38a3903cb0a9b5aa8c5f9c0aadac3684826d6c31c84d0b697313e450b525691"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "f6d1f7a7ad5ab2fa0f260671e704d3b15ff051425a1ab9c20bacba809a137eb459cd440820a0a6d7cc5c898da4786a7c96c059b92c5a49850c56996096392890"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "4c12e833100e908fb0e3b67d9f015898ca14aac7404edcd531f7295d90dee18936c719d4c2cda8245637618fa0189699"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "07ec93f93e9dc2fdac4426498d4f5f0c85a9db5c0cf17e33de33273ab4b303a93c3137ba08494188c0c9b4053b91dd13"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "22bdd401ebb07a6e51e757b636ffbbac960925e1e1ff1dca4f646bc48c2838d0"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "5f8191faa036d45451ec7436314c46642e9b4877c649f542048cb68362a42c4ee84c9ba8b725a4bc08784eeb122abcf4f0a6593d0fdb5212407a1a27e4d8a4ab"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.lucene/lucene-facet@9.9.2?type=jar",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://lucene.apache.org/"
+        },
+        {
+          "type": "build-system",
+          "url": "https://builds.apache.org/job/Lucene/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://issues.apache.org/jira/browse/LUCENE"
+        },
+        {
+          "type": "mailing-list",
+          "url": "https://mail-archives.apache.org/mod_mbox/lucene-java-user/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://gitbox.apache.org/repos/asf?p=lucene.git"
+        }
+      ],
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.lucene/lucene-facet@9.9.2?type=jar"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:maven/org.eclipse.jetty/jetty-home@12.0.21?type=pom",
+      "dependsOn": [
+        "pkg:maven/org.eclipse.jetty/jetty-infinispan-embedded-query@12.0.21?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.hibernate.search/hibernate-search-util-common@7.1.2.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/io.smallrye/jandex@3.1.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/io.smallrye/jandex@3.1.2?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.hibernate.common/hibernate-commons-annotations@6.0.6.Final?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.infinispan/infinispan-core@15.0.11.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan/infinispan-commons@15.0.11.Final?type=jar",
+        "pkg:maven/org.infinispan.protostream/protostream@5.0.12.Final?type=jar",
+        "pkg:maven/org.infinispan.protostream/protostream-types@5.0.10.Final?type=jar",
+        "pkg:maven/org.jgroups/jgroups@5.3.10.Final?type=jar",
+        "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.1.8?type=jar",
+        "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
+        "pkg:maven/org.jboss.threads/jboss-threads@3.6.1.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.infinispan/infinispan-commons@15.0.11.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan.protostream/protostream@5.0.12.Final?type=jar",
+        "pkg:maven/org.infinispan.protostream/protostream-types@5.0.10.Final?type=jar",
+        "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.1.8?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.infinispan.protostream/protostream@5.0.12.Final?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.infinispan.protostream/protostream-types@5.0.10.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan.protostream/protostream@5.0.12.Final?type=jar",
+        "pkg:maven/org.infinispan.protostream/protostream-processor@5.0.12.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.infinispan.protostream/protostream-processor@5.0.12.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan.protostream/protostream@5.0.12.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.1.8?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.jgroups/jgroups@5.3.10.Final?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.jboss.threads/jboss-threads@3.6.1.Final?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.eclipse.jetty/jetty-infinispan-embedded-query@12.0.21?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan/infinispan-query@15.0.11.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.infinispan/infinispan-query@15.0.11.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan/infinispan-core@15.0.11.Final?type=jar",
+        "pkg:maven/org.infinispan/infinispan-query-dsl@15.0.11.Final?type=jar",
+        "pkg:maven/org.infinispan/infinispan-query-core@15.0.11.Final?type=jar",
+        "pkg:maven/org.infinispan/infinispan-objectfilter@15.0.11.Final?type=jar",
+        "pkg:maven/org.hibernate.search/hibernate-search-v5migrationhelper-engine@7.1.2.Final?type=jar",
+        "pkg:maven/org.hibernate.search/hibernate-search-backend-lucene@7.1.2.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.infinispan/infinispan-query-dsl@15.0.11.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan/infinispan-commons@15.0.11.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.infinispan/infinispan-query-core@15.0.11.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan/infinispan-core@15.0.11.Final?type=jar",
+        "pkg:maven/org.infinispan/infinispan-query-dsl@15.0.11.Final?type=jar",
+        "pkg:maven/org.infinispan/infinispan-objectfilter@15.0.11.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.infinispan/infinispan-objectfilter@15.0.11.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.infinispan/infinispan-query-dsl@15.0.11.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.hibernate.search/hibernate-search-v5migrationhelper-engine@7.1.2.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.hibernate.search/hibernate-search-backend-lucene@7.1.2.Final?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.hibernate.search/hibernate-search-backend-lucene@7.1.2.Final?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar",
+        "pkg:maven/org.apache.lucene/lucene-analysis-common@9.9.2?type=jar",
+        "pkg:maven/org.apache.lucene/lucene-queryparser@9.9.2?type=jar",
+        "pkg:maven/org.apache.lucene/lucene-join@9.9.2?type=jar",
+        "pkg:maven/org.apache.lucene/lucene-facet@9.9.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.apache.lucene/lucene-analysis-common@9.9.2?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.apache.lucene/lucene-queryparser@9.9.2?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar",
+        "pkg:maven/org.apache.lucene/lucene-queries@9.9.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.apache.lucene/lucene-queries@9.9.2?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.apache.lucene/lucene-join@9.9.2?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.apache.lucene/lucene-facet@9.9.2?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.apache.lucene/lucene-core@9.9.2?type=jar"
+      ]
+    }
+  ]
+}

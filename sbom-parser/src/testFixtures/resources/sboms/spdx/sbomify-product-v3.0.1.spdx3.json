@@ -1,0 +1,181 @@
+{
+  "@context": "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+  "@graph": [
+    {
+      "type": "CreationInfo",
+      "@id": "_:creationInfo",
+      "specVersion": "3.0.1",
+      "created": "2026-11-07T14:20:24Z",
+      "createdBy": [
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Organization-sbomify"
+      ],
+      "createdUsing": [
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Tool-sbomify"
+      ]
+    },
+    {
+      "type": "Organization",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Organization-sbomify",
+      "creationInfo": "_:creationInfo",
+      "name": "sbomify, ltd"
+    },
+    {
+      "type": "Tool",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Tool-sbomify",
+      "creationInfo": "_:creationInfo",
+      "name": "sbomify",
+      "description": "sbomify 26.11.0"
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-Main",
+      "creationInfo": "_:creationInfo",
+      "name": "sbomify - latest",
+      "software_downloadLocation": "NOASSERTION",
+      "suppliedBy": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Organization-sbomify"
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-1",
+      "creationInfo": "_:creationInfo",
+      "name": "Python Stack",
+      "software_downloadLocation": "NOASSERTION",
+      "software_packageVersion": "v26.11.0",
+      "externalRef": [
+        {
+          "type": "ExternalRef",
+          "externalRefType": "other",
+          "locator": [
+            "https://app.sbomify.com/api/v1/sboms/17b5582a-22f6-4c8b-9600-156101329414/download"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-2",
+      "creationInfo": "_:creationInfo",
+      "name": "Container",
+      "software_downloadLocation": "NOASSERTION",
+      "software_packageVersion": "v26.11.0",
+      "externalRef": [
+        {
+          "type": "ExternalRef",
+          "externalRefType": "other",
+          "locator": [
+            "https://app.sbomify.com/api/v1/sboms/94e67fe9-c327-46aa-8642-ce597c40341c/download"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-3",
+      "creationInfo": "_:creationInfo",
+      "name": "Frontend Stack",
+      "software_downloadLocation": "NOASSERTION",
+      "software_packageVersion": "v26.11.0",
+      "externalRef": [
+        {
+          "type": "ExternalRef",
+          "externalRefType": "other",
+          "locator": [
+            "https://app.sbomify.com/api/v1/sboms/0e2b9c06-8ec6-4ad2-afe1-2b9d3bbfff05/download"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-4",
+      "creationInfo": "_:creationInfo",
+      "name": "Container",
+      "software_downloadLocation": "NOASSERTION",
+      "software_packageVersion": "v26.11.0",
+      "externalRef": [
+        {
+          "type": "ExternalRef",
+          "externalRefType": "other",
+          "locator": [
+            "https://app.sbomify.com/api/v1/sboms/5a0d06ed-fa82-4632-ba2b-b90eb18579a8/download"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-5",
+      "creationInfo": "_:creationInfo",
+      "name": "Python Stack",
+      "software_downloadLocation": "NOASSERTION",
+      "software_packageVersion": "v26.11.0",
+      "externalRef": [
+        {
+          "type": "ExternalRef",
+          "externalRefType": "other",
+          "locator": [
+            "https://app.sbomify.com/api/v1/sboms/91f1366a-01e0-46f5-a1b8-f193df705898/download"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-6",
+      "creationInfo": "_:creationInfo",
+      "name": "Frontend Stack",
+      "software_downloadLocation": "NOASSERTION",
+      "software_packageVersion": "v26.11.0",
+      "externalRef": [
+        {
+          "type": "ExternalRef",
+          "externalRefType": "other",
+          "locator": [
+            "https://app.sbomify.com/api/v1/sboms/08d1e3cc-0e16-43d1-a15d-972a5afac51a/download"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Relationship-describes",
+      "creationInfo": "_:creationInfo",
+      "relationshipType": "describes",
+      "from": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-Main",
+      "to": [
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-1",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-2",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-3",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-4",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-5",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-6"
+      ]
+    },
+    {
+      "type": "SpdxDocument",
+      "spdxId": "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099",
+      "creationInfo": "_:creationInfo",
+      "name": "sbomify - latest",
+      "dataLicense": "CC0-1.0",
+      "profileConformance": [
+        "core",
+        "software"
+      ],
+      "element": [
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Organization-sbomify",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Tool-sbomify",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-Main",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-1",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-2",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-3",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-4",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-5",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-6",
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Relationship-describes"
+      ],
+      "rootElement": [
+        "https://sbomify.com/spdx/eP_4dk8ixV/qFCmiFtEiKrp/e06b2f2c-c915-4f62-9f66-79b03ae8a099#SPDXRef-Package-Main"
+      ]
+    }
+  ]
+}
