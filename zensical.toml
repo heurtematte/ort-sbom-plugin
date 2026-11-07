@@ -19,6 +19,7 @@ nav = [
   { "SBOM sources" = "sources.md" },
   { "Configuration" = "configuration.md" },
   { "Use with ORT Server" = "ort-server.md" },
+  { "Architecture" = "architecture.md" },
   { "Development" = "development.md" },
 ]
 
