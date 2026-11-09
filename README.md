@@ -110,6 +110,11 @@ Requires Java 25, like ORT 98.
 
 The version of ORT is set by the ORT version catalog in `settings.gradle.kts`.
 
+Until they are on Maven Central, the artifacts are published to GitHub Packages
+(`https://maven.pkg.github.com/heurtematte/ort-sbom-plugin`) by the `Build` workflow: the snapshot version from `main`,
+and the version of each `v<version>` tag. Reading them requires a GitHub token with the `read:packages` scope, see
+[Getting started](https://heurtematte.github.io/ort-sbom-plugin/getting-started/).
+
 ## Tests
 
 The tests use real SBOMs from public sources as fixtures (`sbom-parser/src/testFixtures`), with the expected format and

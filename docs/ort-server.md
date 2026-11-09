@@ -159,7 +159,8 @@ public sbomify product.
 
 Instead of building images, ORT Server can declare the plugin as a runtime dependency of the analyzer worker and the
 plugin manager. This requires no change to the code of ORT Server and gives the same features as the images above for
-every deployment. It requires the artifacts of the plugin to be published to Maven Central.
+every deployment. It requires the artifacts of the plugin to be published to Maven Central; the artifacts on GitHub
+Packages are enough for forks and tests, but every build then needs a GitHub token.
 
 ## SBOM repositories
 

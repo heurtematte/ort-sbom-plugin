@@ -4,10 +4,15 @@
 
 The plugin is built against ORT 98, which requires **Java 25**.
 
-!!! note "Not published yet"
+!!! note "GitHub Packages"
 
-    The artifacts are not published to a public Maven repository yet. Build them and publish them to your local Maven
-    repository first:
+    Until the artifacts are published to Maven Central, they are published to
+    [GitHub Packages](https://github.com/heurtematte?tab=packages&repo_name=ort-sbom-plugin): `0.1.0-SNAPSHOT` from
+    the `main` branch, and the version of each `v<version>` tag. GitHub Packages requires a token with the
+    `read:packages` scope, also for public packages, for instance the token of the GitHub CLI (`gh auth token`) or the
+    `GITHUB_TOKEN` of a GitHub Actions workflow.
+
+    Alternatively, build the artifacts and publish them to your local Maven repository:
 
     ```shell
     git clone https://github.com/heurtematte/ort-sbom-plugin.git
@@ -24,7 +29,16 @@ distribution (for ORT Server, see [Use with ORT Server](ort-server.md)):
 
     ```kotlin
     repositories {
-        mavenLocal()
+        maven("https://maven.pkg.github.com/heurtematte/ort-sbom-plugin") {
+            credentials {
+                username = providers.environmentVariable("GITHUB_ACTOR").getOrElse("token")
+                password = providers.environmentVariable("GITHUB_TOKEN").orNull
+            }
+
+            content {
+                includeGroup("org.eclipse.apoapsis.sbom")
+            }
+        }
     }
 
     dependencies {
@@ -35,6 +49,15 @@ distribution (for ORT Server, see [Use with ORT Server](ort-server.md)):
 === "Maven"
 
     ```xml
+    <repositories>
+        <!-- The credentials are those of the server with the same id in settings.xml. -->
+        <repository>
+            <id>ort-sbom-plugin</id>
+            <url>https://maven.pkg.github.com/heurtematte/ort-sbom-plugin</url>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+
     <dependency>
         <groupId>org.eclipse.apoapsis.sbom</groupId>
         <artifactId>sbom-package-manager</artifactId>

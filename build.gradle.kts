@@ -77,6 +77,15 @@ subprojects {
                 }
             }
         }
+
+        // Until the artifacts are on Maven Central. The credentials are read from the Gradle properties
+        // "gitHubPackagesUsername" and "gitHubPackagesPassword", only when publishing to this repository.
+        repositories {
+            maven("https://maven.pkg.github.com/heurtematte/ort-sbom-plugin") {
+                name = "gitHubPackages"
+                credentials(PasswordCredentials::class)
+            }
+        }
     }
 }
 

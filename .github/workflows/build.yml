@@ -7,6 +7,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*"
   pull_request:
   workflow_dispatch:
 
@@ -32,3 +34,32 @@ jobs:
           name: test-reports
           path: "*/build/reports/tests/"
           if-no-files-found: ignore
+
+  # Publish the artifacts to GitHub Packages: the snapshot version of gradle.properties from main, and the version of a
+  # tag "v<version>" from the tag.
+  publish:
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: 25
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
+      - name: Publish to GitHub Packages
+        env:
+          ORG_GRADLE_PROJECT_gitHubPackagesUsername: ${{ github.actor }}
+          ORG_GRADLE_PROJECT_gitHubPackagesPassword: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            ./gradlew publishAllPublicationsToGitHubPackagesRepository -Pversion="${GITHUB_REF_NAME#v}"
+          else
+            ./gradlew publishAllPublicationsToGitHubPackagesRepository
+          fi
