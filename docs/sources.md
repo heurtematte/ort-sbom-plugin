@@ -91,13 +91,30 @@ The password is used as follows:
 
 | Source           | Usage                                                                                                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------- |
-| Dependency-Track | API key, sent as `X-Api-Key`. It needs the permission `VIEW_PORTFOLIO`.                               |
+| Dependency-Track | API key, sent as `X-Api-Key`. See [Dependency-Track permissions](#dependency-track-permissions).      |
 | sbomify          | Access token, sent as `Authorization: Bearer`. Public components and products do not need one.        |
 | Document         | Basic authentication, with the user name.                                                            |
 
 Without credentials, the source is accessed anonymously. Credentials are only sent to the origin of the source:
 redirects to another host, port, or scheme are followed without credentials, and redirects from HTTPS to HTTP are
 refused.
+
+### Dependency-Track permissions
+
+In Dependency-Track, API keys belong to a team (_Administration_ > _Access Management_ > _Teams_). The plugin only reads,
+so the team needs a single permission:
+
+| Permission       | Needed for                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| `VIEW_PORTFOLIO` | All requests: reading the project, looking up its versions, and exporting its SBOM.              |
+
+If **portfolio access control** is enabled, the team also needs access to the projects to analyze, that is, to all
+versions of a project when `version` is used: Dependency-Track answers `403` for the projects not assigned to the team.
+Dependency-Track 5 also has the permission `PORTFOLIO_ACCESS_CONTROL_BYPASS`, which grants access to all projects.
+
+Do not grant permissions such as `BOM_UPLOAD` or `PORTFOLIO_MANAGEMENT`: they allow modifying the portfolio and are
+not needed. Status `401` means that the API key is missing or invalid, status `403` that the team lacks the
+permission or access to the project; the error of the analysis explains both cases.
 
 ## Errors
 

@@ -170,6 +170,7 @@ class SbomFetcherTest : WordSpec({
 
             e.message should contain("failed with status 401")
             e.message should contain("define an infrastructure service")
+            e.message should contain("Use an API key of a team with the permission 'VIEW_PORTFOLIO'.")
         }
 
         "explain an API key without permission" {
@@ -179,7 +180,8 @@ class SbomFetcherTest : WordSpec({
             val e = shouldThrow<IOException> { SbomFetcher(credentials()).fetch(source, tempdir()) }
 
             e.message should contain("failed with status 403")
-            e.message should contain("Check that the credentials")
+            e.message should contain("Check that the API key for '127.0.0.1' is valid")
+            e.message should contain("the permission 'VIEW_PORTFOLIO' and, if portfolio access control is enabled")
         }
 
         "report a version that does not exist" {

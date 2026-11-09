@@ -77,7 +77,9 @@ sources:
 
 Credentials come from the default authenticator: in ORT Server, the infrastructure service matching the URL (the
 password is the Dependency-Track API key or the sbomify token); with the ORT CLI, the `.netrc` file. They are never sent
-to another origin on redirects. See the [documentation](https://heurtematte.github.io/ort-sbom-plugin/sources/).
+to another origin on redirects. A Dependency-Track API key only needs the permission `VIEW_PORTFOLIO` (and access to
+the projects if portfolio access control is enabled). See the
+[documentation](https://heurtematte.github.io/ort-sbom-plugin/sources/).
 
 ## ORT Server
 

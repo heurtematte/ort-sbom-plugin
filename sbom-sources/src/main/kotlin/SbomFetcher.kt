@@ -42,6 +42,9 @@ import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger(SbomFetcher::class.java)
 
+/** The permission that the team of a Dependency-Track API key needs for all requests of [SbomFetcher]. */
+private const val DEPENDENCY_TRACK_PERMISSION = "VIEW_PORTFOLIO"
+
 /** Provides the credentials to access a URL, if there are any. */
 fun interface CredentialsProvider {
     /** Return the credentials for the given [url], or *null* to access it anonymously. */
@@ -97,8 +100,9 @@ data class FetchedSbom(
  * Retrieve SBOMs from [SbomSource]s, with credentials provided by [credentialsProvider]:
  *
  * - For a Dependency-Track project, the inventory exported by Dependency-Track as CycloneDX JSON. The password of the
- *   credentials is the API key; it needs the permission VIEW_PORTFOLIO. The latest version of a project is the one
- *   flagged as latest, or, if there is none, the active version whose SBOM was imported last.
+ *   credentials is the API key; its team needs the permission VIEW_PORTFOLIO and, if portfolio access control is
+ *   enabled, access to the projects. The latest version of a project is the one flagged as latest, or, if there is
+ *   none, the active version whose SBOM was imported last.
  * - For a sbomify component, its latest SBOM or the one with the requested version; for a sbomify product, its
  *   aggregated CycloneDX SBOM. The password of the credentials is the access token; public components and products do
  *   not need one.
@@ -361,13 +365,23 @@ private fun HttpResponse<ByteArray>.toException(
     hadCredentials: Boolean
 ): HttpStatusException {
     val status = statusCode()
+    val isDependencyTrack = source is SbomSource.DependencyTrackProject
     val hint = when {
         status != 401 && status != 403 -> ""
+
+        hadCredentials && isDependencyTrack -> " Check that the API key for '${url.host}' is valid and that its team " +
+            "has the permission '$DEPENDENCY_TRACK_PERMISSION' and, if portfolio access control is enabled, access to " +
+            "the project."
 
         hadCredentials -> " Check that the credentials for '${url.host}' are valid and have the required permissions."
 
         else -> " No credentials are available for '${url.host}': in ORT Server, define an infrastructure service " +
-            "for this URL; with the ORT CLI, add the host to the '.netrc' file."
+            "for this URL; with the ORT CLI, add the host to the '.netrc' file." +
+            if (isDependencyTrack) {
+                " Use an API key of a team with the permission '$DEPENDENCY_TRACK_PERMISSION'."
+            } else {
+                ""
+            }
     }
 
     return HttpStatusException(
