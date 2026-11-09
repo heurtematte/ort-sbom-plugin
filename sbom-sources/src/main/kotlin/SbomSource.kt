@@ -51,7 +51,8 @@ sealed interface SbomSource {
     /**
      * A project of the Dependency-Track instance at [baseUrl] with the given [uuid], as given by the URL of the project
      * page, such as `https://sbom.eclipse.org/projects/<uuid>`. If a [version] is given, the version of the project
-     * with the same name is exported instead; the version [LATEST] selects the latest version.
+     * with the same name is exported instead; the version [LATEST] selects the version flagged as latest, or, if no
+     * version is flagged, the active version whose SBOM was imported last.
      */
     data class DependencyTrackProject(val baseUrl: String, val uuid: String, val version: String? = null) : SbomSource {
         override val url = "$baseUrl/projects/$uuid"

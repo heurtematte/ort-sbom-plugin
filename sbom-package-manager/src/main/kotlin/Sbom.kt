@@ -21,6 +21,7 @@ import org.eclipse.apoapsis.sbom.parser.SbomDocument
 import org.eclipse.apoapsis.sbom.parser.SbomParser
 import org.eclipse.apoapsis.sbom.sources.FetchedSbom
 import org.eclipse.apoapsis.sbom.sources.SbomFetcher
+import org.eclipse.apoapsis.sbom.sources.SbomProjectMetadata
 import org.eclipse.apoapsis.sbom.sources.SbomSource
 import org.eclipse.apoapsis.sbom.sources.SbomSourceFile
 
@@ -43,6 +44,7 @@ import org.ossreviewtoolkit.plugins.api.OrtPlugin
 import org.ossreviewtoolkit.plugins.api.OrtPluginOption
 import org.ossreviewtoolkit.plugins.api.PluginDescriptor
 import org.ossreviewtoolkit.utils.common.collectMessages
+import org.ossreviewtoolkit.utils.ort.DeclaredLicenseProcessor
 import org.ossreviewtoolkit.utils.ort.createOrtTempDir
 
 import org.slf4j.LoggerFactory
@@ -201,14 +203,14 @@ class Sbom(
         excludes: Excludes,
         includes: Includes
     ): List<ProjectAnalyzerResult> {
-        val sources = SbomSourceFile.parse(sourceFile)
-        require(sources.isNotEmpty()) { "The SBOM source file '${sourceFile.name}' does not list any sources." }
+        val entries = SbomSourceFile.parse(sourceFile)
+        require(entries.isNotEmpty()) { "The SBOM source file '${sourceFile.name}' does not list any sources." }
 
         val projectDir = sourceFile.parentFile
         val downloadDir = createOrtTempDir("sbom-sources")
 
         return try {
-            sources.flatMap { source ->
+            entries.flatMap { (source, projectMetadata) ->
                 val fetched = runCatching { fetcher.fetch(source, downloadDir) }.getOrElse { e ->
                     logger.error("Could not retrieve the SBOM of {}: {}", source.description, e.collectMessages())
                     return@flatMap listOf(failedSourceResult(source, definitionFilePath, projectDir, e))
@@ -227,6 +229,7 @@ class Sbom(
                 )
 
                 analyzeDocument(document, definitionFilePath, projectDir, fetched.fallbackName(), excludes, includes)
+                    .map { result -> result.copy(project = result.project.withMetadata(projectMetadata)) }
             }
         } finally {
             downloadDir.deleteRecursively()
@@ -360,6 +363,21 @@ class Sbom(
 /** The name of the project created for a fetched SBOM that describes no component and has no name. */
 private fun FetchedSbom.fallbackName(): String =
     listOfNotNull(name, version).joinToString(" ").ifEmpty { source.url }
+
+/** Return this project with the values of the given [metadata] in place of those of the SBOM. */
+private fun Project.withMetadata(metadata: SbomProjectMetadata): Project {
+    if (metadata.isEmpty()) return this
+
+    val licenses = metadata.declaredLicenses.ifEmpty { declaredLicenses }
+
+    return copy(
+        authors = metadata.authors.ifEmpty { authors },
+        declaredLicenses = licenses,
+        declaredLicensesProcessed = DeclaredLicenseProcessor.process(licenses),
+        description = metadata.description ?: description,
+        homepageUrl = metadata.homepageUrl ?: homepageUrl
+    )
+}
 
 /** The ref of the artificial root used for SBOMs that do not describe a component. */
 internal const val SYNTHETIC_ROOT_REF = "\u0000root"

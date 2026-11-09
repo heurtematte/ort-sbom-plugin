@@ -17,9 +17,13 @@ sources:
   # A Dependency-Track project: the URL of its page in the Dependency-Track frontend.
   - https://sbom.eclipse.org/projects/00000000-0000-0000-0000-000000000000
 
-  # The latest version of the same project, or a given version.
+  # The latest version of the same project, or a given version, with metadata missing from its SBOM.
   - url: https://sbom.eclipse.org/projects/00000000-0000-0000-0000-000000000000
     version: latest
+    project:
+      description: The product
+      homepage: https://example.org/product
+      licenses: [EPL-2.0]
 
   # A sbomify component (its latest SBOM, or the one of the given version) or product.
   - https://app.sbomify.com/component/<component-id>/
@@ -37,16 +41,34 @@ sources:
 | --------- | ------------------------------------------------------------------------------------------------------------------- |
 | `url`     | The URL of the source. Required.                                                                                    |
 | `type`    | `dependency-track`, `sbomify`, or `document`. By default, detected from the URL: Dependency-Track project pages (`/projects/<uuid>`) and sbomify component and product pages (`/component/<id>/`, `/product/<id>/`, optionally below `/public`) are recognized, any other URL is a document. |
-| `version` | For a Dependency-Track project, the version of the project with the same name to analyze, or `latest`. For a sbomify component, the version of its SBOM, or `latest`. Not supported for documents and sbomify products. |
+| `version` | For a Dependency-Track project, the version of the project with the same name to analyze, or `latest`: the version flagged as the latest version in Dependency-Track, or, if no version is flagged, the active version whose SBOM was imported last. For a sbomify component, the version of its SBOM, or `latest`. Not supported for documents and sbomify products. |
+| `project` | Metadata of the projects described by the SBOM, see [Project metadata](#project-metadata). |
 
 Each source becomes one or more projects, with the source file as definition file. Since the source file is versioned
 in Git, the revision of an analysis records which sources, and which pinned versions, were analyzed.
+
+## Project metadata
+
+The metadata of a project, such as its description and licenses, is taken from the component that the SBOM describes.
+SBOMs often lack it: the SBOMs exported by Dependency-Track, for instance, only contain the metadata of the project in
+Dependency-Track. As the curations of ORT apply to packages, not to projects, the metadata of the projects of a source
+can be given in the source file:
+
+| Key           | Description                                                                         |
+| ------------- | ----------------------------------------------------------------------------------- |
+| `description` | The description of the project.                                                     |
+| `homepage`    | The URL of the homepage of the project.                                             |
+| `authors`     | The authors of the project, as a string or a list of strings.                       |
+| `licenses`    | The declared licenses of the project, as SPDX expressions, as a string or a list.  |
+
+Each given value replaces the corresponding value of the SBOM in all projects of the source; the other values are kept.
+If the SBOM declares no authors, its supplier is used, such as the publisher of the project in Dependency-Track.
 
 ## What is retrieved
 
 | Source                  | API calls                                                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Dependency-Track project | `GET /api/v1/project/{uuid}`, then `/api/v1/project/lookup` or `/api/v1/project/latest/{name}` if a version is selected, then the CycloneDX inventory export `GET /api/v1/bom/cyclonedx/project/{uuid}?format=json&variant=inventory`. |
+| Dependency-Track project | `GET /api/v1/project/{uuid}`, then `/api/v1/project/lookup` or `/api/v1/project/latest/{name}` if a version is selected (if no version is flagged as the latest version, `/api/v1/project?name={name}` to find the version imported last), then the CycloneDX inventory export `GET /api/v1/bom/cyclonedx/project/{uuid}?format=json&variant=inventory`. |
 | sbomify component       | `GET /api/v1/components/{id}/sboms` (latest SBOM, or filtered by version), then `GET /api/v1/sboms/{id}/download`. |
 | sbomify product         | `GET /api/v1/products/{id}/download?format=cyclonedx`, the aggregated SBOM of the product.                   |
 | Document                | `GET` of the URL.                                                                                            |
@@ -97,10 +119,10 @@ An invalid source file, such as one with an unknown key or a version for a docum
 The retrieval is implemented in the `sbom-sources` library, which can be used without ORT:
 
 ```kotlin
-val sources = SbomSourceFile.parse(File("sbom-sources.yml"))
+val entries = SbomSourceFile.parse(File("sbom-sources.yml"))
 val fetcher = SbomFetcher(CredentialsProvider.DEFAULT)
 
-sources.forEach { source ->
+entries.forEach { (source, project) ->
     val sbom = fetcher.fetch(source, outputDir)
     println("${source.description}: ${sbom.format.displayName} ${sbom.name} ${sbom.version} sha256:${sbom.sha256}")
 }

@@ -42,12 +42,47 @@ import org.ossreviewtoolkit.model.config.PackageManagerConfiguration
 
 private const val UUID = "44444444-4444-4444-4444-444444444444"
 
+/** An SBOM like those exported by sbom.eclipse.org, whose components have a publisher or supplier but no authors. */
+private val CHE_SBOM = """
+    {
+      "bomFormat": "CycloneDX",
+      "specVersion": "1.5",
+      "version": 1,
+      "metadata": {
+        "component": {
+          "type": "library",
+          "bom-ref": "che-server",
+          "publisher": "Red Hat, Inc.",
+          "name": "che-server",
+          "version": "7.124.0",
+          "purl": "pkg:maven/org.eclipse.che/che-server@7.124.0?type=pom"
+        }
+      },
+      "components": [
+        {
+          "type": "library",
+          "bom-ref": "commons-io",
+          "supplier": { "name": "The Apache Software Foundation" },
+          "group": "commons-io",
+          "name": "commons-io",
+          "version": "2.16.1",
+          "purl": "pkg:maven/commons-io/commons-io@2.16.1"
+        }
+      ],
+      "dependencies": [
+        { "ref": "che-server", "dependsOn": ["commons-io"] },
+        { "ref": "commons-io", "dependsOn": [] }
+      ]
+    }
+""".trimIndent()
+
 class SbomSourcesTest : WordSpec({
     val server = MockSbomServer()
 
     server.dependencyTrackProject(UUID, "angus-imap", "2.0.3", SbomFixtures.bytes(SbomFixtures.CYCLONEDX_1_4_JSON))
     server.respond("/releases/vertx.cdx.xml", SbomFixtures.bytes(SbomFixtures.CYCLONEDX_1_6_XML))
     server.respond("/releases/product.spdx3.json", SbomFixtures.bytes(SbomFixtures.SPDX_3_0_SBOMIFY))
+    server.respond("/releases/che.cdx.json", CHE_SBOM.toByteArray())
 
     afterSpec { server.close() }
 
@@ -125,6 +160,40 @@ class SbomSourcesTest : WordSpec({
                 "sbom-sources.yml",
                 SbomFixtures.CYCLONEDX_1_6_JSON.substringAfterLast('/')
             )
+        }
+
+        "use the supplier of components without authors as their author" {
+            val dir = tempdir()
+            File(dir, "sbom-sources.yml").writeText("sources:\n  - ${server.baseUrl}/releases/che.cdx.json\n")
+
+            val result = analyze(dir)
+
+            result.getProjects().single().authors should containExactly("Red Hat, Inc.")
+            result.getPackages().single().metadata.authors should containExactly("The Apache Software Foundation")
+        }
+
+        "replace the metadata of the project with the metadata in the source file" {
+            val dir = tempdir()
+            File(dir, "sbom-sources.yml").writeText(
+                """
+                sources:
+                  - url: ${server.baseUrl}/releases/che.cdx.json
+                    project:
+                      description: Eclipse Che
+                      homepage: https://eclipse.dev/che/
+                      authors: [Eclipse Che contributors]
+                      licenses: EPL-2.0
+                """.trimIndent()
+            )
+
+            val project = analyze(dir).getProjects().single()
+
+            project.id shouldBe Identifier("SBOM:org.eclipse.che:che-server:7.124.0")
+            project.description shouldBe "Eclipse Che"
+            project.homepageUrl shouldBe "https://eclipse.dev/che/"
+            project.authors should containExactly("Eclipse Che contributors")
+            project.declaredLicenses should containExactly("EPL-2.0")
+            project.declaredLicensesProcessed.spdxExpression?.toString() shouldBe "EPL-2.0"
         }
 
         "report an invalid source file" {

@@ -106,10 +106,56 @@ class SbomSourceTest : WordSpec({
             )
 
             sources should containExactly(
-                SbomSource.SbomifyComponent("https://app.sbomify.com", "abc"),
-                SbomSource.DependencyTrackProject("https://sbom.eclipse.org", UUID, "latest"),
-                SbomSource.Document("https://example.org/component/sbom/")
+                SbomSourceEntry(SbomSource.SbomifyComponent("https://app.sbomify.com", "abc")),
+                SbomSourceEntry(SbomSource.DependencyTrackProject("https://sbom.eclipse.org", UUID, "latest")),
+                SbomSourceEntry(SbomSource.Document("https://example.org/component/sbom/"))
             )
+        }
+
+        "parse the metadata of the project of a source" {
+            val sources = SbomSourceFile.parse(
+                """
+                sources:
+                  - url: https://sbom.eclipse.org/projects/$UUID
+                    version: "7.124.0"
+                    project:
+                      description: " Eclipse Che "
+                      homepage: https://eclipse.dev/che/
+                      authors: Eclipse Che contributors
+                      licenses:
+                        - EPL-2.0
+                        - Apache-2.0 OR MIT
+                  - url: https://example.org/bom.json
+                    project:
+                      licenses: []
+                """.trimIndent()
+            )
+
+            sources should containExactly(
+                SbomSourceEntry(
+                    SbomSource.DependencyTrackProject("https://sbom.eclipse.org", UUID, "7.124.0"),
+                    SbomProjectMetadata(
+                        description = "Eclipse Che",
+                        homepageUrl = "https://eclipse.dev/che/",
+                        authors = setOf("Eclipse Che contributors"),
+                        declaredLicenses = setOf("EPL-2.0", "Apache-2.0 OR MIT")
+                    )
+                ),
+                SbomSourceEntry(SbomSource.Document("https://example.org/bom.json"))
+            )
+        }
+
+        "reject invalid project metadata" {
+            mapOf(
+                "project: https://example.org" to "The value of 'project' must be a map.",
+                "project:\n      licence: MIT" to "Unknown keys 'licence' in 'project'",
+                "project:\n      authors: { name: X }" to "The value of 'authors' must be a string or a list",
+                "project:\n      licenses: [[MIT]]" to "The items of 'licenses' must be strings."
+            ).forEach { (project, message) ->
+                shouldThrow<IllegalArgumentException> {
+                    SbomSourceFile.parse("sources:\n  - url: https://example.org/bom.json\n    $project")
+                }.message should contain(message)
+            }
         }
 
         "accept an empty list of sources" {

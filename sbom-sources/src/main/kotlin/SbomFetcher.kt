@@ -28,9 +28,12 @@ import java.util.Base64
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.longOrNull
 
 import org.eclipse.apoapsis.sbom.parser.SbomFormat
 import org.eclipse.apoapsis.sbom.parser.SbomParser
@@ -94,7 +97,8 @@ data class FetchedSbom(
  * Retrieve SBOMs from [SbomSource]s, with credentials provided by [credentialsProvider]:
  *
  * - For a Dependency-Track project, the inventory exported by Dependency-Track as CycloneDX JSON. The password of the
- *   credentials is the API key; it needs the permission VIEW_PORTFOLIO.
+ *   credentials is the API key; it needs the permission VIEW_PORTFOLIO. The latest version of a project is the one
+ *   flagged as latest, or, if there is none, the active version whose SBOM was imported last.
  * - For a sbomify component, its latest SBOM or the one with the requested version; for a sbomify product, its
  *   aggregated CycloneDX SBOM. The password of the credentials is the access token; public components and products do
  *   not need one.
@@ -112,6 +116,11 @@ class SbomFetcher(
         private const val DEFAULT_CONNECT_TIMEOUT_SECONDS = 30L
         private const val DEFAULT_REQUEST_TIMEOUT_MINUTES = 10L
         private const val MAX_REDIRECTS = 5
+        private const val HTTP_NOT_FOUND = 404
+
+        /** The page size and the maximum number of pages when listing the versions of a Dependency-Track project. */
+        private const val PAGE_SIZE = 100
+        private const val MAX_PAGES = 100
 
         /** The headers that carry credentials. */
         private val CREDENTIAL_HEADERS = setOf("Authorization", "X-Api-Key")
@@ -174,7 +183,7 @@ class SbomFetcher(
         val project = when (source.version) {
             null, referencedVersion -> referenced
 
-            SbomSource.LATEST -> getJson(api.resolve("project/latest/${name.orEmpty().pathEncode()}"), apiHeaders, source)
+            SbomSource.LATEST -> latestDependencyTrackVersion(api, apiHeaders, source, name.orEmpty())
 
             else -> {
                 val query = "name=${name.orEmpty().queryEncode()}&version=${source.version.queryEncode()}"
@@ -190,6 +199,61 @@ class SbomFetcher(
         val content = get(export, apiHeaders + ("Accept" to "application/vnd.cyclonedx+json"), source)
 
         return Download(content, name, version)
+    }
+
+    /**
+     * Return the latest version of the Dependency-Track project with the given [name]: the version flagged as the
+     * latest version, or, if no version is flagged or the instance does not support the flag (before
+     * Dependency-Track 4.12), the active version whose SBOM was imported last.
+     */
+    private fun latestDependencyTrackVersion(
+        api: URI,
+        headers: Map<String, String>,
+        source: SbomSource,
+        name: String
+    ): JsonObject {
+        try {
+            return getJson(api.resolve("project/latest/${name.pathEncode()}"), headers, source)
+        } catch (e: HttpStatusException) {
+            if (e.status != HTTP_NOT_FOUND) throw e
+        }
+
+        val latest = dependencyTrackVersions(api, headers, source, name)
+            .filter { it.boolean("active") != false }
+            .mapNotNull { project -> project.long("lastBomImport")?.let { project to it } }
+            .maxByOrNull { (_, lastBomImport) -> lastBomImport }
+            ?.first
+            ?: throw IOException(
+                "No active version of the Dependency-Track project '$name' has an SBOM (${source.description})."
+            )
+
+        logger.info(
+            "No version of the Dependency-Track project '{}' is flagged as the latest version; using version '{}', " +
+                "whose SBOM was imported last.",
+            name,
+            latest.string("version")
+        )
+
+        return latest
+    }
+
+    /** Return all versions of the Dependency-Track project with the given [name], excluding inactive versions. */
+    private fun dependencyTrackVersions(
+        api: URI,
+        headers: Map<String, String>,
+        source: SbomSource,
+        name: String
+    ): List<JsonObject> {
+        val versions = mutableListOf<JsonObject>()
+
+        for (page in 1..MAX_PAGES) {
+            val query = "name=${name.queryEncode()}&excludeInactive=true&pageSize=$PAGE_SIZE&pageNumber=$page"
+            val items = getJsonArray(api.resolve("project?$query"), headers, source)
+            items.filterIsInstance<JsonObject>().filterTo(versions) { it.string("name") == name }
+            if (items.size < PAGE_SIZE) break
+        }
+
+        return versions
     }
 
     private fun fetchSbomifyComponent(source: SbomSource.SbomifyComponent): Download {
@@ -228,10 +292,17 @@ class SbomFetcher(
             mapOf("Authorization" to "Basic $token")
         }.orEmpty()
 
-    private fun getJson(url: URI, headers: Map<String, String>, source: SbomSource): JsonObject {
-        val content = get(url, headers + ("Accept" to "application/json"), source)
-        return runCatching { json.parseToJsonElement(content.decodeToString()) }.getOrNull() as? JsonObject
+    private fun getJson(url: URI, headers: Map<String, String>, source: SbomSource): JsonObject =
+        getJsonElement(url, headers, source) as? JsonObject
             ?: throw IOException("Unexpected response from '${url.withoutQuery()}' for ${source.description}.")
+
+    private fun getJsonArray(url: URI, headers: Map<String, String>, source: SbomSource): JsonArray =
+        getJsonElement(url, headers, source) as? JsonArray
+            ?: throw IOException("Unexpected response from '${url.withoutQuery()}' for ${source.description}.")
+
+    private fun getJsonElement(url: URI, headers: Map<String, String>, source: SbomSource): JsonElement? {
+        val content = get(url, headers + ("Accept" to "application/json"), source)
+        return runCatching { json.parseToJsonElement(content.decodeToString()) }.getOrNull()
     }
 
     private fun get(url: URI, headers: Map<String, String>, source: SbomSource): ByteArray {
@@ -281,7 +352,14 @@ class SbomFetcher(
     private data class Download(val content: ByteArray, val name: String?, val version: String?)
 }
 
-private fun HttpResponse<ByteArray>.toException(url: URI, source: SbomSource, hadCredentials: Boolean): IOException {
+/** A request that failed with the HTTP [status]. */
+private class HttpStatusException(val status: Int, message: String) : IOException(message)
+
+private fun HttpResponse<ByteArray>.toException(
+    url: URI,
+    source: SbomSource,
+    hadCredentials: Boolean
+): HttpStatusException {
     val status = statusCode()
     val hint = when {
         status != 401 && status != 403 -> ""
@@ -292,7 +370,10 @@ private fun HttpResponse<ByteArray>.toException(url: URI, source: SbomSource, ha
             "for this URL; with the ORT CLI, add the host to the '.netrc' file."
     }
 
-    return IOException("Request to '${url.withoutQuery()}' for ${source.description} failed with status $status.$hint")
+    return HttpStatusException(
+        status,
+        "Request to '${url.withoutQuery()}' for ${source.description} failed with status $status.$hint"
+    )
 }
 
 private fun URI.hasSameOrigin(other: URI): Boolean =
@@ -306,6 +387,10 @@ private fun URI.effectivePort(): Int =
 private fun URI.withoutQuery(): String = toString().substringBefore('?')
 
 private fun JsonObject.string(key: String): String? = (get(key) as? JsonPrimitive)?.contentOrNull
+
+private fun JsonObject.long(key: String): Long? = (get(key) as? JsonPrimitive)?.longOrNull
+
+private fun JsonObject.boolean(key: String): Boolean? = (get(key) as? JsonPrimitive)?.booleanOrNull
 
 private fun String.queryEncode(): String = URLEncoder.encode(this, Charsets.UTF_8)
 

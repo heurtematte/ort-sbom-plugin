@@ -36,6 +36,10 @@ import org.eclipse.apoapsis.sbom.sources.DependencyTrackResponses.dependencyTrac
 private const val UUID_1 = "11111111-1111-1111-1111-111111111111"
 private const val UUID_2 = "22222222-2222-2222-2222-222222222222"
 private const val UUID_3 = "33333333-3333-3333-3333-333333333333"
+private const val UUID_4 = "44444444-4444-4444-4444-444444444444"
+private const val UUID_5 = "55555555-5555-5555-5555-555555555555"
+private const val UUID_6 = "66666666-6666-6666-6666-666666666666"
+private const val UUID_7 = "77777777-7777-7777-7777-777777777777"
 
 private const val EXPORT_QUERY = "?format=json&variant=inventory&download=true"
 
@@ -104,6 +108,58 @@ class SbomFetcherTest : WordSpec({
 
             fetched.version shouldBe "5.1.0"
             server.requestsTo("/api/v1/bom/cyclonedx/project/$UUID_3$EXPORT_QUERY").size shouldBe 1
+        }
+
+        "export the active version imported last if no version is flagged as the latest version" {
+            // Dependency-Track answers 404 for project/latest/vertx-core, as no version is flagged.
+            server.dependencyTrackProject(UUID_4, "vertx-core", "4.5.0", otherCyclonedx)
+            server.dependencyTrackProject(UUID_5, "vertx-core", "5.0.0", cyclonedx)
+            server.respondJson(
+                "/api/v1/project?name=vertx-core&excludeInactive=true&pageSize=100&pageNumber=1",
+                """
+                [
+                  {"uuid":"$UUID_4","name":"vertx-core","version":"4.5.0","active":true,"lastBomImport":1000},
+                  {"uuid":"$UUID_5","name":"vertx-core","version":"5.0.0","active":true,"lastBomImport":3000},
+                  {"uuid":"$UUID_6","name":"vertx-core","version":"6.0.0","active":false,"lastBomImport":4000},
+                  {"uuid":"$UUID_7","name":"vertx-core","version":"5.1.0","active":true},
+                  {"uuid":"$UUID_1","name":"vertx-core-tests","version":"5.2.0","active":true,"lastBomImport":5000}
+                ]
+                """.trimIndent()
+            )
+
+            val source = SbomSource.parse("${server.baseUrl}/projects/$UUID_4", version = "latest")
+
+            val fetched = SbomFetcher(credentials()).fetch(source, tempdir())
+
+            fetched.version shouldBe "5.0.0"
+            fetched.file.readBytes() shouldBe cyclonedx
+            server.requestsTo("/api/v1/project/latest/vertx-core").size shouldBe 1
+        }
+
+        "report a project without any version with an SBOM" {
+            server.dependencyTrackProject(UUID_6, "vertx-web", "1.0.0", otherCyclonedx)
+            server.respondJson(
+                "/api/v1/project?name=vertx-web&excludeInactive=true&pageSize=100&pageNumber=1",
+                """[{"uuid":"$UUID_6","name":"vertx-web","version":"1.0.0","active":true}]"""
+            )
+
+            val source = SbomSource.parse("${server.baseUrl}/projects/$UUID_6", version = "latest")
+
+            val e = shouldThrow<IOException> { SbomFetcher(credentials()).fetch(source, tempdir()) }
+
+            e.message should contain("No active version of the Dependency-Track project 'vertx-web' has an SBOM")
+        }
+
+        "not hide other errors when looking up the latest version" {
+            server.dependencyTrackProject(UUID_7, "vertx-auth", "1.0.0", otherCyclonedx)
+            server.respond("/api/v1/project/latest/vertx-auth", status = 403)
+
+            val source = SbomSource.parse("${server.baseUrl}/projects/$UUID_7", version = "latest")
+
+            val e = shouldThrow<IOException> { SbomFetcher(credentials()).fetch(source, tempdir()) }
+
+            e.message should contain("/api/v1/project/latest/vertx-auth' for Dependency-Track project")
+            e.message should contain("failed with status 403")
         }
 
         "explain a missing API key" {

@@ -129,7 +129,7 @@ internal class SbomDependencyHandler(
             id = identifierFor(node),
             cpe = component.cpe,
             definitionFilePath = definitionFilePath,
-            authors = component.authors,
+            authors = component.authorsOrSupplier(),
             declaredLicenses = component.declaredLicenses.ifEmpty {
                 setOfNotNull(
                     component.concludedLicense.takeIf {
@@ -159,7 +159,7 @@ internal class SbomDependencyHandler(
             id = id,
             purl = purl.orEmpty(),
             cpe = cpe,
-            authors = authors,
+            authors = authorsOrSupplier(),
             declaredLicenses = declared,
             concludedLicense = concluded,
             description = description.orEmpty(),
@@ -203,6 +203,12 @@ internal fun sanitizedIdentifier(type: String, namespace: String, name: String, 
     fun String.encoded() = replace(":", "%3A")
     return Identifier(type.encoded(), namespace.encoded(), name.encoded(), version.encoded())
 }
+
+/**
+ * Return the authors of this component, or, if the SBOM declares none, its supplier, such as the supplier,
+ * manufacturer, or publisher of a CycloneDX component, so that the party responsible for the component is known.
+ */
+private fun SbomComponent.authorsOrSupplier(): Set<String> = authors.ifEmpty { setOfNotNull(supplier) }
 
 /** Return the [VcsInfo] for the VCS URL of this component, which may contain a revision and a path. */
 private fun SbomComponent.vcsInfo(): VcsInfo {

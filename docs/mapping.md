@@ -28,7 +28,7 @@ All other components become packages.
 | CPE                   | `cpe`                                        | `cpe23Type` / `cpe22Type` reference     | `cpe23` / `cpe22` identifier             |
 | Declared licenses     | `licenses` (declared)                        | `licenseDeclared`                       | `hasDeclaredLicense` relationships       |
 | Concluded license     | `licenses` (acknowledgement `concluded`)     | `licenseConcluded`                      | `hasConcludedLicense` relationships      |
-| Authors               | `authors`, `author`                          | `originator`                            | `originatedBy`                           |
+| Authors               | `authors`, `author`, else `supplier`, `manufacturer`, `publisher` | `originator`, else `supplier` | `originatedBy`, else `suppliedBy` |
 | Description           | `description`                                | `description`, `summary`                | `description`, `summary`                 |
 | Homepage              | `website` external reference                 | `homepage`                              | `software_homePage`                      |
 | VCS                   | `vcs` external reference                     | VCS `downloadLocation`                  | `vcs` external reference                 |
