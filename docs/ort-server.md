@@ -63,14 +63,19 @@ credentials of the infrastructure services of the repository. The values are als
 
 ### Docker Compose
 
-In a checkout of ORT Server, start the Docker Compose setup with
-[`ort-server/compose.yml`](https://github.com/heurtematte/ort-sbom-plugin/blob/main/ort-server/compose.yml), which
-replaces the images of core and analyzer worker:
+[`ort-server/compose.yml`](https://github.com/heurtematte/ort-sbom-plugin/blob/main/ort-server/compose.yml) replaces
+all images of the Docker Compose setup of ORT Server with the published images, by default those of ORT Server 0.99.1.
+Use it together with the `docker-compose.yml` of a checkout of the same release of ORT Server:
 
 ```shell
-export ORT_SERVER_IMAGE_TAG=0.99.1
+git clone --depth 1 --branch 0.99.1 https://github.com/eclipse-apoapsis/ort-server.git
+cd ort-server
 docker compose -f docker-compose.yml -f <ort-sbom-plugin>/ort-server/compose.yml up
 ```
+
+Set `ORT_SERVER_IMAGE_TAG` to use another release of ORT Server, for which the images must have been published, and
+`ORT_SERVER_IMAGE_PREFIX` to take the images without the plugin from another registry, such as
+`ghcr.io/eclipse-apoapsis/`.
 
 ### Building the images
 
@@ -84,7 +89,8 @@ ort-server/build-images.sh 0.99.1
 PUSH=1 MIRROR=1 ort-server/build-images.sh 0.99.1 registry.example.org/ort-server
 ```
 
-With Docker Compose, use local images with `ORT_SERVER_SBOM_IMAGE_PREFIX=ort-server-sbom/`.
+With Docker Compose, use the local images of core and analyzer worker with
+`ORT_SERVER_SBOM_IMAGE_PREFIX=ort-server-sbom/`.
 
 ## Analyzing SBOMs
 
@@ -122,7 +128,7 @@ With the plugin installed, SBOMs are analyzed from Git repositories:
     ```
 
     The package manager can also be enabled in the `.ort.yml` file of the repository
-    (`analyzer.enabledPackageManagers`), or together with other package managers for source code repositories that
+    (`analyzer.enabled_package_managers`), or together with other package managers for source code repositories that
     contain SBOMs.
 
 At each run, the analyzer worker retrieves the current SBOMs of the sources, so the results follow the SBOMs published
