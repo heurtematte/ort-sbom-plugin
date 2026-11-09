@@ -31,7 +31,9 @@ import java.util.Base64
 
 import org.eclipse.apoapsis.sbom.parser.SbomFixtures
 import org.eclipse.apoapsis.sbom.parser.SbomFormat
+import org.eclipse.apoapsis.sbom.sources.DependencyTrackResponses.dependencyTrackInstance
 import org.eclipse.apoapsis.sbom.sources.DependencyTrackResponses.dependencyTrackProject
+import org.eclipse.apoapsis.sbom.sources.SbomifyResponses.sbomifyInstance
 
 private const val UUID_1 = "11111111-1111-1111-1111-111111111111"
 private const val UUID_2 = "22222222-2222-2222-2222-222222222222"
@@ -168,9 +170,10 @@ class SbomFetcherTest : WordSpec({
 
             val e = shouldThrow<IOException> { SbomFetcher(CredentialsProvider.NONE).fetch(source, tempdir()) }
 
-            e.message should contain("failed with status 401")
+            e.message should contain("No credentials are available for '127.0.0.1'")
             e.message should contain("define an infrastructure service")
-            e.message should contain("Use an API key of a team with the permission 'VIEW_PORTFOLIO'.")
+            e.message should contain("permission 'VIEW_PORTFOLIO'")
+            server.requestsTo("/api/v1/project/$UUID_2-0").size shouldBe 0
         }
 
         "explain an API key without permission" {
@@ -189,8 +192,8 @@ class SbomFetcherTest : WordSpec({
 
             val e = shouldThrow<IOException> { SbomFetcher(credentials()).fetch(source, tempdir()) }
 
-            e.message should contain("/api/v1/project/lookup' for Dependency-Track project $UUID_1")
-            e.message should contain("(version '9.9.9') failed with status 404")
+            e.message shouldBe "The Dependency-Track project 'vertx-grpcio-common' has no version '9.9.9'. Use one " +
+                "of its versions, 'latest', or no version for the version of the project URL."
         }
     }
 
@@ -198,6 +201,8 @@ class SbomFetcherTest : WordSpec({
         val cyclonedx = SbomFixtures.bytes(SbomFixtures.CYCLONEDX_1_7_SBOMIFY)
         val spdx = SbomFixtures.bytes(SbomFixtures.SPDX_3_0_SBOMIFY)
 
+        server.sbomifyInstance()
+        server.respondJson("/api/v1/components/comp1", """{"id":"comp1","name":"comp"}""")
         server.respondJson(
             "/api/v1/components/comp1/sboms?page=1&page_size=1",
             """{"items":[{"sbom":{"id":"sbom-latest","name":"comp","version":"2.0","format":"cyclonedx"}}]}"""
@@ -300,6 +305,82 @@ class SbomFetcherTest : WordSpec({
 
             shouldThrow<IOException> { SbomFetcher().fetch(source, tempdir()) }.message should
                 contain("Too many redirects")
+        }
+    }
+
+    "Identifying the server" should {
+        val cyclonedx = SbomFixtures.bytes(SbomFixtures.CYCLONEDX_1_6_JSON)
+
+        "fail before sending credentials to a server that is not Dependency-Track" {
+            MockSbomServer().use { notDependencyTrack ->
+                notDependencyTrack.respondJson("/api/v1/project/$UUID_5", """{"uuid":"$UUID_5"}""")
+                val source = SbomSource.DependencyTrackProject(notDependencyTrack.baseUrl, UUID_5)
+                val credentials = CredentialsProvider { PasswordAuthentication("", "secret".toCharArray()) }
+
+                val e = shouldThrow<SbomServerIdentificationException> {
+                    SbomFetcher(credentials).fetch(source, tempdir())
+                }
+
+                e.message should contain("is not a Dependency-Track instance")
+                notDependencyTrack.requests.filter { "x-api-key" in it.headers }.size shouldBe 0
+                notDependencyTrack.requestsTo("/api/v1/project/$UUID_5").size shouldBe 0
+            }
+        }
+
+        "call the API server configured in the frontend" {
+            otherServer.dependencyTrackProject(UUID_6, "api-server-project", "1.0.0", cyclonedx)
+
+            MockSbomServer().use { frontend ->
+                frontend.dependencyTrackInstance(apiBaseUrl = otherServer.baseUrl)
+                val credentials = CredentialsProvider { url ->
+                    PasswordAuthentication("", "secret".toCharArray()).takeIf { url.isOn(frontend) }
+                }
+
+                val fetched = SbomFetcher(credentials)
+                    .fetch(SbomSource.DependencyTrackProject(frontend.baseUrl, UUID_6), tempdir())
+
+                fetched.name shouldBe "api-server-project"
+                otherServer.requestsTo("/api/v1/project/$UUID_6").single().headers shouldContain ("x-api-key" to "secret")
+                frontend.requestsTo("/api/v1/project/$UUID_6").size shouldBe 0
+            }
+        }
+
+        "not identify the server if disabled" {
+            val source = SbomSource.DependencyTrackProject(server.baseUrl, UUID_1)
+
+            SbomFetcher(credentials(), identifyServers = false).fetch(source, tempdir())
+
+            server.requestsTo("/api/version").size shouldBe 0
+            server.requestsTo("/static/config.json").size shouldBe 0
+        }
+
+        "identify a server only once" {
+            val fetcher = SbomFetcher(credentials())
+
+            fetcher.fetch(SbomSource.DependencyTrackProject(server.baseUrl, UUID_1), tempdir())
+            fetcher.fetch(SbomSource.DependencyTrackProject(server.baseUrl, UUID_2), tempdir())
+
+            server.requestsTo("/api/version").size shouldBe 1
+        }
+    }
+
+    "Fetching the name of a source" should {
+        "return the name of a Dependency-Track project without exporting its SBOM" {
+            val source = SbomSource.DependencyTrackProject(server.baseUrl, UUID_1)
+
+            SbomFetcher(credentials()).fetchName(source) shouldBe "vertx-grpcio-common"
+
+            server.requestsTo("/api/v1/bom/cyclonedx/project/$UUID_1$EXPORT_QUERY").size shouldBe 0
+        }
+
+        "return the name of a sbomify component" {
+            SbomFetcher(CredentialsProvider.NONE).fetchName(SbomSource.parse("${server.baseUrl}/component/comp1/")) shouldBe
+                "comp"
+        }
+
+        "return no name for a document" {
+            SbomFetcher(CredentialsProvider.NONE).fetchName(SbomSource.Document("${server.baseUrl}/sbom.json")) shouldBe
+                null
         }
     }
 })

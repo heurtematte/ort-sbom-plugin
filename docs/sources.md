@@ -64,11 +64,27 @@ can be given in the source file:
 Each given value replaces the corresponding value of the SBOM in all projects of the source; the other values are kept.
 If the SBOM declares no authors, its supplier is used, such as the publisher of the project in Dependency-Track.
 
+## Server identification
+
+Before any request with credentials, the server of a Dependency-Track or sbomify source is identified through the
+public endpoints these platforms provide, without credentials. If the server is not what the URL of the source suggests,
+or cannot be reached, the source fails at once and no credentials are sent to it.
+
+| Source           | Identification                                                                                              |
+| ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| Dependency-Track | `GET <frontend>/static/config.json`: its `API_BASE_URL` gives the API server if the frontend does not serve the API; then `GET <api>/api/version`, whose `application` must be Dependency-Track. Both endpoints exist in Dependency-Track 4 and 5. |
+| sbomify          | `GET <base>/api/v1/openapi.json`, whose title must be the sbomify API.                                     |
+| Document         | None: a document is not a server.                                                                           |
+
+Each server is identified once per analysis. Redirects are only followed on the same host. As the identification only
+depends on these endpoints, upgrading Dependency-Track or sbomify does not change it, as long as the platforms keep
+their API version 1.
+
 ## What is retrieved
 
 | Source                  | API calls                                                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Dependency-Track project | `GET /api/v1/project/{uuid}`, then `/api/v1/project/lookup` or `/api/v1/project/latest/{name}` if a version is selected (if no version is flagged as the latest version, `/api/v1/project?name={name}` to find the version imported last), then the CycloneDX inventory export `GET /api/v1/bom/cyclonedx/project/{uuid}?format=json&variant=inventory`. |
+| Dependency-Track project | `GET /api/v1/project/{uuid}` on the identified API server, then `/api/v1/project/lookup` or `/api/v1/project/latest/{name}` if a version is selected (if no version is flagged as the latest version, `/api/v1/project?name={name}` to find the version imported last), then the CycloneDX inventory export `GET /api/v1/bom/cyclonedx/project/{uuid}?format=json&variant=inventory`. |
 | sbomify component       | `GET /api/v1/components/{id}/sboms` (latest SBOM, or filtered by version), then `GET /api/v1/sboms/{id}/download`. |
 | sbomify product         | `GET /api/v1/products/{id}/download?format=cyclonedx`, the aggregated SBOM of the product.                   |
 | Document                | `GET` of the URL.                                                                                            |
@@ -95,7 +111,9 @@ The password is used as follows:
 | sbomify          | Access token, sent as `Authorization: Bearer`. Public components and products do not need one.        |
 | Document         | Basic authentication, with the user name.                                                            |
 
-Without credentials, the source is accessed anonymously. Credentials are only sent to the origin of the source:
+Dependency-Track requires an API key: without credentials, a Dependency-Track source fails at once, without any request.
+sbomify components and products and documents are accessed anonymously without credentials. Credentials are only sent
+to the origin of the source, or to the API server that the frontend of a Dependency-Track instance designates:
 redirects to another host, port, or scheme are followed without credentials, and redirects from HTTPS to HTTP are
 refused.
 
@@ -128,6 +146,9 @@ Could not retrieve the SBOM of Dependency-Track project 00000000-... at https://
 credentials are available for 'sbom.eclipse.org': in ORT Server, define an infrastructure service for this URL; with
 the ORT CLI, add the host to the '.netrc' file.
 ```
+
+A version that does not exist is reported as such, for instance "The Dependency-Track project 'che-server' has no
+version 'main'".
 
 An invalid source file, such as one with an unknown key or a version for a document, fails as a whole with an error.
 

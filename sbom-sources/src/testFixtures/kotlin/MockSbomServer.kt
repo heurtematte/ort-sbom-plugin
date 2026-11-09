@@ -97,8 +97,21 @@ class MockSbomServer : AutoCloseable {
 
 /** Answers of a Dependency-Track instance, registered on a [MockSbomServer]. */
 object DependencyTrackResponses {
-    /** Register a project with the given [uuid], [name], and [version] whose export is the given [sbom]. */
+    /**
+     * Identify this server as a Dependency-Track instance with the given [version], whose frontend configures the
+     * given [apiBaseUrl] as the API server ("" for the frontend itself).
+     */
+    fun MockSbomServer.dependencyTrackInstance(version: String = "4.14.5", apiBaseUrl: String = "") {
+        respondJson("/static/config.json", """{"API_BASE_URL":"$apiBaseUrl","OIDC_CLIENT_ID":null}""")
+        respondJson("/api/version", """{"application":"Dependency-Track","version":"$version"}""")
+    }
+
+    /**
+     * Register a project with the given [uuid], [name], and [version] whose export is the given [sbom], on a server
+     * identified as a Dependency-Track instance.
+     */
     fun MockSbomServer.dependencyTrackProject(uuid: String, name: String, version: String, sbom: ByteArray) {
+        dependencyTrackInstance()
         val project = """{"uuid":"$uuid","name":"$name","version":"$version","isLatest":false}"""
         respondJson("/api/v1/project/$uuid", project)
         respondJson(
@@ -106,5 +119,12 @@ object DependencyTrackResponses {
             project
         )
         respond("/api/v1/bom/cyclonedx/project/$uuid?format=json&variant=inventory&download=true", sbom)
+    }
+}
+
+object SbomifyResponses {
+    /** Identify this server as a sbomify instance with the given [version]. */
+    fun MockSbomServer.sbomifyInstance(version: String = "26.11.0") {
+        respondJson("/api/v1/openapi.json", """{"openapi":"3.1.0","info":{"title":"sbomify API","version":"$version"}}""")
     }
 }

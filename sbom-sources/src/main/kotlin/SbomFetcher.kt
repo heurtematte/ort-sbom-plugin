@@ -25,6 +25,7 @@ import java.net.http.HttpResponse
 import java.security.MessageDigest
 import java.time.Duration
 import java.util.Base64
+import java.util.concurrent.ConcurrentHashMap
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -110,11 +111,17 @@ data class FetchedSbom(
  *
  * Credentials are only sent to the origin of the source: when a request is redirected to another origin, the
  * redirected request is anonymous.
+ *
+ * Unless [identifyServers] is disabled, the server of a Dependency-Track or sbomify source is first identified with
+ * [SbomServerIdentifier], without credentials, and the retrieval fails at once if it is not of the expected type. The
+ * identification is done once per server and fetcher. Disable it if the servers were already identified, for instance
+ * when the source was registered, and give the identified API URL of Dependency-Track sources in the source.
  */
 class SbomFetcher(
     private val credentialsProvider: CredentialsProvider = CredentialsProvider.DEFAULT,
     connectTimeout: Duration = Duration.ofSeconds(DEFAULT_CONNECT_TIMEOUT_SECONDS),
-    private val requestTimeout: Duration = Duration.ofMinutes(DEFAULT_REQUEST_TIMEOUT_MINUTES)
+    private val requestTimeout: Duration = Duration.ofMinutes(DEFAULT_REQUEST_TIMEOUT_MINUTES),
+    private val identifyServers: Boolean = true
 ) {
     companion object {
         private const val DEFAULT_CONNECT_TIMEOUT_SECONDS = 30L
@@ -138,6 +145,11 @@ class SbomFetcher(
         .connectTimeout(connectTimeout)
         .build()
 
+    private val identifier = SbomServerIdentifier(connectTimeout)
+
+    /** The servers identified so far, by their type and base URL. */
+    private val identifiedServers = ConcurrentHashMap<String, SbomServer>()
+
     /**
      * Retrieve the SBOM of the given [source] and store it in a new file in [outputDir]. Throw an [IOException] if it
      * cannot be retrieved or is not an SBOM in a supported format.
@@ -145,11 +157,13 @@ class SbomFetcher(
     fun fetch(source: SbomSource, outputDir: File): FetchedSbom {
         logger.info("Retrieving the SBOM of {}.", source.description)
 
-        val download = when (source) {
-            is SbomSource.DependencyTrackProject -> fetchFromDependencyTrack(source)
-            is SbomSource.SbomifyComponent -> fetchSbomifyComponent(source)
-            is SbomSource.SbomifyProduct -> fetchSbomifyProduct(source)
-            is SbomSource.Document -> URI(source.url).let { url -> Download(get(url, basicAuthHeaders(url), source), null, null) }
+        val download = when (val resolved = resolveServer(source)) {
+            is SbomSource.DependencyTrackProject -> fetchFromDependencyTrack(resolved)
+            is SbomSource.SbomifyComponent -> fetchSbomifyComponent(resolved)
+            is SbomSource.SbomifyProduct -> fetchSbomifyProduct(resolved)
+            is SbomSource.Document -> URI(resolved.url).let { url ->
+                Download(get(url, basicAuthHeaders(url), resolved), name = null, version = null)
+            }
         }
 
         val format = SbomParser.detectFormat(download.content)
@@ -172,14 +186,78 @@ class SbomFetcher(
         return FetchedSbom(source, file, format, download.name, download.version, sha256)
     }
 
-    private fun fetchFromDependencyTrack(source: SbomSource.DependencyTrackProject): Download {
-        val api = URI("${source.baseUrl}/api/v1/")
-        val headers = credentialsProvider.credentialsFor(api)?.let { mapOf("X-Api-Key" to String(it.password)) }
-        if (headers == null) {
-            logger.warn("No credentials are available for {}; accessing its API anonymously.", source.baseUrl)
+    /**
+     * Return the name of the project, component, or product of the given [source], without retrieving its SBOM, or
+     * *null* for a document. Throw an [IOException] if it cannot be retrieved.
+     */
+    fun fetchName(source: SbomSource): String? =
+        when (val resolved = resolveServer(source)) {
+            is SbomSource.DependencyTrackProject -> {
+                val api = URI("${resolved.apiBaseUrl}/api/v1/")
+                val headers = dependencyTrackHeaders(api, resolved)
+                getJson(api.resolve("project/${resolved.uuid}"), headers, resolved).string("name")
+            }
+
+            is SbomSource.SbomifyComponent -> {
+                val api = URI("${resolved.baseUrl}/api/v1/")
+                getJson(api.resolve("components/${resolved.id}"), bearerHeaders(api), resolved).string("name")
+            }
+
+            is SbomSource.SbomifyProduct -> {
+                val api = URI("${resolved.baseUrl}/api/v1/")
+                getJson(api.resolve("products/${resolved.id}"), bearerHeaders(api), resolved).string("name")
+            }
+
+            is SbomSource.Document -> null
         }
 
-        val apiHeaders = headers.orEmpty()
+    /**
+     * Identify the server of the given [source] if [identifyServers] is enabled, and return the source with the API URL
+     * of the server. Throw an [SbomServerIdentificationException] if the server is not of the type of the source.
+     */
+    private fun resolveServer(source: SbomSource): SbomSource {
+        if (!identifyServers || source is SbomSource.Document) return source
+
+        val baseUrl = when (source) {
+            is SbomSource.DependencyTrackProject -> source.baseUrl
+            is SbomSource.SbomifyComponent -> source.baseUrl
+            is SbomSource.SbomifyProduct -> source.baseUrl
+            is SbomSource.Document -> source.url
+        }
+
+        val server = identifiedServers.getOrPut("${source::class.simpleName} $baseUrl") {
+            identifier.identify(source).also { server ->
+                logger.info("Identified {} {} at {}.", server.type.id, server.version.orEmpty(), baseUrl)
+            }
+        }
+
+        return if (source is SbomSource.DependencyTrackProject && source.apiUrl == null) {
+            source.copy(apiUrl = server.apiUrl?.takeUnless { it == source.baseUrl })
+        } else {
+            source
+        }
+    }
+
+    /**
+     * Return the headers with the API key for the Dependency-Track [api] of the given [source]. Throw an [IOException]
+     * if no API key is available, as Dependency-Track does not allow anonymous access to projects.
+     */
+    private fun dependencyTrackHeaders(api: URI, source: SbomSource.DependencyTrackProject): Map<String, String> {
+        val credentials = credentialsProvider.credentialsFor(api)
+            ?: credentialsProvider.credentialsFor(URI("${source.baseUrl}/"))
+            ?: throw IOException(
+                "No credentials are available for '${api.host}', but Dependency-Track requires an API key to access " +
+                    "${source.description}: in ORT Server, define an infrastructure service for this URL whose " +
+                    "password is an API key of a team with the permission '$DEPENDENCY_TRACK_PERMISSION'; with the " +
+                    "ORT CLI, add the host to the '.netrc' file."
+            )
+
+        return mapOf("X-Api-Key" to String(credentials.password))
+    }
+
+    private fun fetchFromDependencyTrack(source: SbomSource.DependencyTrackProject): Download {
+        val api = URI("${source.apiBaseUrl}/api/v1/")
+        val apiHeaders = dependencyTrackHeaders(api, source)
         val referenced = getJson(api.resolve("project/${source.uuid}"), apiHeaders, source)
         val name = referenced.string("name")
         val referencedVersion = referenced.string("version")
@@ -191,7 +269,17 @@ class SbomFetcher(
 
             else -> {
                 val query = "name=${name.orEmpty().queryEncode()}&version=${source.version.queryEncode()}"
-                getJson(api.resolve("project/lookup?$query"), apiHeaders, source)
+                try {
+                    getJson(api.resolve("project/lookup?$query"), apiHeaders, source)
+                } catch (e: HttpStatusException) {
+                    if (e.status != HTTP_NOT_FOUND) throw e
+
+                    throw IOException(
+                        "The Dependency-Track project '$name' has no version '${source.version}'. Use one of its " +
+                            "versions, '${SbomSource.LATEST}', or no version for the version of the project URL.",
+                        e
+                    )
+                }
             }
         }
 

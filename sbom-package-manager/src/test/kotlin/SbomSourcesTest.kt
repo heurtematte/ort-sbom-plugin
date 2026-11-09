@@ -86,6 +86,16 @@ class SbomSourcesTest : WordSpec({
 
     afterSpec { server.close() }
 
+    // Dependency-Track requires an API key.
+    beforeEach {
+        Authenticator.setDefault(object : Authenticator() {
+            override fun getPasswordAuthentication(): PasswordAuthentication? =
+                PasswordAuthentication("", "api-key".toCharArray()).takeIf {
+                    requestingURL.toString().startsWith(server.baseUrl)
+                }
+        })
+    }
+
     afterEach { Authenticator.setDefault(null) }
 
     "The SBOM package manager" should {
@@ -123,7 +133,8 @@ class SbomSourcesTest : WordSpec({
 
             analyze(dir).getAnalyzerIssues(minSeverity = Severity.ERROR) should beEmptyMap()
 
-            server.requests.map { it.headers["x-api-key"] }.toSet() should containExactly("api-key")
+            server.requests.filter { it.pathAndQuery.startsWith("/api/v1/") }.map { it.headers["x-api-key"] }.toSet() should
+                containExactly("api-key")
         }
 
         "report a source that cannot be retrieved and analyze the others" {
