@@ -150,6 +150,11 @@ the ORT CLI, add the host to the '.netrc' file.
 A version that does not exist is reported as such, for instance "The Dependency-Track project 'che-server' has no
 version 'main'".
 
+With the option `failFast` (see [configuration](configuration.md)), the retrieval stops at the first source that fails:
+the remaining sources of the file are not requested, and each of them is reported with an error that names the first
+failure. The analysis of ORT still completes, with these errors as issues, as ORT does not allow a package manager to
+abort an analysis.
+
 An invalid source file, such as one with an unknown key or a version for a document, fails as a whole with an error.
 
 ## Using the library

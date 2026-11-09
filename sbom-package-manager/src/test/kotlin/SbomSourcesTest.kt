@@ -160,6 +160,28 @@ class SbomSourcesTest : WordSpec({
             result.getProject(failedProject)?.homepageUrl shouldBe "${server.baseUrl}/releases/missing.cdx.json"
         }
 
+        "not retrieve the remaining sources after a failure with failFast" {
+            val dir = tempdir()
+            File(dir, "sbom-sources.yml").writeText(
+                """
+                sources:
+                  - ${server.baseUrl}/releases/missing.cdx.json
+                  - ${server.baseUrl}/releases/product.spdx3.json
+                """.trimIndent()
+            )
+            server.requests.clear()
+
+            val result = analyze(dir, mapOf("failFast" to "true"))
+
+            val failedProject = sanitizedIdentifier("SBOM", "", "${server.baseUrl}/releases/missing.cdx.json", "")
+            val skippedProject = sanitizedIdentifier("SBOM", "", "${server.baseUrl}/releases/product.spdx3.json", "")
+            val issues = result.getAnalyzerIssues(minSeverity = Severity.ERROR)
+            issues.keys should containExactlyInAnyOrder(failedProject, skippedProject)
+            issues.getValue(skippedProject).single().message should
+                containString("was not retrieved, as the retrieval of an earlier source failed")
+            server.requestsTo("/releases/product.spdx3.json").size shouldBe 0
+        }
+
         "analyze SBOM files and source files side by side" {
             val dir = tempdir()
             SbomFixtures.copyTo(dir, SbomFixtures.CYCLONEDX_1_6_JSON)

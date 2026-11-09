@@ -58,6 +58,7 @@ Options:
 | `sourceFilePatterns`           | see code   | File name patterns of SBOM source files; empty to ignore them                       |
 | `attachUnreferencedComponents` | `true`     | Add components not reachable in the dependency graph as direct project dependencies |
 | `concludedLicenseHandling`     | `DECLARED` | Map concluded licenses as `DECLARED`, `CONCLUDED`, or `IGNORE`                      |
+| `failFast`                     | `false`    | Stop retrieving the sources of a source file at the first failure                   |
 
 ## SBOM sources
 

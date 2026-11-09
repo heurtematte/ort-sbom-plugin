@@ -102,7 +102,15 @@ data class SbomConfig(
 
     /** How licenses that the SBOM declares as concluded are mapped. */
     @OrtPluginOption(defaultValue = "DECLARED")
-    val concludedLicenseHandling: ConcludedLicenseHandling
+    val concludedLicenseHandling: ConcludedLicenseHandling,
+
+    /**
+     * Whether the retrieval of the sources of an SBOM source file stops at the first source that cannot be retrieved,
+     * for instance because its server is not of the expected type or the credentials are missing. The remaining
+     * sources are then reported as not retrieved, instead of being requested one by one.
+     */
+    @OrtPluginOption(defaultValue = "false")
+    val failFast: Boolean
 )
 
 /**
@@ -195,7 +203,8 @@ class Sbom(
 
     /**
      * Retrieve the SBOMs of the sources listed in the given [sourceFile] and analyze them. A source that cannot be
-     * retrieved results in a project with an error, so that the other sources are still analyzed.
+     * retrieved results in a project with an error, so that the other sources are still analyzed, unless
+     * [SbomConfig.failFast] is enabled: then the remaining sources are not retrieved.
      */
     private fun resolveSources(
         sourceFile: File,
@@ -209,10 +218,17 @@ class Sbom(
         val projectDir = sourceFile.parentFile
         val downloadDir = createOrtTempDir("sbom-sources")
 
+        var failure: Throwable? = null
+
         return try {
             entries.flatMap { (source, projectMetadata) ->
+                failure?.let { e ->
+                    return@flatMap listOf(skippedSourceResult(source, definitionFilePath, projectDir, e))
+                }
+
                 val fetched = runCatching { fetcher.fetch(source, downloadDir) }.getOrElse { e ->
                     logger.error("Could not retrieve the SBOM of {}: {}", source.description, e.collectMessages())
+                    if (config.failFast) failure = e
                     return@flatMap listOf(failedSourceResult(source, definitionFilePath, projectDir, e))
                 }
 
@@ -236,12 +252,41 @@ class Sbom(
         }
     }
 
+    /** Create the result for a [source] that was not retrieved because an earlier source failed with [error]. */
+    private fun skippedSourceResult(
+        source: SbomSource,
+        definitionFilePath: String,
+        projectDir: File,
+        error: Throwable
+    ): ProjectAnalyzerResult =
+        sourceResultWithIssue(
+            source,
+            definitionFilePath,
+            projectDir,
+            "The SBOM of ${source.description} was not retrieved, as the retrieval of an earlier source failed and " +
+                "the option 'failFast' is enabled: ${error.collectMessages()}"
+        )
+
     /** Create the result for a [source] whose SBOM could not be retrieved or parsed because of [error]. */
     private fun failedSourceResult(
         source: SbomSource,
         definitionFilePath: String,
         projectDir: File,
         error: Throwable
+    ): ProjectAnalyzerResult =
+        sourceResultWithIssue(
+            source,
+            definitionFilePath,
+            projectDir,
+            "Could not retrieve the SBOM of ${source.description}: ${error.collectMessages()}"
+        )
+
+    /** Create the result for a [source] without SBOM, with an error issue with the given [message]. */
+    private fun sourceResultWithIssue(
+        source: SbomSource,
+        definitionFilePath: String,
+        projectDir: File,
+        message: String
     ): ProjectAnalyzerResult {
         val project = Project(
             id = dependencyHandler.uniqueProjectId(sanitizedIdentifier(SBOM_PROJECT_TYPE, "", source.url, "")),
@@ -253,11 +298,7 @@ class Sbom(
             scopeNames = emptySet()
         )
 
-        val issue = Issue(
-            source = descriptor.id,
-            message = "Could not retrieve the SBOM of ${source.description}: ${error.collectMessages()}",
-            severity = Severity.ERROR
-        )
+        val issue = Issue(source = descriptor.id, message = message, severity = Severity.ERROR)
 
         return ProjectAnalyzerResult(project, emptySet(), listOf(issue))
     }
