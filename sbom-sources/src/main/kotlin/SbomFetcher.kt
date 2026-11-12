@@ -116,12 +116,16 @@ data class FetchedSbom(
  * [SbomServerIdentifier], without credentials, and the retrieval fails at once if it is not of the expected type. The
  * identification is done once per server and fetcher. Disable it if the servers were already identified, for instance
  * when the source was registered, and give the identified API URL of Dependency-Track sources in the source.
+ *
+ * Requests are retried according to [retryPolicy] if a server is temporarily unavailable, for instance during a
+ * restart, including the requests to identify servers.
  */
 class SbomFetcher(
     private val credentialsProvider: CredentialsProvider = CredentialsProvider.DEFAULT,
     connectTimeout: Duration = Duration.ofSeconds(DEFAULT_CONNECT_TIMEOUT_SECONDS),
     private val requestTimeout: Duration = Duration.ofMinutes(DEFAULT_REQUEST_TIMEOUT_MINUTES),
-    private val identifyServers: Boolean = true
+    private val identifyServers: Boolean = true,
+    retryPolicy: RetryPolicy = RetryPolicy()
 ) {
     companion object {
         private const val DEFAULT_CONNECT_TIMEOUT_SECONDS = 30L
@@ -140,12 +144,15 @@ class SbomFetcher(
     }
 
     /** Redirects are followed manually, to drop credentials when leaving the origin of a source. */
-    private val client = HttpClient.newBuilder()
-        .followRedirects(HttpClient.Redirect.NEVER)
-        .connectTimeout(connectTimeout)
-        .build()
+    private val sender = RetryingSender(
+        HttpClient.newBuilder()
+            .followRedirects(HttpClient.Redirect.NEVER)
+            .connectTimeout(connectTimeout)
+            .build(),
+        retryPolicy
+    )
 
-    private val identifier = SbomServerIdentifier(connectTimeout)
+    private val identifier = SbomServerIdentifier(connectTimeout, retryPolicy = retryPolicy)
 
     /** The servers identified so far, by their type and base URL. */
     private val identifiedServers = ConcurrentHashMap<String, SbomServer>()
@@ -408,11 +415,16 @@ class SbomFetcher(
                 .GET()
                 .build()
 
-            val response = try {
-                client.send(request, HttpResponse.BodyHandlers.ofByteArray())
+            val (response, retries) = try {
+                sender.send(request, HttpResponse.BodyHandlers.ofByteArray())
             } catch (e: InterruptedException) {
                 Thread.currentThread().interrupt()
                 throw IOException("Interrupted while requesting '${currentUrl.withoutQuery()}'.", e)
+            } catch (e: IOException) {
+                throw IOException(
+                    "Request to '${currentUrl.withoutQuery()}' for ${source.description} failed: ${e.describe()}",
+                    e
+                )
             }
 
             val location = response.headers().firstValue("Location").orElse(null)
@@ -433,7 +445,7 @@ class SbomFetcher(
 
                 else -> {
                     val hadCredentials = currentHeaders.keys.any { it in CREDENTIAL_HEADERS }
-                    throw response.toException(currentUrl, source, hadCredentials)
+                    throw response.toException(currentUrl, source, hadCredentials, retries)
                 }
             }
         }
@@ -450,11 +462,16 @@ private class HttpStatusException(val status: Int, message: String) : IOExceptio
 private fun HttpResponse<ByteArray>.toException(
     url: URI,
     source: SbomSource,
-    hadCredentials: Boolean
+    hadCredentials: Boolean,
+    retries: Int
 ): HttpStatusException {
     val status = statusCode()
     val isDependencyTrack = source is SbomSource.DependencyTrackProject
+    val afterRetries = if (retries > 0) " after $retries retries" else ""
     val hint = when {
+        status in RetryPolicy.RETRYABLE_STATUSES -> " The server is temporarily unavailable or overloaded; try again " +
+            "later."
+
         status != 401 && status != 403 -> ""
 
         hadCredentials && isDependencyTrack -> " Check that the API key for '${url.host}' is valid and that its team " +
@@ -474,7 +491,7 @@ private fun HttpResponse<ByteArray>.toException(
 
     return HttpStatusException(
         status,
-        "Request to '${url.withoutQuery()}' for ${source.description} failed with status $status.$hint"
+        "Request to '${url.withoutQuery()}' for ${source.description} failed with status $status$afterRetries.$hint"
     )
 }
 
@@ -484,9 +501,6 @@ private fun URI.hasSameOrigin(other: URI): Boolean =
 
 private fun URI.effectivePort(): Int =
     port.takeIf { it != -1 } ?: if (scheme.equals("https", ignoreCase = true)) 443 else 80
-
-/** Return this URL without query, which may contain signatures for pre-signed downloads, for messages. */
-private fun URI.withoutQuery(): String = toString().substringBefore('?')
 
 private fun JsonObject.string(key: String): String? = (get(key) as? JsonPrimitive)?.contentOrNull
 

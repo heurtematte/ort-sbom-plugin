@@ -54,14 +54,20 @@ class SbomServerIdentificationException(message: String, cause: Throwable? = nul
  * - Documents are not identified, as a document is not a server.
  *
  * Redirects are only followed within the same host, so that an identification cannot be used to reach other hosts.
+ *
+ * Requests are retried according to [retryPolicy] if a server is temporarily unavailable. By default, they are only
+ * retried twice within a few seconds, as an identification is often requested interactively, for instance when a source
+ * is registered.
  */
 class SbomServerIdentifier(
     connectTimeout: Duration = Duration.ofSeconds(DEFAULT_CONNECT_TIMEOUT_SECONDS),
-    private val requestTimeout: Duration = Duration.ofSeconds(DEFAULT_REQUEST_TIMEOUT_SECONDS)
+    private val requestTimeout: Duration = Duration.ofSeconds(DEFAULT_REQUEST_TIMEOUT_SECONDS),
+    retryPolicy: RetryPolicy = RetryPolicy(maxRetries = DEFAULT_MAX_RETRIES)
 ) {
     companion object {
         private const val DEFAULT_CONNECT_TIMEOUT_SECONDS = 10L
         private const val DEFAULT_REQUEST_TIMEOUT_SECONDS = 30L
+        private const val DEFAULT_MAX_RETRIES = 2
         private const val MAX_REDIRECTS = 3
 
         private val DEPENDENCY_TRACK_NAME = Regex("""dependency[- ]?track""", RegexOption.IGNORE_CASE)
@@ -69,10 +75,13 @@ class SbomServerIdentifier(
         private val json = Json { ignoreUnknownKeys = true }
     }
 
-    private val client = HttpClient.newBuilder()
-        .followRedirects(HttpClient.Redirect.NEVER)
-        .connectTimeout(connectTimeout)
-        .build()
+    private val sender = RetryingSender(
+        HttpClient.newBuilder()
+            .followRedirects(HttpClient.Redirect.NEVER)
+            .connectTimeout(connectTimeout)
+            .build(),
+        retryPolicy
+    )
 
     /**
      * Identify the server of the given [source]. Throw an [SbomServerIdentificationException] if it cannot be reached
@@ -142,7 +151,8 @@ class SbomServerIdentifier(
 
     /**
      * Return the JSON object at the given [url], or *null* if the server answers with another status than 200 or
-     * the content is not a JSON object. Throw an [SbomServerIdentificationException] if the server cannot be reached.
+     * the content is not a JSON object. Throw an [SbomServerIdentificationException] if the server cannot be reached
+     * or is temporarily unavailable.
      */
     private fun getJsonObject(url: URI): JsonObject? {
         var currentUrl = url
@@ -154,10 +164,10 @@ class SbomServerIdentifier(
                 .GET()
                 .build()
 
-            val response = try {
-                client.send(request, HttpResponse.BodyHandlers.ofString())
+            val (response, retries) = try {
+                sender.send(request, HttpResponse.BodyHandlers.ofString())
             } catch (e: IOException) {
-                throw SbomServerIdentificationException("Could not reach '$currentUrl': ${e.message ?: e}", e)
+                throw SbomServerIdentificationException("Could not reach '$currentUrl': ${e.describe()}", e)
             } catch (e: InterruptedException) {
                 Thread.currentThread().interrupt()
                 throw SbomServerIdentificationException("Interrupted while requesting '$currentUrl'.", e)
@@ -176,6 +186,14 @@ class SbomServerIdentifier(
 
                 currentUrl = target
                 return@repeat
+            }
+
+            if (response.statusCode() in RetryPolicy.RETRYABLE_STATUSES) {
+                val afterRetries = if (retries > 0) " after $retries retries" else ""
+                throw SbomServerIdentificationException(
+                    "Could not identify the server: '$currentUrl' answered with status ${response.statusCode()}" +
+                        "$afterRetries. The server is temporarily unavailable or overloaded; try again later."
+                )
             }
 
             if (response.statusCode() != 200) return null

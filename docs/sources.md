@@ -150,6 +150,27 @@ the ORT CLI, add the host to the '.netrc' file.
 A version that does not exist is reported as such, for instance "The Dependency-Track project 'che-server' has no
 version 'main'".
 
+### Temporary failures
+
+A server can be unavailable for a short time, for instance while Dependency-Track restarts. So all requests, including
+those of the [server identification](#server-identification), are retried if no response is received (refused or reset
+connection, connection timeout) or if the server answers with status 408, 429, 502, 503, or 504. The delay before a
+retry starts at 2 seconds and doubles up to 30 seconds; a longer delay asked for by the server with the `Retry-After`
+header is respected, up to 30 seconds. A request is retried five times, within about one minute.
+
+Other statuses, such as 401, 404, or 500, are not retried, as a retry would fail the same way. Neither is a request that
+gets no complete response within the request timeout of 10 minutes.
+
+If the retries of a request are exhausted, the source fails with the last status, for instance:
+
+```text
+Request to 'https://sbom.eclipse.org/api/v1/project/00000000-...' for Dependency-Track project ... failed with status
+503 after 5 retries. The server is temporarily unavailable or overloaded; try again later.
+```
+
+The further requests to the same server are then sent only once, until one of them gets an answer, so that an
+unavailable server does not delay each of the many sources a source file may list.
+
 With the option `failFast` (see [configuration](configuration.md)), the retrieval stops at the first source that fails:
 the remaining sources of the file are not requested, and each of them is reported with an error that names the first
 failure. The analysis of ORT still completes, with these errors as issues, as ORT does not allow a package manager to
@@ -163,10 +184,13 @@ The retrieval is implemented in the `sbom-sources` library, which can be used wi
 
 ```kotlin
 val entries = SbomSourceFile.parse(File("sbom-sources.yml"))
-val fetcher = SbomFetcher(CredentialsProvider.DEFAULT)
+val fetcher = SbomFetcher(CredentialsProvider.DEFAULT, retryPolicy = RetryPolicy(maxRetries = 3))
 
 entries.forEach { (source, project) ->
     val sbom = fetcher.fetch(source, outputDir)
     println("${source.description}: ${sbom.format.displayName} ${sbom.name} ${sbom.version} sha256:${sbom.sha256}")
 }
 ```
+
+`RetryPolicy` sets how requests are retried (see [temporary failures](#temporary-failures)); `RetryPolicy.NONE`
+disables retries.

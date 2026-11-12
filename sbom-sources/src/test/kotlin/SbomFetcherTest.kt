@@ -27,6 +27,7 @@ import java.io.IOException
 import java.net.PasswordAuthentication
 import java.net.URI
 import java.security.MessageDigest
+import java.time.Duration
 import java.util.Base64
 
 import org.eclipse.apoapsis.sbom.parser.SbomFixtures
@@ -44,6 +45,9 @@ private const val UUID_6 = "66666666-6666-6666-6666-666666666666"
 private const val UUID_7 = "77777777-7777-7777-7777-777777777777"
 
 private const val EXPORT_QUERY = "?format=json&variant=inventory&download=true"
+
+/** Retry twice without delay. */
+private val FAST_RETRIES = RetryPolicy(maxRetries = 2, initialDelay = Duration.ZERO, maxDelay = Duration.ZERO)
 
 class SbomFetcherTest : WordSpec({
     val server = MockSbomServer()
@@ -361,6 +365,89 @@ class SbomFetcherTest : WordSpec({
             fetcher.fetch(SbomSource.DependencyTrackProject(server.baseUrl, UUID_2), tempdir())
 
             server.requestsTo("/api/version").size shouldBe 1
+        }
+    }
+
+    "Retrying requests" should {
+        val cyclonedx = SbomFixtures.bytes(SbomFixtures.CYCLONEDX_1_6_JSON)
+        val apiKey = CredentialsProvider { PasswordAuthentication("", "api-key".toCharArray()) }
+
+        "retry the requests to a server that is temporarily unavailable" {
+            MockSbomServer().use { dependencyTrack ->
+                val export = "/api/v1/bom/cyclonedx/project/$UUID_1$EXPORT_QUERY"
+                dependencyTrack.dependencyTrackProject(UUID_1, "vertx-core", "5.0.0", cyclonedx)
+                dependencyTrack.failNext("/api/v1/project/$UUID_1", status = 503, count = 2)
+                dependencyTrack.failNext(export, status = 502)
+
+                val fetched = SbomFetcher(apiKey, retryPolicy = FAST_RETRIES)
+                    .fetch(SbomSource.DependencyTrackProject(dependencyTrack.baseUrl, UUID_1), tempdir())
+
+                fetched.file.readBytes() shouldBe cyclonedx
+                dependencyTrack.requestsTo("/api/v1/project/$UUID_1").size shouldBe 3
+                dependencyTrack.requestsTo(export).size shouldBe 2
+            }
+        }
+
+        "report the status of a request whose retries are exhausted" {
+            MockSbomServer().use { dependencyTrack ->
+                dependencyTrack.dependencyTrackProject(UUID_1, "vertx-core", "5.0.0", cyclonedx)
+                dependencyTrack.failNext("/api/v1/project/$UUID_1", status = 503, count = 3)
+                val source = SbomSource.DependencyTrackProject(dependencyTrack.baseUrl, UUID_1)
+
+                val e = shouldThrow<IOException> {
+                    SbomFetcher(apiKey, retryPolicy = FAST_RETRIES).fetch(source, tempdir())
+                }
+
+                e.message should contain("/api/v1/project/$UUID_1' for Dependency-Track project")
+                e.message should contain("failed with status 503 after 2 retries. The server is temporarily unavailable")
+                dependencyTrack.requestsTo("/api/v1/project/$UUID_1").size shouldBe 3
+            }
+        }
+
+        "not retry other statuses" {
+            MockSbomServer().use { documents ->
+                documents.respond("/sbom.json", status = 500)
+                val source = SbomSource.Document("${documents.baseUrl}/sbom.json")
+
+                val e = shouldThrow<IOException> {
+                    SbomFetcher(CredentialsProvider.NONE, retryPolicy = FAST_RETRIES).fetch(source, tempdir())
+                }
+
+                e.message should endWith("failed with status 500.")
+                documents.requestsTo("/sbom.json").size shouldBe 1
+            }
+        }
+
+        "retry a refused connection" {
+            val source = SbomSource.Document("http://127.0.0.1:1/sbom.json")
+
+            val e = shouldThrow<IOException> {
+                SbomFetcher(CredentialsProvider.NONE, retryPolicy = FAST_RETRIES).fetch(source, tempdir())
+            }
+
+            e.message should contain("Request to 'http://127.0.0.1:1/sbom.json' for ")
+            e.message should endWith("(after 2 retries)")
+        }
+
+        "not retry the requests to a server whose retries are exhausted until it answers again" {
+            MockSbomServer().use { documents ->
+                listOf("/a.json", "/b.json", "/c.json", "/d.json").forEach { documents.respond(it, cyclonedx) }
+                documents.failNext("/a.json", count = 3)
+                documents.failNext("/b.json")
+                documents.failNext("/d.json")
+                val fetcher = SbomFetcher(CredentialsProvider.NONE, retryPolicy = FAST_RETRIES)
+
+                fun fetch(path: String) = fetcher.fetch(SbomSource.Document("${documents.baseUrl}$path"), tempdir())
+
+                shouldThrow<IOException> { fetch("/a.json") }
+                shouldThrow<IOException> { fetch("/b.json") }
+                fetch("/c.json")
+                fetch("/d.json").file.readBytes() shouldBe cyclonedx
+
+                documents.requestsTo("/a.json").size shouldBe 3
+                documents.requestsTo("/b.json").size shouldBe 1
+                documents.requestsTo("/d.json").size shouldBe 2
+            }
         }
     }
 

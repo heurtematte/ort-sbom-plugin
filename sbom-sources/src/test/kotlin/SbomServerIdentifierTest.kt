@@ -19,13 +19,18 @@ import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.contain
 
+import java.time.Duration
+
 import org.eclipse.apoapsis.sbom.sources.DependencyTrackResponses.dependencyTrackInstance
 import org.eclipse.apoapsis.sbom.sources.SbomifyResponses.sbomifyInstance
 
 private const val UUID = "11111111-1111-1111-1111-111111111111"
 
+/** Retry twice without delay. */
+private val FAST_RETRIES = RetryPolicy(maxRetries = 2, initialDelay = Duration.ZERO, maxDelay = Duration.ZERO)
+
 class SbomServerIdentifierTest : WordSpec({
-    val identifier = SbomServerIdentifier()
+    val identifier = SbomServerIdentifier(retryPolicy = FAST_RETRIES)
 
     "identify" should {
         "identify a Dependency-Track instance that serves its API" {
@@ -90,6 +95,32 @@ class SbomServerIdentifierTest : WordSpec({
                 }
 
                 e.message should contain("Refusing the redirect")
+            }
+        }
+
+        "retry a request to a server that is temporarily unavailable" {
+            MockSbomServer().use { server ->
+                server.dependencyTrackInstance(version = "4.14.5")
+                server.failNext("/api/version", status = 503, count = 2)
+
+                identifier.identify(SbomSource.DependencyTrackProject(server.baseUrl, UUID)) shouldBe
+                    SbomServer(SbomSourceType.DEPENDENCY_TRACK, server.baseUrl, "4.14.5")
+
+                server.requestsTo("/api/version").size shouldBe 3
+            }
+        }
+
+        "report a server that is still unavailable after the retries" {
+            MockSbomServer().use { server ->
+                server.dependencyTrackInstance()
+                server.failNext("/api/version", status = 503, count = 3)
+
+                val e = shouldThrow<SbomServerIdentificationException> {
+                    identifier.identify(SbomSource.DependencyTrackProject(server.baseUrl, UUID))
+                }
+
+                e.message shouldBe "Could not identify the server: '${server.baseUrl}/api/version' answered with " +
+                    "status 503 after 2 retries. The server is temporarily unavailable or overloaded; try again later."
             }
         }
 

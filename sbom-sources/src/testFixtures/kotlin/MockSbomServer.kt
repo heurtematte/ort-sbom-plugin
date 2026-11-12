@@ -18,6 +18,7 @@ import com.sun.net.httpserver.HttpServer
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.CopyOnWriteArrayList
 
 /** A request received by a [MockSbomServer]. */
@@ -31,13 +32,15 @@ data class RecordedRequest(
 
 /**
  * A local HTTP server for tests that simulates SBOM sources, such as the APIs of Dependency-Track and sbomify. Responses
- * are registered per path and query with [respond]; unknown paths result in status 404.
+ * are registered per path and query with [respond]; unknown paths result in status 404. Transient failures registered
+ * with [failNext] are answered first.
  */
 class MockSbomServer : AutoCloseable {
     private class Response(val status: Int, val body: ByteArray, val headers: Map<String, String>)
 
     private val server = HttpServer.create(InetSocketAddress(InetAddress.getLoopbackAddress(), 0), 0)
     private val responses = ConcurrentHashMap<String, Response>()
+    private val failures = ConcurrentHashMap<String, ConcurrentLinkedQueue<Response>>()
 
     /** The requests received so far. */
     val requests = CopyOnWriteArrayList<RecordedRequest>()
@@ -56,7 +59,9 @@ class MockSbomServer : AutoCloseable {
 
                 requests += RecordedRequest(pathAndQuery, headers)
 
-                val response = responses[pathAndQuery] ?: Response(404, "Not found".toByteArray(), emptyMap())
+                val response = failures[pathAndQuery]?.poll()
+                    ?: responses[pathAndQuery]
+                    ?: Response(404, "Not found".toByteArray(), emptyMap())
                 response.headers.forEach { (name, value) -> exchange.responseHeaders.add(name, value) }
 
                 if (response.body.isEmpty()) {
@@ -79,6 +84,15 @@ class MockSbomServer : AutoCloseable {
         headers: Map<String, String> = emptyMap()
     ) {
         responses[pathAndQuery] = Response(status, body, headers)
+    }
+
+    /**
+     * Answer the next [count] requests to the given [pathAndQuery] with the given [status] and [headers], before the
+     * response registered with [respond].
+     */
+    fun failNext(pathAndQuery: String, status: Int = 503, count: Int = 1, headers: Map<String, String> = emptyMap()) {
+        val queue = failures.getOrPut(pathAndQuery) { ConcurrentLinkedQueue() }
+        repeat(count) { queue += Response(status, "Failure".toByteArray(), headers) }
     }
 
     /** Answer requests to the given [pathAndQuery] with the given JSON [body]. */
