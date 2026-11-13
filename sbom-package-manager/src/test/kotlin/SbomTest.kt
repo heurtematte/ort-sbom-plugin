@@ -208,6 +208,30 @@ class SbomTest : WordSpec({
             }
         }
 
+        "ignore files without package URL and keep what they contain in the dependency graph" {
+            val dir = tempdir()
+            dir.resolve("image.cdx.json").writeText(IMAGE_SBOM_WITH_FILES)
+
+            val result = analyze(dir)
+
+            val project = result.getProjects().single()
+            result.getPackages().map { it.metadata.id } should containExactlyInAnyOrder(LODASH, FOO, BUSYBOX)
+            result.directDependencies(project, "required") should containExactlyInAnyOrder(LODASH, FOO, BUSYBOX)
+            result.getAnalyzerIssues().values.flatten() should beEmpty()
+        }
+
+        "include files without package URL if enabled" {
+            val dir = tempdir()
+            dir.resolve("image.cdx.json").writeText(IMAGE_SBOM_WITH_FILES)
+
+            val result = analyze(dir, mapOf("includeFileComponents" to "true"))
+
+            val project = result.getProjects().single()
+            val file = Identifier(SBOM_PROJECT_TYPE, "", "/app/node_modules/foo/package.json", "")
+            result.getPackages().map { it.metadata.id } should containExactlyInAnyOrder(LODASH, FOO, BUSYBOX, file)
+            result.directDependencies(project, "required") should containExactlyInAnyOrder(LODASH, file, BUSYBOX)
+        }
+
         "create the same projects and packages from all serializations of an SPDX SBOM" {
             val results = listOf(
                 SbomFixtures.SPDX_2_3_JSON,
@@ -287,6 +311,37 @@ class SbomTest : WordSpec({
 private val MAIL_API = Identifier("Maven:jakarta.mail:jakarta.mail-api:2.1.3")
 private val ANGUS_CORE = Identifier("Maven:org.eclipse.angus:angus-core:2.0.3")
 private val TYCHO_DIRECTOR = Identifier("Maven:org.eclipse.tycho:tycho-p2-director-plugin:")
+private val LODASH = Identifier("NPM::lodash:4.17.21")
+private val FOO = Identifier("NPM::foo:1.0.0")
+private val BUSYBOX = Identifier("generic::busybox:1.36.1")
+
+/**
+ * An SBOM of a container image, which lists files like Syft: a file without package URL that contains a package, and a
+ * file with a package URL.
+ */
+private val IMAGE_SBOM_WITH_FILES = """
+    {
+      "bomFormat": "CycloneDX",
+      "specVersion": "1.6",
+      "version": 1,
+      "metadata": {
+        "component": { "type": "container", "bom-ref": "image", "name": "image", "version": "1.0" }
+      },
+      "components": [
+        { "type": "library", "bom-ref": "lodash", "name": "lodash", "version": "4.17.21",
+          "purl": "pkg:npm/lodash@4.17.21" },
+        { "type": "file", "bom-ref": "manifest", "name": "/app/node_modules/foo/package.json",
+          "hashes": [ { "alg": "SHA-1", "content": "30ace999df8ba3d52ee635b20ca1bf0e4422bce2" } ] },
+        { "type": "library", "bom-ref": "foo", "name": "foo", "version": "1.0.0", "purl": "pkg:npm/foo@1.0.0" },
+        { "type": "file", "bom-ref": "busybox", "name": "/bin/busybox", "version": "1.36.1",
+          "purl": "pkg:generic/busybox@1.36.1" }
+      ],
+      "dependencies": [
+        { "ref": "image", "dependsOn": [ "lodash", "manifest", "busybox" ] },
+        { "ref": "manifest", "dependsOn": [ "foo" ] }
+      ]
+    }
+""".trimIndent()
 
 /** Run the ORT Analyzer with the SBOM package manager on the given [dir]. */
 private fun analyze(

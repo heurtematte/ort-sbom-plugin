@@ -57,6 +57,7 @@ Options:
 | `definitionFilePatterns`       | see code   | File name patterns of SBOMs                                                         |
 | `sourceFilePatterns`           | see code   | File name patterns of SBOM source files; empty to ignore them                       |
 | `attachUnreferencedComponents` | `true`     | Add components not reachable in the dependency graph as direct project dependencies |
+| `includeFileComponents`        | `false`    | Create packages for files without package URL, such as the files of images          |
 | `concludedLicenseHandling`     | `DECLARED` | Map concluded licenses as `DECLARED`, `CONCLUDED`, or `IGNORE`                      |
 | `deriveSourceArtifacts`        | `true`     | Derive the source artifacts of Maven and npm packages from their package URL        |
 | `failFast`                     | `false`    | Stop retrieving the sources of a source file at the first failure                   |

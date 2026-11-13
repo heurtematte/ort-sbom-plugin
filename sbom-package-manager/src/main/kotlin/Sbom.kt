@@ -100,6 +100,15 @@ data class SbomConfig(
     @OrtPluginOption(defaultValue = "true")
     val attachUnreferencedComponents: Boolean,
 
+    /**
+     * Whether files without a package URL, such as the files of a container image that SBOMs created by tools like
+     * Syft list as components of type "file", become packages. Advisors cannot identify them and the scanner cannot
+     * download them, so they are ignored by default; the components they depend on or contain take their place in the
+     * dependency graph.
+     */
+    @OrtPluginOption(defaultValue = "false")
+    val includeFileComponents: Boolean,
+
     /** How licenses that the SBOM declares as concluded are mapped. */
     @OrtPluginOption(defaultValue = "DECLARED")
     val concludedLicenseHandling: ConcludedLicenseHandling,
@@ -312,18 +321,27 @@ class Sbom(
     }
 
     /**
-     * Convert the given [document] into projects. Use the given [definitionFilePath] and [projectDir] for the projects,
-     * and the given [fallbackName] for the project if the document describes no component and has no name.
+     * Convert the given [parsedDocument] into projects. Use the given [definitionFilePath] and [projectDir] for the
+     * projects, and the given [fallbackName] for the project if the document describes no component and has no name.
      */
     @Suppress("LongParameterList")
     private fun analyzeDocument(
-        document: SbomDocument,
+        parsedDocument: SbomDocument,
         definitionFilePath: String,
         projectDir: File,
         fallbackName: String,
         excludes: Excludes,
         includes: Includes
     ): List<ProjectAnalyzerResult> {
+        val document = if (config.includeFileComponents) {
+            parsedDocument
+        } else {
+            parsedDocument.withoutComponents { it.isFileWithoutPackageUrl() }.also { document ->
+                val ignored = parsedDocument.components.size - document.components.size
+                if (ignored > 0) logger.info("Ignoring {} file(s) without package URL of '{}'.", ignored, fallbackName)
+            }
+        }
+
         val documentIndex = dependencyHandler.register(document)
 
         val issues = document.warnings.mapTo(mutableListOf()) { warning ->

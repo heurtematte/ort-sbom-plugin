@@ -7,6 +7,7 @@ The `SBOM` package manager has the following options:
 | `definitionFilePatterns`       | String list | see below  | File name patterns of the SBOMs to analyze. Matching files are analyzed if their content is a supported SBOM. |
 | `sourceFilePatterns`           | String list | see below  | File name patterns of [SBOM source files](sources.md), which list SBOMs to retrieve from Dependency-Track, sbomify, or URLs. Empty to disable them. |
 | `attachUnreferencedComponents` | Boolean     | `true`     | Add components that are not reachable from a described component as direct dependencies of the project. If disabled, they are dropped with a warning. |
+| `includeFileComponents`        | Boolean     | `false`    | Create packages for files without package URL, such as the files of container images, which are ignored by default, see [mapping](mapping.md#files). |
 | `concludedLicenseHandling`     | Enum        | `DECLARED` | How licenses an SBOM marks as concluded are mapped, see below.                                     |
 | `deriveSourceArtifacts`        | Boolean     | `true`     | Give packages without source artifact in the SBOM the one derived from their package URL, see [mapping](mapping.md#source-artifacts). |
 | `failFast`                     | Boolean     | `false`    | Stop retrieving the sources of a source file at the first failure, see [SBOM sources](sources.md#errors). |

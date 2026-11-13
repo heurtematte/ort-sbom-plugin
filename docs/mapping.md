@@ -20,7 +20,7 @@ processed VCS of a project to match the analyzed repository.
 
 ## Packages
 
-All other components become packages.
+All other components become packages, except [files without package URL](#files).
 
 | ORT property          | CycloneDX                                    | SPDX 2                                  | SPDX 3                                   |
 | --------------------- | -------------------------------------------- | --------------------------------------- | ---------------------------------------- |
@@ -47,6 +47,15 @@ digests (`sha256:...`) or in Debian versions with an epoch (`1:2.4.47`). They ar
 original value.
 
 Components without a package URL get identifiers of type `SBOM`.
+
+### Files
+
+SBOMs of container images, such as those created by Syft, list the files of the image as components of type `file`,
+for instance `/bin/busybox` or `/app/node_modules/qs/package.json`; they can be the majority of the components. Files
+without a package URL are ignored, as advisors cannot identify them and the scanner cannot download them: as packages,
+they would only cause errors. The components that such a file depends on or contains take its place in the dependency
+graph. The same applies to SPDX packages whose primary purpose is `FILE`. Files with a package URL become packages,
+and the `includeFileComponents` option keeps all files.
 
 ### VCS
 
