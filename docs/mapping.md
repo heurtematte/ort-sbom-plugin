@@ -33,7 +33,7 @@ All other components become packages.
 | Homepage              | `website` external reference                 | `homepage`                              | `software_homePage`                      |
 | VCS                   | `vcs` external reference                     | VCS `downloadLocation`                  | `vcs` external reference                 |
 | Binary artifact       | `distribution` external reference + hash     | –                                       | –                                        |
-| Source artifact       | `source-distribution` external reference     | `downloadLocation` + checksum           | `software_downloadLocation`              |
+| Source artifact       | `source-distribution` external reference, else derived from the purl | `downloadLocation` + checksum, else derived from the purl | `software_downloadLocation`, else derived from the purl |
 
 ### Identifiers
 
@@ -60,6 +60,22 @@ ignored.
 
 SSH URLs of known hosts, such as GitHub, GitLab, or Bitbucket, are turned into HTTPS URLs, as the repositories that
 SBOMs describe are mostly public and scanners usually have no SSH keys.
+
+### Source artifacts
+
+To scan a package, ORT downloads its sources from its VCS or its source artifact. If the SBOM gives no source
+artifact, it is derived from the package URL for registries whose layout makes its location predictable, like the
+package managers of ORT do:
+
+| Package URL type | Source artifact                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| `maven`          | The sources JAR, such as `<repository>/org/example/lib/1.0/lib-1.0-sources.jar`      |
+| `npm`            | The tarball, such as `<registry>/@scope/name/-/name-1.0.0.tgz`                       |
+
+The repository is Maven Central or the npm registry, unless the package URL names another one with the
+`repository_url` qualifier. POMs and snapshot versions get no source artifact. The derived artifact may not exist, for
+instance if a library was published without sources; the scanner then reports that it could not get the sources, as it
+would without it. The `deriveSourceArtifacts` option disables this.
 
 ### Licenses
 

@@ -142,9 +142,21 @@ class SbomTest : WordSpec({
             val mailApi = result.getPackages().single { it.metadata.id == MAIL_API }.metadata
             mailApi.purl shouldBe "pkg:maven/jakarta.mail/jakarta.mail-api@2.1.3?type=jar"
             mailApi.vcsProcessed.url shouldBe "https://github.com/jakartaee/mail-api.git"
+            mailApi.sourceArtifact.url shouldBe
+                "https://repo.maven.apache.org/maven2/jakarta/mail/jakarta.mail-api/2.1.3/jakarta.mail-api-2.1.3-" +
+                "sources.jar"
             mailApi.declaredLicenses should containExactlyInAnyOrder(
                 "EPL-2.0", "GPL-2.0-with-classpath-exception", "BSD-3-Clause"
             )
+        }
+
+        "not derive source artifacts from package URLs if disabled" {
+            val dir = tempdir()
+            SbomFixtures.copyTo(dir, SbomFixtures.CYCLONEDX_1_4_JSON)
+
+            val result = analyze(dir, mapOf("deriveSourceArtifacts" to "false"))
+
+            result.getPackages().single { it.metadata.id == MAIL_API }.metadata.sourceArtifact.url shouldBe ""
         }
 
         "produce the same result for the JSON and XML serializations of a CycloneDX SBOM" {

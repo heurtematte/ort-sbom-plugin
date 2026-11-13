@@ -62,10 +62,12 @@ private val PURL_TYPE_TO_ORT_TYPE = mapOf(
 
 /**
  * A [DependencyHandler] for the components of [SbomDocument]s. As one package manager instance processes multiple
- * documents, documents are [registered][register] and nodes refer to them by index.
+ * documents, documents are [registered][register] and nodes refer to them by index. If [deriveSourceArtifacts] is
+ * enabled, packages for which the SBOM gives no source artifact get the one derived from their package URL.
  */
 internal class SbomDependencyHandler(
-    private val concludedLicenseHandling: ConcludedLicenseHandling
+    private val concludedLicenseHandling: ConcludedLicenseHandling,
+    private val deriveSourceArtifacts: Boolean = true
 ) : DependencyHandler<SbomNode> {
     private val documents = mutableListOf<SbomDocument>()
     private val identifiers = mutableMapOf<SbomNode, Identifier>()
@@ -164,12 +166,17 @@ internal class SbomDependencyHandler(
             homepageUrl = homepageUrl.orEmpty(),
             binaryArtifact = downloadUrl?.let { RemoteArtifact(it, hash) } ?: RemoteArtifact.EMPTY,
             sourceArtifact = sourceDownloadUrl?.let { RemoteArtifact(it, if (downloadUrl == null) hash else Hash.NONE) }
-                ?: RemoteArtifact.EMPTY,
+                ?: derivedSourceArtifact(deriveSourceArtifacts),
             vcs = vcs,
             vcsProcessed = PackageManager.processPackageVcs(vcs, homepageUrl.orEmpty())
         )
     }
 }
+
+/** Return the source artifact derived from the package URL of this component, if enabled and possible. */
+private fun SbomComponent.derivedSourceArtifact(enabled: Boolean): RemoteArtifact =
+    purl.toPackageUrl()?.sourceArtifactUrl()?.takeIf { enabled }?.let { RemoteArtifact(it, Hash.NONE) }
+        ?: RemoteArtifact.EMPTY
 
 /**
  * Return the [Identifier] of this component. If it has a valid package URL, the identifier is derived from it, using

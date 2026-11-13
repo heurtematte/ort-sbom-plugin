@@ -105,6 +105,14 @@ data class SbomConfig(
     val concludedLicenseHandling: ConcludedLicenseHandling,
 
     /**
+     * Whether packages for which the SBOM gives no source artifact get the one derived from their package URL, for
+     * registries whose layout makes it predictable: the sources JAR of Maven packages and the tarball of npm packages,
+     * like the package managers of ORT. This lets the scanner get the sources of packages without a usable VCS.
+     */
+    @OrtPluginOption(defaultValue = "true")
+    val deriveSourceArtifacts: Boolean,
+
+    /**
      * Whether the retrieval of the sources of an SBOM source file stops at the first source that cannot be retrieved,
      * for instance because its server is not of the expected type or the credentials are missing. The remaining
      * sources are then reported as not retrieved, instead of being requested one by one.
@@ -154,7 +162,7 @@ class Sbom(
 
     private val fetcher by lazy { SbomFetcher() }
 
-    private val dependencyHandler = SbomDependencyHandler(config.concludedLicenseHandling)
+    private val dependencyHandler = SbomDependencyHandler(config.concludedLicenseHandling, config.deriveSourceArtifacts)
 
     private val graphBuilder = DependencyGraphBuilder(dependencyHandler)
 
