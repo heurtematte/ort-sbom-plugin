@@ -45,15 +45,24 @@ private val SCM_PARAMETERS = setOf(PATH_PARAMETER, TAG_PARAMETER, COMMIT_PARAMET
  * values of the `Eclipse-SourceReferences` header of bundles as parameters, for instance
  * "scm:git:https://github.com/org/repo.git?path=bundles/a&tag=v1&commitId=0123abc", which give the path and the
  * revision; the commit is preferred over the tag. Providers that ORT does not support, such as CVS, are ignored.
+ *
+ * Local paths are ignored as well: the repositories of an SBOM are not on the machine that analyzes it, and an SBOM
+ * must not make the scanner read local files. Values that are not URLs, such as "@scope/name", would otherwise be
+ * taken as paths relative to the working directory.
  */
 internal fun parseVcsUrl(url: String): VcsInfo {
     val trimmedUrl = url.trim()
-    if (trimmedUrl.startsWith("scm:", ignoreCase = true)) return parseScmUrl(trimmedUrl)
 
-    val path = trimmedUrl.substringAfter('#', "")
-    return parseHostedUrl(trimmedUrl.substringBefore('#'), type = null).let { vcs ->
-        if (path.isNotEmpty() && vcs.path.isEmpty()) vcs.copy(path = path) else vcs
+    val vcs = if (trimmedUrl.startsWith("scm:", ignoreCase = true)) {
+        parseScmUrl(trimmedUrl)
+    } else {
+        val path = trimmedUrl.substringAfter('#', "")
+        parseHostedUrl(expandNpmShortcut(trimmedUrl.substringBefore('#')), type = null).let { vcs ->
+            if (path.isNotEmpty() && vcs.path.isEmpty()) vcs.copy(path = path) else vcs
+        }
     }
+
+    return vcs.takeUnless { it.url.startsWith("file:", ignoreCase = true) } ?: VcsInfo.EMPTY
 }
 
 private fun parseScmUrl(url: String): VcsInfo {
@@ -102,6 +111,24 @@ private fun parseHostedUrl(url: String, type: VcsType?): VcsInfo {
 
     return if (type != null && vcs.type == VcsType.UNKNOWN) vcs.copy(type = type) else vcs
 }
+
+/** The hosts of the shortcuts that npm supports in the repository URLs of packages, such as "github:org/repo". */
+private val NPM_SHORTCUT_HOSTS = mapOf("github" to "github.com", "gitlab" to "gitlab.com", "bitbucket" to "bitbucket.org")
+
+/** A repository URL in the format of an npm shortcut for a known host. */
+private val NPM_SHORTCUT_REGEX =
+    Regex("(?<host>github|gitlab|bitbucket):(?<path>[^/:@\\s]+/[^/:@\\s]+)", RegexOption.IGNORE_CASE)
+
+/**
+ * Return the HTTPS URL of the repository that the given [url] denotes if it is an npm shortcut for a known host, or
+ * the [url] otherwise. Shortcuts without host, such as "org/repo", are not expanded, as they cannot be told apart from
+ * relative paths.
+ */
+private fun expandNpmShortcut(url: String): String =
+    NPM_SHORTCUT_REGEX.matchEntire(url)?.let { match ->
+        val (host, path) = match.destructured
+        "https://${NPM_SHORTCUT_HOSTS.getValue(host.lowercase())}/${path.removeSuffix(".git")}.git"
+    } ?: url
 
 /** An SSH URL as created by [normalizeVcsUrl], with an optional user and port. */
 private val SSH_URL_REGEX = Regex("ssh://(?:[^@/]+@)?(?<host>[^:/]+)(?::\\d+)?/(?<path>.+)", RegexOption.IGNORE_CASE)

@@ -59,7 +59,11 @@ and the revision, the commit being preferred over the tag. Providers that ORT ca
 ignored.
 
 SSH URLs of known hosts, such as GitHub, GitLab, or Bitbucket, are turned into HTTPS URLs, as the repositories that
-SBOMs describe are mostly public and scanners usually have no SSH keys.
+SBOMs describe are mostly public and scanners usually have no SSH keys. The shortcuts that npm supports for these hosts,
+such as `github:org/repo`, are expanded.
+
+Local paths and values that are not URLs, such as `@scope/name`, are ignored: the repositories of an SBOM are not on
+the machine that analyzes it, and an SBOM must not make the scanner read local files.
 
 ### Source artifacts
 

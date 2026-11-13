@@ -110,5 +110,19 @@ class VcsUrlsTest : WordSpec({
         "ignore providers that ORT does not support" {
             parseVcsUrl("scm:cvs:pserver:anonymous@wsdl4j.cvs.sourceforge.net:/cvsroot/wsdl4j") shouldBe VcsInfo.EMPTY
         }
+
+        "ignore local paths and values that are not URLs" {
+            parseVcsUrl("@ObeoNetwork/react-trello") shouldBe VcsInfo.EMPTY
+            parseVcsUrl("../repo") shouldBe VcsInfo.EMPTY
+            parseVcsUrl("/srv/git/repo.git") shouldBe VcsInfo.EMPTY
+            parseVcsUrl("file:///srv/git/repo.git") shouldBe VcsInfo.EMPTY
+            parseVcsUrl("scm:git:file:///srv/git/repo.git") shouldBe VcsInfo.EMPTY
+        }
+
+        "expand the shortcuts of npm for known hosts" {
+            parseVcsUrl("github:org/repo") shouldBe VcsInfo(VcsType.GIT, "https://github.com/org/repo.git", "")
+            parseVcsUrl("gitlab:org/repo.git") shouldBe VcsInfo(VcsType.GIT, "https://gitlab.com/org/repo.git", "")
+            parseVcsUrl("org/repo") shouldBe VcsInfo.EMPTY
+        }
     }
 })
