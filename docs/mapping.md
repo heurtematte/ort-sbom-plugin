@@ -74,7 +74,7 @@ package managers of ORT do:
 | Package URL type | Source artifact                                                                      |
 | ---------------- | ------------------------------------------------------------------------------------ |
 | `maven`          | The sources JAR, such as `<repository>/org/example/lib/1.0/lib-1.0-sources.jar`      |
-| `npm`            | The tarball, such as `<registry>/@scope/name/-/name-1.0.0.tgz`                       |
+| `npm`            | The `download_url` qualifier, else the tarball, such as `<registry>/@scope/name/-/name-1.0.0.tgz` |
 
 The repository is Maven Central or the npm registry, unless the package URL names another one with the
 `repository_url` qualifier. POMs and snapshot versions get no source artifact. The derived artifact may not exist, for

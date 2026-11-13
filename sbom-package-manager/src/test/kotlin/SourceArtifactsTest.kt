@@ -52,6 +52,14 @@ class SourceArtifactsTest : WordSpec({
                 "https://registry.npmjs.org/@babel/core/-/core-7.28.4.tgz"
         }
 
+        "return the download URL of an npm package" {
+            PackageURL(
+                "pkg:npm/%40obeonetwork/react-trello@2.4.11?download_url=https%3A%2F%2Fnpm.pkg.github.com%2F" +
+                    "download%2F%40ObeoNetwork%2Freact-trello%2F2.4.11%2F384ada405b80fc7105583b43f6aef05e1f26bf3b"
+            ).sourceArtifactUrl() shouldBe "https://npm.pkg.github.com/download/@ObeoNetwork/react-trello/2.4.11/" +
+                "384ada405b80fc7105583b43f6aef05e1f26bf3b"
+        }
+
         "return no URL for other types or packages without version" {
             PackageURL("pkg:pypi/grpcio@1.83.0").sourceArtifactUrl() should beNull()
             PackageURL("pkg:npm/vite").sourceArtifactUrl() should beNull()

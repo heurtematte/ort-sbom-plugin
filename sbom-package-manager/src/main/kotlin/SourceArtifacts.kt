@@ -24,7 +24,9 @@ private const val NPM_REGISTRY_URL = "https://registry.npmjs.org"
 /**
  * Return the URL of the source artifact of the package with this package URL, for registries whose layout makes it
  * predictable, or *null* otherwise. Like the package managers of ORT, this is the sources JAR of a Maven package and
- * the tarball of an npm package. The `repository_url` qualifier selects another repository than the public one.
+ * the tarball of an npm package. The `repository_url` qualifier selects another repository than the public one. For
+ * npm packages, the `download_url` qualifier gives the tarball itself, for instance in a registry with another layout
+ * such as GitHub Packages.
  *
  * The artifact may not exist, for instance if a Maven package was published without sources; the scanner then
  * reports that it could not get the sources, as it would without this URL.
@@ -50,6 +52,10 @@ private fun PackageURL.mavenSourcesJarUrl(): String? {
 }
 
 private fun PackageURL.npmTarballUrl(): String? {
+    qualifiers?.get("download_url")?.takeIf { it.startsWith("https://") || it.startsWith("http://") }?.let {
+        return it
+    }
+
     val version = version?.takeUnless { it.isEmpty() } ?: return null
     val registry = qualifiers?.get("repository_url")?.trimEnd('/') ?: NPM_REGISTRY_URL
 
