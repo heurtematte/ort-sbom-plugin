@@ -48,6 +48,19 @@ original value.
 
 Components without a package URL get identifiers of type `SBOM`.
 
+### VCS
+
+VCS URLs can also have the format of Maven SCM connections, `scm:<provider>:<url>`, which SBOMs created from Maven
+and Tycho builds commonly use, for instance `scm:git:git@github.com:eclipse/lsp4j.git` or
+`scm:svn:http://svn.apache.org/repos/asf/commons/proper/collections`. For bundles, Tycho adds the values of their
+`Eclipse-SourceReferences` header as parameters, as in
+`scm:git:https://github.com/org/repo.git?path=bundles/a&tag=v1&commitId=0123abc`: they give the path in the repository
+and the revision, the commit being preferred over the tag. Providers that ORT cannot download from, such as CVS, are
+ignored.
+
+SSH URLs of known hosts, such as GitHub, GitLab, or Bitbucket, are turned into HTTPS URLs, as the repositories that
+SBOMs describe are mostly public and scanners usually have no SSH keys.
+
 ### Licenses
 
 Licenses that an SBOM marks as concluded are handled according to the `concludedLicenseHandling` option (see

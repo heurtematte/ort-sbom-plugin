@@ -20,7 +20,6 @@ import org.eclipse.apoapsis.sbom.parser.SbomDocument
 import org.eclipse.apoapsis.sbom.parser.SbomHash
 
 import org.ossreviewtoolkit.analyzer.PackageManager
-import org.ossreviewtoolkit.downloader.VcsHost
 import org.ossreviewtoolkit.model.Hash
 import org.ossreviewtoolkit.model.HashAlgorithm
 import org.ossreviewtoolkit.model.Identifier
@@ -32,7 +31,6 @@ import org.ossreviewtoolkit.model.RemoteArtifact
 import org.ossreviewtoolkit.model.VcsInfo
 import org.ossreviewtoolkit.model.utils.DependencyHandler
 import org.ossreviewtoolkit.model.utils.toPackageUrl
-import org.ossreviewtoolkit.utils.ort.normalizeVcsUrl
 import org.ossreviewtoolkit.utils.spdxexpression.SpdxExpression
 
 /** A node of the dependency graph: the component with the given [ref] in the document with index [document]. */
@@ -211,15 +209,7 @@ internal fun sanitizedIdentifier(type: String, namespace: String, name: String, 
 private fun SbomComponent.authorsOrSupplier(): Set<String> = authors.ifEmpty { setOfNotNull(supplier) }
 
 /** Return the [VcsInfo] for the VCS URL of this component, which may contain a revision and a path. */
-private fun SbomComponent.vcsInfo(): VcsInfo {
-    val url = vcsUrl ?: return VcsInfo.EMPTY
-
-    // A fragment denotes a path in the repository, as in purls.
-    val path = url.substringAfter('#', "")
-    return VcsHost.parseUrl(normalizeVcsUrl(url.substringBefore('#'))).let { vcs ->
-        if (path.isNotEmpty() && vcs.path.isEmpty()) vcs.copy(path = path) else vcs
-    }
-}
+private fun SbomComponent.vcsInfo(): VcsInfo = vcsUrl?.let(::parseVcsUrl) ?: VcsInfo.EMPTY
 
 /** Return the strongest verifiable hash among these hashes, or [Hash.NONE]. Invalid hash values are ignored. */
 private fun List<SbomHash>.bestHash(): Hash =
