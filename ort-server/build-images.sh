@@ -21,7 +21,7 @@
 # ORT Server to TARGET_PREFIX, so that the Helm chart of ORT Server can use them all with "containerRegistry".
 set -euo pipefail
 
-version="${1:-0.99.1}"
+version="${1:-0.103.0}"
 target_prefix="${2:-ort-server-sbom}"
 source_prefix="${SOURCE_PREFIX:-ghcr.io/eclipse-apoapsis}"
 

@@ -24,8 +24,8 @@ changing or rebuilding ORT Server. Two images need it:
 The images of ORT Server start Java with the classpath listed in `/app/jib-classpath-file`.
 [`ort-server/Dockerfile`](https://github.com/heurtematte/ort-sbom-plugin/blob/main/ort-server/Dockerfile) builds an
 image on top of a released image: it adds the jars of the plugin to `/app/plugins` and appends `/app/plugins/*` to that
-classpath. The build fails if the image does not contain the version of ORT the plugin is built against (ORT 98 for
-ORT Server 0.99), since plugins must be built for the ORT version of ORT Server. All other libraries the plugin needs
+classpath. The build fails if the image does not contain the version of ORT the plugin is built against (ORT 99 for
+ORT Server 0.103), since plugins must be built for the ORT version of ORT Server. All other libraries the plugin needs
 are already part of the images.
 
 ### Published images
@@ -41,12 +41,12 @@ publishes, for a release of ORT Server:
 The images are published under the name of the repository, so that they do not collide with other images of ORT
 Server of the same owner, such as those built by a fork of ORT Server.
 
-By default, it uses ORT Server 0.99.1; run it manually to build the images for another release.
+By default, it uses ORT Server 0.103.0; run it manually to build the images for another release.
 
 ### Helm
 
 The [Helm chart of ORT Server](https://github.com/eclipse-apoapsis/helm-charts) pulls all images from the same
-registry, with the `appVersion` of the chart as tag (0.99.1 for chart 0.26.2). Point it to the published images:
+registry, with the `appVersion` of the chart as tag (0.103.0 for chart 0.28.0). Point it to the published images:
 
 ```yaml
 containerRegistry: ghcr.io/heurtematte/ort-sbom-plugin
@@ -64,11 +64,11 @@ credentials of the infrastructure services of the repository. The values are als
 ### Docker Compose
 
 [`ort-server/compose.yml`](https://github.com/heurtematte/ort-sbom-plugin/blob/main/ort-server/compose.yml) replaces
-all images of the Docker Compose setup of ORT Server with the published images, by default those of ORT Server 0.99.1.
+all images of the Docker Compose setup of ORT Server with the published images, by default those of ORT Server 0.103.0.
 Use it together with the `docker-compose.yml` of a checkout of the same release of ORT Server:
 
 ```shell
-git clone --depth 1 --branch 0.99.1 https://github.com/eclipse-apoapsis/ort-server.git
+git clone --depth 1 --branch 0.103.0 https://github.com/eclipse-apoapsis/ort-server.git
 cd ort-server
 docker compose -f docker-compose.yml -f <ort-sbom-plugin>/ort-server/compose.yml up
 ```
@@ -82,11 +82,11 @@ Set `ORT_SERVER_IMAGE_TAG` to use another release of ORT Server, for which the i
 To build the images locally, or for another registry:
 
 ```shell
-# Local images ort-server-sbom/ort-server-core:0.99.1 and ort-server-sbom/ort-server-analyzer-worker:0.99.1.
-ort-server/build-images.sh 0.99.1
+# Local images ort-server-sbom/ort-server-core:0.103.0 and ort-server-sbom/ort-server-analyzer-worker:0.103.0.
+ort-server/build-images.sh 0.103.0
 
 # Push them to a registry, and copy the other images of the release there for the Helm chart.
-PUSH=1 MIRROR=1 ort-server/build-images.sh 0.99.1 registry.example.org/ort-server
+PUSH=1 MIRROR=1 ort-server/build-images.sh 0.103.0 registry.example.org/ort-server
 ```
 
 With Docker Compose, use the local images of core and analyzer worker with

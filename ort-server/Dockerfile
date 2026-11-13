@@ -20,10 +20,10 @@
 # The build context is the directory created by "./gradlew ortServerPlugin" (build/ort-server-plugin), for instance:
 #
 #   docker build -f ort-server/Dockerfile \
-#     --build-arg BASE_IMAGE=ghcr.io/eclipse-apoapsis/ort-server-core:0.99.1 \
-#     -t ort-server-core-sbom:0.99.1 build/ort-server-plugin
+#     --build-arg BASE_IMAGE=ghcr.io/eclipse-apoapsis/ort-server-core:0.103.0 \
+#     -t ort-server-core-sbom:0.103.0 build/ort-server-plugin
 
-ARG BASE_IMAGE=ghcr.io/eclipse-apoapsis/ort-server-core:0.99.1
+ARG BASE_IMAGE=ghcr.io/eclipse-apoapsis/ort-server-core:0.103.0
 
 FROM ${BASE_IMAGE} AS base
 

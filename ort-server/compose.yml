@@ -12,12 +12,12 @@
 # Use the images with the ORT SBOM plugin in the Docker Compose setup of ORT Server. This file only replaces the images
 # of ORT Server, so use it together with the docker-compose.yml of a checkout of the same release of ORT Server:
 #
-#   git clone --depth 1 --branch 0.99.1 https://github.com/eclipse-apoapsis/ort-server.git
+#   git clone --depth 1 --branch 0.103.0 https://github.com/eclipse-apoapsis/ort-server.git
 #   cd ort-server
 #   docker compose -f docker-compose.yml -f <ort-sbom-plugin>/ort-server/compose.yml up
 #
-# By default, all images are those of ORT Server 0.99.1 published by the "ORT Server images" workflow, for instance
-# ghcr.io/heurtematte/ort-sbom-plugin/ort-server-ui:0.99.1: the core and analyzer worker with the plugin, and copies of
+# By default, all images are those of ORT Server 0.103.0 published by the "ORT Server images" workflow, for instance
+# ghcr.io/heurtematte/ort-sbom-plugin/ort-server-ui:0.103.0: the core and analyzer worker with the plugin, and copies of
 # the other images of the release.
 #
 # - ORT_SERVER_IMAGE_TAG selects another release of ORT Server, for which the images must have been published.
@@ -27,28 +27,34 @@
 
 services:
   core:
-    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-core:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-core:${ORT_SERVER_IMAGE_TAG:-0.103.0}
 
   analyzer-worker:
-    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-analyzer-worker:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_SBOM_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-analyzer-worker:${ORT_SERVER_IMAGE_TAG:-0.103.0}
 
   advisor-worker:
-    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-advisor-worker:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-advisor-worker:${ORT_SERVER_IMAGE_TAG:-0.103.0}
 
   config-worker:
-    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-config-worker:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-config-worker:${ORT_SERVER_IMAGE_TAG:-0.103.0}
 
   evaluator-worker:
-    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-evaluator-worker:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-evaluator-worker:${ORT_SERVER_IMAGE_TAG:-0.103.0}
 
   orchestrator:
-    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-orchestrator:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-orchestrator:${ORT_SERVER_IMAGE_TAG:-0.103.0}
 
   reporter-worker:
-    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-reporter-worker:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-reporter-worker:${ORT_SERVER_IMAGE_TAG:-0.103.0}
 
   scanner-worker:
-    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-scanner-worker:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-scanner-worker:${ORT_SERVER_IMAGE_TAG:-0.103.0}
+
+  # Only run by hand, like in the docker-compose.yml of ORT Server, which has this service since ORT Server 0.103.0.
+  tasks:
+    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-maintenance-tasks:${ORT_SERVER_IMAGE_TAG:-0.103.0}
+    profiles:
+      - tasks
 
   ui:
-    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-ui:${ORT_SERVER_IMAGE_TAG:-0.99.1}
+    image: ${ORT_SERVER_IMAGE_PREFIX-ghcr.io/heurtematte/ort-sbom-plugin/}ort-server-ui:${ORT_SERVER_IMAGE_TAG:-0.103.0}

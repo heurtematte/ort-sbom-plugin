@@ -2,7 +2,7 @@
 
 ## Requirements
 
-The plugin is built against ORT 98, which requires **Java 25**.
+The plugin is built against ORT 99, which requires **Java 25**.
 
 !!! note "GitHub Packages"
 

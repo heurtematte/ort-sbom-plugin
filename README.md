@@ -87,21 +87,21 @@ the projects if portfolio access control is enabled). See the
 The plugin can be added to the released images of ORT Server, without changing ORT Server: `ort-server/Dockerfile`
 adds the jars to the core and analyzer worker images and appends them to their classpath. The
 [ORT Server images](.github/workflows/ort-server-images.yml) workflow publishes them as
-`ghcr.io/heurtematte/ort-sbom-plugin/ort-server-core:0.99.1` and
-`ghcr.io/heurtematte/ort-sbom-plugin/ort-server-analyzer-worker:0.99.1`, together with copies of the other images of
+`ghcr.io/heurtematte/ort-sbom-plugin/ort-server-core:0.103.0` and
+`ghcr.io/heurtematte/ort-sbom-plugin/ort-server-analyzer-worker:0.103.0`, together with copies of the other images of
 the release, so that the Helm chart of ORT Server uses them all with:
 
 ```yaml
 containerRegistry: ghcr.io/heurtematte/ort-sbom-plugin
 ```
 
-To build the images yourself, run `ort-server/build-images.sh 0.99.1`. See
+To build the images yourself, run `ort-server/build-images.sh 0.103.0`. See
 [Use with ORT Server](https://heurtematte.github.io/ort-sbom-plugin/ort-server/) for Docker Compose and the analysis of
 SBOMs in ORT Server.
 
 ## Building
 
-Requires Java 25, like ORT 98.
+Requires Java 25, like ORT 99.
 
 ```shell
 ./gradlew build                 # compile and test

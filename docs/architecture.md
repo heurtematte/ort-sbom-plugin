@@ -91,7 +91,7 @@ services, so the plugin does not depend on ORT Server.
 C4Component
     title Components of the plugin in the analyzer worker
 
-    Container(ortAnalyzer, "ORT Analyzer", "ORT 98", "Finds definition files, runs package managers")
+    Container(ortAnalyzer, "ORT Analyzer", "ORT 99", "Finds definition files, runs package managers")
     Container(authenticator, "Authenticator", "java.net.Authenticator", "ORT Server: infrastructure services; ORT CLI: .netrc")
 
     Container_Boundary(pm, "sbom-package-manager") {
@@ -136,7 +136,7 @@ Dependency-Track project.
 C4Dynamic
     title Analysis of a source file with a Dependency-Track project
 
-    Container(ortAnalyzer, "ORT Analyzer", "ORT 98")
+    Container(ortAnalyzer, "ORT Analyzer", "ORT 99")
     Container_Boundary(plugin, "SBOM plugin") {
         Component(sbom, "Sbom", "sbom-package-manager")
         Component(sourceFile, "SbomSourceFile", "sbom-sources")

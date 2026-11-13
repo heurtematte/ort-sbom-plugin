@@ -34,11 +34,11 @@ on:
       ort-server-version:
         description: The release of ORT Server to add the plugin to; it must use the ORT version of the plugin.
         required: true
-        default: "0.99.1"
+        default: "0.103.0"
 
 env:
   # The release of ORT Server whose images get the plugin, by default.
-  ORT_SERVER_VERSION: ${{ inputs.ort-server-version || '0.99.1' }}
+  ORT_SERVER_VERSION: ${{ inputs.ort-server-version || '0.103.0' }}
   SOURCE_PREFIX: ghcr.io/eclipse-apoapsis
 
 permissions:

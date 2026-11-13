@@ -2,7 +2,7 @@
 
 ## Building
 
-The project is built with Gradle and requires Java 25, like ORT 98:
+The project is built with Gradle and requires Java 25, like ORT 99:
 
 ```shell
 ./gradlew build                 # compile and run the tests

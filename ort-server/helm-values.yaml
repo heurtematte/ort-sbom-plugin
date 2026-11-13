@@ -10,7 +10,7 @@
 # SPDX-License-Identifier: EPL-2.0
 
 # Values for the Helm chart of ORT Server (https://github.com/eclipse-apoapsis/helm-charts) to use the images with the
-# ORT SBOM plugin. The chart pulls all images from this registry, tagged with its appVersion (0.99.1 for chart 0.26.2);
+# ORT SBOM plugin. The chart pulls all images from this registry, tagged with its appVersion (0.103.0 for chart 0.28.0);
 # the "ORT Server images" workflow publishes the images with the plugin and copies the other images of that release.
 #
 #   helm upgrade --install ort-server <chart> -f values.yaml -f ort-server/helm-values.yaml
